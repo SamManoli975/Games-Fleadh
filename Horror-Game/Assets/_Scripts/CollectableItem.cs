@@ -4,8 +4,26 @@ using UnityEngine;
 
 public class CollectableItem : Interactable
 {
-    void Awake()
+    [SerializeField] ItemType itemType;
+
+    protected override void Start()
     {
-        hoverMessage = "Pick Item";
+        base.Start();
+
+        hoverMessage = "Pick up " + ItemsDataManager.instance.GetItemData(itemType).name;
+        onClick.AddListener(Collect);
+    }
+
+    void Collect(Clicker clicker)
+    {
+        Inventory inventory = clicker.GetComponent<Inventory>();
+        if (inventory == null)
+        {
+            Debug.LogWarning("Object without inventory is trying to collect an item");
+            return;
+        }
+
+        inventory.AddItem(itemType);
+        Destroy(gameObject);
     }
 }

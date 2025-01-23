@@ -21,6 +21,8 @@ public class Clicker : MonoBehaviour
     [SerializeField] Transform rayOrigin;
 
     Interactable curHovered = null;
+    // keeps track of whether 'curHovered' was set to an interactable or not to handle situations where 'curHovered' object is destroyed
+    bool hadCurHovered = false;
 
     void Update()
     {
@@ -29,13 +31,13 @@ public class Clicker : MonoBehaviour
         if (curHovered != null)
         {
             if (Input.GetMouseButtonDown(0))
-                curHovered.Interact(InteractionType.leftMouse);
+                curHovered.Interact(InteractionType.leftMouse, this);
 
             if (Input.GetMouseButtonDown(1))
-                curHovered.Interact(InteractionType.rightMouse);
+                curHovered.Interact(InteractionType.rightMouse, this);
 
             if (Input.GetKeyDown(KeyCode.E))
-                curHovered.Interact(InteractionType.interactionKey);
+                curHovered.Interact(InteractionType.interactionKey, this);
         }
     }
 
@@ -56,7 +58,7 @@ public class Clicker : MonoBehaviour
             }
         }
 
-        if (!hoveredOnInteractable && curHovered != null)
+        if (!hoveredOnInteractable && hadCurHovered)
             UnsetCurHovered();
     }
 
@@ -67,15 +69,21 @@ public class Clicker : MonoBehaviour
 
         newInteractable.StartHovering();
         curHovered = newInteractable;
+        hadCurHovered = true;
 
         onHoveredChange.Invoke(newInteractable);
     }
 
     void UnsetCurHovered()
     {
-        curHovered.StopHovering();
-        curHovered = null;
-        onHoveredChange.Invoke(null);
+        if (curHovered != null)
+        {
+            curHovered.StopHovering();
+            curHovered = null;
+        }
 
+        hadCurHovered = false;
+
+        onHoveredChange.Invoke(null);
     }
 }

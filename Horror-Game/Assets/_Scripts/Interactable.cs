@@ -6,9 +6,9 @@ using UnityEngine.Events;
 public class Interactable : MonoBehaviour
 {
     // For detecting default interaction
-    public UnityEvent onClick;
+    public UnityEvent<Clicker> onClick;
     // For detecting specific types of interactions
-    public UnityEvent<InteractionType> onInteraction;
+    public UnityEvent<InteractionType, Clicker> onInteraction;
 
     [Tooltip("Message to display when the object is hovered")]
     [SerializeField] public string hoverMessage;
@@ -18,7 +18,7 @@ public class Interactable : MonoBehaviour
 
     Outline outline;
 
-    void Start()
+    protected virtual void Start()
     {
         if (outlineOnHover)
         {
@@ -27,13 +27,13 @@ public class Interactable : MonoBehaviour
         }
     }
 
-    public void Interact(InteractionType interactionType)
+    public void Interact(InteractionType interactionType, Clicker clicker)
     {
         // Here default interaction is defined as leftMouse button
         if (interactionType == InteractionType.leftMouse)
-            onClick.Invoke();
+            onClick.Invoke(clicker);
 
-        onInteraction.Invoke(interactionType);
+        onInteraction.Invoke(interactionType, clicker);
     }
 
     public void StartHovering()
