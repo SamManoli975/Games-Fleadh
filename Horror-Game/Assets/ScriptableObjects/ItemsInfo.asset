@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f294e501f5ff165478659f23f3ae923c, type: 3}
+  m_Name: ItemsInfo
+  m_EditorClassIdentifier: 
+  items:
+  - itemType: 1
+    name: Flashlight
+    image: {fileID: 21300000, guid: 0d6c467a574f15c48886c85ba30bc760, type: 3}
+    isStackable: 0
+    collectableItemPrefab: {fileID: 2435142581511081971, guid: 390b3989104516944a8298e91f4d6919, type: 3}
+    handItemPrefab: {fileID: 5776716582666878201, guid: abe592af9b2a87749a41a025425f3bf0, type: 3}
+  - itemType: 2
+    name: KeyA
+    image: {fileID: 21300000, guid: a5ea1a3b2ca588d428804fd51e8cc08f, type: 3}
+    isStackable: 1
+    collectableItemPrefab: {fileID: 0}
+    handItemPrefab: {fileID: 0}
+  - itemType: 3
+    name: KeyB
+    image: {fileID: 21300000, guid: 7ed4bf615827f0e4bb499ed6cbf1ee03, type: 3}
+    isStackable: 1
+    collectableItemPrefab: {fileID: 0}
+    handItemPrefab: {fileID: 0}
