@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting.ReorderableList;
 using UnityEngine;
 
 public class CollectableItem : Interactable
@@ -11,7 +12,7 @@ public class CollectableItem : Interactable
         base.Start();
 
         hoverMessage = "Pick up " + ItemsDataManager.instance.GetItemData(itemType).name;
-        onClick.AddListener(Collect);
+        onInteraction.AddListener(Collect);
     }
 
     void Collect(Clicker clicker)
@@ -23,7 +24,15 @@ public class CollectableItem : Interactable
             return;
         }
 
-        inventory.AddItem(itemType);
-        Destroy(gameObject);
+        if (inventory.CanAddItem(itemType))
+        {
+            int prioritySlot = -1;
+            Hand hand = clicker.GetComponent<Hand>();
+            if (hand != null)
+                prioritySlot = hand.GetSelectedSlot();
+
+            inventory.AddItem(itemType, prioritySlot);
+            Destroy(gameObject);
+        }
     }
 }

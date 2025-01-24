@@ -20,7 +20,7 @@ public class UI_HoveredMessage : MonoBehaviour
             return;
         }
 
-        textfield.text = interactable.hoverMessage;
+        textfield.text = interactable.hoverMessage + " (E)";
         textfield.gameObject.SetActive(true);
     }
 

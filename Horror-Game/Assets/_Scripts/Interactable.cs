@@ -5,16 +5,13 @@ using UnityEngine.Events;
 
 public class Interactable : MonoBehaviour
 {
-    // For detecting default interaction
-    public UnityEvent<Clicker> onClick;
-    // For detecting specific types of interactions
-    public UnityEvent<InteractionType, Clicker> onInteraction;
+    public UnityEvent<Clicker> onInteraction;
 
     [Tooltip("Message to display when the object is hovered")]
     [SerializeField] public string hoverMessage;
 
     [Tooltip("Do not forget to add 'Outline' component if set to true")]
-    [SerializeField] bool outlineOnHover = false;
+    [SerializeField] bool outlineOnHover = true;
 
     Outline outline;
 
@@ -23,17 +20,15 @@ public class Interactable : MonoBehaviour
         if (outlineOnHover)
         {
             outline = GetComponent<Outline>();
+            if (outline == null)
+                Debug.LogError("Add 'Outline' component to an object if you have 'outlineOnHover' enabled");
             outline.enabled = false;
         }
     }
 
-    public void Interact(InteractionType interactionType, Clicker clicker)
+    public void Interact(Clicker clicker)
     {
-        // Here default interaction is defined as leftMouse button
-        if (interactionType == InteractionType.leftMouse)
-            onClick.Invoke(clicker);
-
-        onInteraction.Invoke(interactionType, clicker);
+        onInteraction.Invoke(clicker);
     }
 
     public void StartHovering()

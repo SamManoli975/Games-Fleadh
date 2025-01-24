@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class UI_InventorySlot : MonoBehaviour
 {
+    [SerializeField] Image backgroundImage;
     [SerializeField] Image itemIconImage;
     [SerializeField] TextMeshProUGUI countTextfield;
 
@@ -33,6 +34,16 @@ public class UI_InventorySlot : MonoBehaviour
         {
             countTextfield.gameObject.SetActive(false);
         }
+    }
+
+    public void Select()
+    {
+        backgroundImage.color = Color.gray;
+    }
+
+    public void Deselect()
+    {
+        backgroundImage.color = Color.white;
     }
 
 }

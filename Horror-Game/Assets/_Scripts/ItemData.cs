@@ -4,9 +4,10 @@ using UnityEngine;
 
 public enum ItemType
 {
+    none,
     flashlight,
-    keyA,
-    keyB
+    key1,
+    key2
 }
 
 [System.Serializable]
@@ -16,4 +17,7 @@ public class ItemData
     public string name;
     public Sprite image;
     public bool isStackable;
+
+    public GameObject collectableItemPrefab;
+    public GameObject handItemPrefab;
 }

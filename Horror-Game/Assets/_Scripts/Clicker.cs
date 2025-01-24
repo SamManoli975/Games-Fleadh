@@ -30,14 +30,8 @@ public class Clicker : MonoBehaviour
 
         if (curHovered != null)
         {
-            if (Input.GetMouseButtonDown(0))
-                curHovered.Interact(InteractionType.leftMouse, this);
-
-            if (Input.GetMouseButtonDown(1))
-                curHovered.Interact(InteractionType.rightMouse, this);
-
             if (Input.GetKeyDown(KeyCode.E))
-                curHovered.Interact(InteractionType.interactionKey, this);
+                curHovered.Interact(this);
         }
     }
 

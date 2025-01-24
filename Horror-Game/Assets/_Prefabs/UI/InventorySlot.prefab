@@ -302,5 +302,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 846fef4fe46d5e142bd08aa1717a3660, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  backgroundImage: {fileID: 3782266539838379387}
   itemIconImage: {fileID: 4818780466223354938}
   countTextfield: {fileID: 413429439}
