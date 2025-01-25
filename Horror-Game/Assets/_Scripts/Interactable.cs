@@ -5,23 +5,26 @@ using UnityEngine.Events;
 
 public class Interactable : MonoBehaviour
 {
-    public UnityEvent<Clicker> onInteraction;
+    public UnityEvent<Clicker> onInteraction = new UnityEvent<Clicker>();
 
     [Tooltip("Message to display when the object is hovered")]
-    [SerializeField] public string hoverMessage;
+    public string hoverMessage;
 
     [Tooltip("Do not forget to add 'Outline' component if set to true")]
-    [SerializeField] bool outlineOnHover = true;
+    public bool outlineOnHover = true;
 
-    Outline outline;
+    public Outline outline;
 
     protected virtual void Start()
     {
         if (outlineOnHover)
         {
-            outline = GetComponent<Outline>();
             if (outline == null)
-                Debug.LogError("Add 'Outline' component to an object if you have 'outlineOnHover' enabled");
+            {
+                outline = GetComponent<Outline>();
+                if (outline == null)
+                    Debug.LogError("Add 'Outline' component to an object if you have 'outlineOnHover' enabled");
+            }
             outline.enabled = false;
         }
     }

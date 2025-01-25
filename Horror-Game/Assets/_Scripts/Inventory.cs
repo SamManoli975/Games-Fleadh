@@ -18,9 +18,34 @@ public class Inventory : MonoBehaviour
             items[i] = null;
     }
 
+    void RemoveOneItemFromSlot(int slot)
+    {
+        items[slot].count--;
+        if (items[slot].count == 0)
+            items[slot] = null;
+    }
+
     public int GetSlotsCount()
     {
         return slotsCount;
+    }
+
+    public ItemStack GetItemStackAtSlot(int slot)
+    {
+        return items[slot];
+    }
+
+    public bool HasItem(ItemType itemType)
+    {
+        for (int i = 0; i < slotsCount; i++)
+        {
+            if (items[i] != null && items[i].itemType == itemType)
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public bool CanAddItem(ItemType itemType)
@@ -95,8 +120,32 @@ public class Inventory : MonoBehaviour
         onItemsUpdated.Invoke(items);
     }
 
-    public ItemStack GetItemStackAtSlot(int slot)
+    public void RemoveItem(ItemType itemType, int priorityRemovePlace = -1)
     {
-        return items[slot];
+        if (!HasItem(itemType))
+        {
+            Debug.LogError("No item of type '" + itemType + "' in the inventory to remove");
+            return;
+        }
+
+        // trying to remove from the priority place first
+        if (priorityRemovePlace >= 0 && priorityRemovePlace < items.Length
+        && items[priorityRemovePlace] != null && items[priorityRemovePlace].itemType == itemType)
+        {
+            RemoveOneItemFromSlot(priorityRemovePlace);
+        }
+        else
+        {
+            for (int i = 0; i < slotsCount; i++)
+            {
+                if (items[i] != null && items[i].itemType == itemType)
+                {
+                    RemoveOneItemFromSlot(i);
+                    break;
+                }
+            }
+        }
+
+        onItemsUpdated.Invoke(items);
     }
 }
