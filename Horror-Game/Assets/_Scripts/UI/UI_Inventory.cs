@@ -1,16 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class UI_Inventory : MonoBehaviour
 {
     [SerializeField] List<UI_InventorySlot> slots;
+    [SerializeField] TextMeshProUGUI curItemNameTextfield;
 
     int curSelectedSlot = -1;
 
-    void Start()
+    void Awake()
     {
         InitSlots();
+        curItemNameTextfield.gameObject.SetActive(false);
     }
 
     void InitSlots()
@@ -23,6 +26,21 @@ public class UI_Inventory : MonoBehaviour
     {
         for (int i = 0; i < slots.Count; i++)
             slots[i].UpdateSlot(i < items.Length ? items[i] : null);
+
+        UpdateSelectedItemName();
+    }
+
+    void UpdateSelectedItemName()
+    {
+        if (slots[curSelectedSlot].curItemData != null)
+        {
+            curItemNameTextfield.text = slots[curSelectedSlot].curItemData.name;
+            curItemNameTextfield.gameObject.SetActive(true);
+        }
+        else
+        {
+            curItemNameTextfield.gameObject.SetActive(false);
+        }
     }
 
     public void UpdateSelectedSlot(int newSelectedSlot)
@@ -35,5 +53,7 @@ public class UI_Inventory : MonoBehaviour
 
         slots[newSelectedSlot].Select();
         curSelectedSlot = newSelectedSlot;
+
+        UpdateSelectedItemName();
     }
 }

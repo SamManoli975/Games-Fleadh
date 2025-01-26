@@ -10,6 +10,8 @@ public class UI_InventorySlot : MonoBehaviour
     [SerializeField] Image itemIconImage;
     [SerializeField] TextMeshProUGUI countTextfield;
 
+    public ItemData curItemData;
+
     // if stack is null, then there is not item in this slot
     public void UpdateSlot(ItemStack stack)
     {
@@ -17,15 +19,16 @@ public class UI_InventorySlot : MonoBehaviour
         {
             itemIconImage.gameObject.SetActive(false);
             countTextfield.gameObject.SetActive(false);
+            curItemData = null;
             return;
         }
 
-        ItemData itemData = ItemsDataManager.instance.GetItemData(stack.itemType);
+        curItemData = ItemsDataManager.instance.GetItemData(stack.itemType);
 
         itemIconImage.gameObject.SetActive(true);
-        itemIconImage.sprite = itemData.image;
+        itemIconImage.sprite = curItemData.image;
 
-        if (itemData.isStackable)
+        if (curItemData.isStackable)
         {
             countTextfield.text = stack.count.ToString();
             countTextfield.gameObject.SetActive(true);
