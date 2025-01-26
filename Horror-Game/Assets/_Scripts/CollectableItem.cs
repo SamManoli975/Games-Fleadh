@@ -11,7 +11,7 @@ public class CollectableItem : Interactable
     {
         base.Start();
 
-        hoverMessage = "Pick up " + ItemsDataManager.instance.GetItemData(itemType).name;
+        SetHoverMessage("Pick up " + ItemsDataManager.instance.GetItemData(itemType).name);
         onInteraction.AddListener(Collect);
     }
 

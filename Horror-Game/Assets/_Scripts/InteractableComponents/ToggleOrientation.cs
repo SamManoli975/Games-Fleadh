@@ -14,15 +14,15 @@ public class ToggleOrientation : MonoBehaviour
     public bool doDisableCollidersOnMovement = false;
     public float disableColliderFromProgress = 0;
 
-    Collider movingPartCollider = null;
+    Collider[] movingPartColliders = new Collider[0];
     protected float curClosedProgress = 0;
 
     public virtual void Start()
     {
         if (doDisableCollidersOnMovement || doDisableOpenCollider)
         {
-            movingPartCollider = movingPart.GetComponent<Collider>();
-            if (movingPartCollider != null && movingPartCollider.isTrigger)
+            movingPartColliders = movingPart.GetComponents<Collider>();
+            if (movingPartColliders.Length == 0)
             {
                 doDisableCollidersOnMovement = false;
                 doDisableOpenCollider = false;
@@ -63,18 +63,20 @@ public class ToggleOrientation : MonoBehaviour
 
             if (doDisableCollidersOnMovement)
             {
-                if (curProgress != 1 && disableColliderFromProgress <= curProgress && curProgress <= 1 - disableColliderFromProgress)
-                    movingPartCollider.isTrigger = true;
-                else
-                    movingPartCollider.isTrigger = false;
+                bool isTrigger = curProgress != 1 && disableColliderFromProgress <= curProgress && curProgress <= 1 - disableColliderFromProgress;
+                for (int i = 0; i < movingPartColliders.Length; i++)
+                {
+                    movingPartColliders[i].isTrigger = isTrigger;
+                }
             }
 
             if (doDisableOpenCollider)
             {
-                if (isClosed && curClosedProgress == 1)
-                    movingPartCollider.isTrigger = false;
-                else
-                    movingPartCollider.isTrigger = true;
+                bool isTrigger = !isClosed || curClosedProgress != 1;
+                for (int i = 0; i < movingPartColliders.Length; i++)
+                {
+                    movingPartColliders[i].isTrigger = isTrigger;
+                }
             }
 
             SetMovingPartTransform();

@@ -27,12 +27,15 @@ public class Lockable : MonoBehaviour
         }
 
         Inventory inventory = clicker.GetComponent<Inventory>();
-        if (inventory == null)
+        Hand hand = clicker.GetComponent<Hand>();
+        if (inventory == null || hand == null)
             return;
 
-        if (inventory.HasItem(requiredKey))
+        int selectedSlot = hand.GetSelectedSlot();
+        ItemStack selectedStack = inventory.GetItemStackAtSlot(selectedSlot);
+        if (selectedStack != null && selectedStack.itemType == requiredKey)
         {
-            inventory.RemoveItem(requiredKey);
+            inventory.RemoveItem(requiredKey, selectedSlot);
             Unclock();
         }
     }

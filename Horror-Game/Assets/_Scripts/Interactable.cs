@@ -1,14 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.Events;
 
 public class Interactable : MonoBehaviour
 {
     public UnityEvent<Clicker> onInteraction = new UnityEvent<Clicker>();
+    public UnityEvent<string> onHoverMessageChanged = new UnityEvent<string>();
 
     [Tooltip("Message to display when the object is hovered")]
-    public string hoverMessage;
+    [SerializeField] string hoverMessage;
 
     [Tooltip("Do not forget to add 'Outline' component if set to true")]
     public bool outlineOnHover = true;
@@ -44,5 +46,16 @@ public class Interactable : MonoBehaviour
     {
         if (outlineOnHover)
             outline.enabled = false;
+    }
+
+    public void SetHoverMessage(string msg)
+    {
+        hoverMessage = msg;
+        onHoverMessageChanged.Invoke(hoverMessage);
+    }
+
+    public string GetHoverMessage()
+    {
+        return hoverMessage;
     }
 }
