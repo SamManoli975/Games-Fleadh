@@ -35,7 +35,7 @@ public class Lockable : MonoBehaviour
         ItemStack selectedStack = inventory.GetItemStackAtSlot(selectedSlot);
         if (selectedStack != null && selectedStack.itemType == requiredKey)
         {
-            inventory.RemoveItem(requiredKey, selectedSlot);
+            inventory.RemoveItemFromSlot(requiredKey, selectedSlot);
             Unclock();
         }
     }

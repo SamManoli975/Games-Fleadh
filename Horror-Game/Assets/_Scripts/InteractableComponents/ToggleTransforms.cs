@@ -14,7 +14,7 @@ public class ToggleTransforms : ToggleOrientation
 
     protected override void SetMovingPartTransform()
     {
-        movingPart.transform.position = Vector3.Lerp(openPoint.position, closedPoint.position, curClosedProgress);
-        movingPart.transform.rotation = Quaternion.Lerp(openPoint.rotation, closedPoint.rotation, curClosedProgress);
+        movingPart.transform.position = Vector3.Lerp(openPoint.position, closedPoint.position, Ease(curClosedProgress));
+        movingPart.transform.rotation = Quaternion.Lerp(openPoint.rotation, closedPoint.rotation, Ease(curClosedProgress));
     }
 }

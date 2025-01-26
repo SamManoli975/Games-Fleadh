@@ -15,7 +15,7 @@ public class ToggleRotations : ToggleOrientation
     protected override void SetMovingPartTransform()
     {
         Vector3 curRotation = movingPart.transform.localRotation.eulerAngles;
-        curRotation.y = Mathf.Lerp(openRotation, closedRotation, curClosedProgress);
+        curRotation.y = Mathf.Lerp(openRotation, closedRotation, Ease(curClosedProgress));
         movingPart.transform.localRotation = Quaternion.Euler(curRotation);
     }
 }

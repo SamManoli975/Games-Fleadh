@@ -148,4 +148,16 @@ public class Inventory : MonoBehaviour
 
         onItemsUpdated.Invoke(items);
     }
+
+    public void RemoveItemFromSlot(ItemType itemType, int slot)
+    {
+        if (slot >= 0 && slot < items.Length
+        && items[slot] != null && items[slot].itemType == itemType)
+        {
+            RemoveOneItemFromSlot(slot);
+        }
+
+        onItemsUpdated.Invoke(items);
+    }
+
 }

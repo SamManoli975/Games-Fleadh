@@ -14,6 +14,7 @@ public class Drawer : MonoBehaviour
 
     [SerializeField] float animTime = 0.3f;
 
+    [Tooltip("Do not forget to add 'Outline' component if set to true")]
     [SerializeField] bool outlineOnHover = false;
     [SerializeField] Outline outline;
 

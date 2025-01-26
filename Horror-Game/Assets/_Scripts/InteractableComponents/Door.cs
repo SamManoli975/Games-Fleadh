@@ -12,8 +12,9 @@ public class Door : MonoBehaviour
     [SerializeField] float openRotation = 90;
     [SerializeField] float closedRotation = 0;
 
-    [SerializeField] float animTime = 0.3f;
+    [SerializeField] float animTime = 0.4f;
 
+    [Tooltip("Do not forget to add 'Outline' component if set to true")]
     [SerializeField] bool outlineOnHover = false;
     [SerializeField] Outline outline;
 

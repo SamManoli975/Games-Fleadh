@@ -16,6 +16,8 @@ public class Hand : MonoBehaviour
     [SerializeField] float minScrollAmount = 0.2f;
     [SerializeField] float maxStoredScroll = 3f;
 
+    [SerializeField] Transform itemsDropPoint;
+
     int selectedSlot = 0;
     Inventory inventory;
 
@@ -42,6 +44,30 @@ public class Hand : MonoBehaviour
             if (curHandItem != null)
                 curHandItem.Use();
         }
+
+        if (Input.GetKeyDown(KeyCode.Q) && curHandItemType != ItemType.none)
+        {
+            DropCurItem();
+        }
+    }
+
+    void DropCurItem()
+    {
+        // double check
+        if (inventory.GetItemStackAtSlot(selectedSlot) == null)
+        {
+            Debug.LogError("Trying to throw item which is not in the inventory");
+            return;
+        }
+
+        ItemData itemData = ItemsDataManager.instance.GetItemData(curHandItemType);
+        if (itemData.collectableItemPrefab != null)
+        {
+            GameObject collectableItem = Instantiate(itemData.collectableItemPrefab);
+            collectableItem.transform.position = itemsDropPoint.transform.position;
+        }
+
+        inventory.RemoveItemFromSlot(curHandItemType, selectedSlot);
     }
 
     void ChooseSlot()
@@ -111,10 +137,11 @@ public class Hand : MonoBehaviour
         if (curHandItemObj != null)
         {
             Destroy(curHandItemObj);
-            curHandItemObj = null;
-            curHandItem = null;
-            curHandItemType = ItemType.none;
         }
+
+        curHandItemObj = null;
+        curHandItem = null;
+        curHandItemType = ItemType.none;
 
         ItemStack itemStack = inventory.GetItemStackAtSlot(selectedSlot);
         if (itemStack != null)
@@ -137,7 +164,6 @@ public class Hand : MonoBehaviour
         if ((items[selectedSlot] == null && curHandItemType != ItemType.none) ||
             (items[selectedSlot] != null && items[selectedSlot].itemType != curHandItemType))
             ChangeHandItem();
-
     }
 
     public int GetSelectedSlot()

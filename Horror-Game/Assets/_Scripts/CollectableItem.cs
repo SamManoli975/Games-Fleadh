@@ -3,16 +3,25 @@ using System.Collections.Generic;
 using Unity.VisualScripting.ReorderableList;
 using UnityEngine;
 
-public class CollectableItem : Interactable
+public class CollectableItem : MonoBehaviour
 {
     [SerializeField] ItemType itemType;
 
-    protected override void Start()
-    {
-        base.Start();
+    [Tooltip("Do not forget to add 'Outline' component if set to true")]
+    [SerializeField] bool outlineOnHover = false;
+    [SerializeField] Outline outline;
 
-        SetHoverMessage("Pick up " + ItemsDataManager.instance.GetItemData(itemType).name);
-        onInteraction.AddListener(Collect);
+    Interactable interactable;
+
+    void Start()
+    {
+        interactable = gameObject.AddComponent<Interactable>();
+
+        interactable.outlineOnHover = outlineOnHover;
+        interactable.outline = outline;
+
+        interactable.SetHoverMessage("Pick up " + ItemsDataManager.instance.GetItemData(itemType).name);
+        interactable.onInteraction.AddListener(Collect);
     }
 
     void Collect(Clicker clicker)

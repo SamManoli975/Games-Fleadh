@@ -130,12 +130,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b862edec338944479fa1977b1629850, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  onInteraction:
-    m_PersistentCalls:
-      m_Calls: []
-  hoverMessage: 
-  outlineOnHover: 1
   itemType: 2
+  outlineOnHover: 1
+  outline: {fileID: 9130866396560601486}
 --- !u!114 &9130866396560601486
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -162,7 +159,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2724920519054411267}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 0.20869589, y: 0.06174276, z: 0.39992476}

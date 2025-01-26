@@ -101,6 +101,14 @@ public class ToggleOrientation : MonoBehaviour
             Close();
     }
 
+    protected float Ease(float t)
+    {
+        t = Mathf.Clamp01(t);
+
+        // Smoothstep easing: t^2 * (3 - 2 * t)
+        return t * t * (3f - 2f * t);
+    }
+
     protected virtual void SetMovingPartTransform()
     {
     }
