@@ -13,7 +13,6 @@ MonoBehaviour:
   m_Name: Global Volume Profile
   m_EditorClassIdentifier: 
   settings:
-  - {fileID: 6360780252128543359}
   - {fileID: 8377954748380919151}
   - {fileID: 2809827091243509977}
   - {fileID: 5587423259997259375}
@@ -70,7 +69,7 @@ MonoBehaviour:
     value: 1
   temperature:
     overrideState: 1
-    value: -1
+    value: 0
   tint:
     overrideState: 0
     value: 0
@@ -81,14 +80,14 @@ MonoBehaviour:
     overrideState: 0
     value: 0
   saturation:
-    overrideState: 0
-    value: 0
+    overrideState: 1
+    value: 10
   brightness:
     overrideState: 0
     value: 0
   postExposure:
     overrideState: 1
-    value: 0
+    value: -0.28
   contrast:
     overrideState: 1
     value: -4
@@ -123,11 +122,11 @@ MonoBehaviour:
     overrideState: 1
     value: {x: 0.84954274, y: 0.8662336, z: 1, w: -0.041599974}
   gamma:
-    overrideState: 0
-    value: {x: 1, y: 1, z: 1, w: 0}
+    overrideState: 1
+    value: {x: 0.9223617, y: 1, z: 0.9474633, w: 0.2048003}
   gain:
     overrideState: 1
-    value: {x: 1, y: 0.8064144, z: 0.5771738, w: 0.035200194}
+    value: {x: 1, y: 0.66484964, z: 0.5064121, w: 0.035200194}
   masterCurve:
     overrideState: 0
     value:
@@ -1370,43 +1369,6 @@ MonoBehaviour:
     value: {fileID: 0}
     defaultState: 1
   opacity:
-    overrideState: 0
-    value: 1
---- !u!114 &6360780252128543359
-MonoBehaviour:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b3f6f3f7c722b4544b97e3c75840aa33, type: 3}
-  m_Name: AutoExposure
-  m_EditorClassIdentifier: 
-  active: 0
-  enabled:
-    overrideState: 1
-    value: 1
-  filtering:
-    overrideState: 1
-    value: {x: 50, y: 99}
-  minLuminance:
-    overrideState: 1
-    value: -1
-  maxLuminance:
-    overrideState: 1
-    value: 0
-  keyValue:
-    overrideState: 0
-    value: 1
-  eyeAdaptation:
-    overrideState: 0
-    value: 0
-  speedUp:
-    overrideState: 0
-    value: 2
-  speedDown:
     overrideState: 0
     value: 1
 --- !u!114 &8377954748380919151
