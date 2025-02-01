@@ -87,7 +87,7 @@ MonoBehaviour:
     value: 0
   postExposure:
     overrideState: 1
-    value: -0.28
+    value: -0.72
   contrast:
     overrideState: 1
     value: -4
@@ -120,7 +120,7 @@ MonoBehaviour:
     value: 100
   lift:
     overrideState: 1
-    value: {x: 0.84954274, y: 0.8662336, z: 1, w: -0.041599974}
+    value: {x: 0.92915404, y: 0.9602196, z: 1, w: -0.041599974}
   gamma:
     overrideState: 1
     value: {x: 0.9223617, y: 1, z: 0.9474633, w: 0.2048003}
@@ -1409,8 +1409,8 @@ MonoBehaviour:
     overrideState: 0
     value: {r: 1, g: 1, b: 1, a: 1}
   fastMode:
-    overrideState: 0
-    value: 0
+    overrideState: 1
+    value: 1
   dirtTexture:
     overrideState: 0
     value: {fileID: 0}
