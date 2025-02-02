@@ -3,7 +3,9 @@ guid: 26e54e5a728a9234ab24fcf1460ed8a2
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - LandingAudioClip: {fileID: 8300000, guid: 2c2e1ba634f1c744d95fde35c7d2f14c, type: 3}
+  - CinemachineCameraTarget: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

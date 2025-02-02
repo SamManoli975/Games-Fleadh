@@ -19,16 +19,22 @@ public class Movement : MonoBehaviour
     public float maxStamina = 3f;
     private float currentStamina;
     public float staminaRegenRate = 1f;
-    public float staminaRegenDelay = 2f; // Delay before stamina starts regenerating
-    private float timeSinceLastSprint = 0f; // Time since the player last sprinted
+    public float staminaRegenDelay = 2f;
+    private float timeSinceLastSprint = 0f;
     public bool isSprinting = false;
     public UnityEngine.UI.Image staminaBar;
     public AudioSource exhaustionSound;
+
+    public AudioSource footstepSound; // New footstep AudioSource
+    public AudioClip[] footstepClips; // Array of footstep sounds
+    private bool isMoving = false;
+    private bool isPlayingFootsteps = false;
 
     private Vector3 moveDirection = Vector3.zero;
     private float rotationX = 0;
     private CharacterController characterController;
     private bool canMove = true;
+    private Animator animator;
 
     void Start()
     {
@@ -36,6 +42,18 @@ public class Movement : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         currentStamina = maxStamina;
+
+        if (exhaustionSound != null)
+        {
+            exhaustionSound.volume = 0f;
+        }
+        animator = GetComponent<Animator>();
+
+        // Debug check for footstepClips
+        if (footstepClips == null || footstepClips.Length == 0)
+        {
+            Debug.LogError("FootstepClips is not assigned or empty!");
+        }
     }
 
     void Update()
@@ -43,12 +61,17 @@ public class Movement : MonoBehaviour
         Vector3 forward = transform.TransformDirection(Vector3.forward);
         Vector3 right = transform.TransformDirection(Vector3.right);
 
+        isMoving = Input.GetAxis("Vertical") != 0 || Input.GetAxis("Horizontal") != 0;
         bool isRunning = Input.GetKey(KeyCode.LeftShift) && currentStamina > 0;
 
         float curSpeedX = canMove ? (isRunning ? runSpeed : walkSpeed) * Input.GetAxis("Vertical") : 0;
         float curSpeedY = canMove ? (isRunning ? runSpeed : walkSpeed) * Input.GetAxis("Horizontal") : 0;
         float movementDirectionY = moveDirection.y;
         moveDirection = (forward * curSpeedX) + (right * curSpeedY);
+
+        // Update Animator Parameters
+        animator.SetBool("isMoving", isMoving);
+        animator.SetBool("isRunning", isRunning);
 
         if (Input.GetButton("Jump") && canMove && characterController.isGrounded)
         {
@@ -73,8 +96,8 @@ public class Movement : MonoBehaviour
         else
         {
             characterController.height = defaultHeight;
-            walkSpeed = 6f;
-            runSpeed = 12f;
+            walkSpeed = 3f;
+            runSpeed = 6f;
         }
 
         characterController.Move(moveDirection * Time.deltaTime);
@@ -92,9 +115,8 @@ public class Movement : MonoBehaviour
         {
             isSprinting = true;
             currentStamina -= Time.deltaTime;
-            timeSinceLastSprint = 0f; // Reset the delay timer when sprinting
+            timeSinceLastSprint = 0f;
 
-            // Play sound while sprinting
             if (!exhaustionSound.isPlaying)
             {
                 exhaustionSound.Play();
@@ -105,25 +127,88 @@ public class Movement : MonoBehaviour
             isSprinting = false;
             timeSinceLastSprint += Time.deltaTime;
 
-            // Regenerate stamina only after the delay has passed
             if (timeSinceLastSprint >= staminaRegenDelay && currentStamina < maxStamina)
             {
                 currentStamina += staminaRegenRate * Time.deltaTime;
-            }
-
-            // Stop the sound when not sprinting
-            if (exhaustionSound.isPlaying)
-            {
-                exhaustionSound.Stop();
             }
         }
 
         currentStamina = Mathf.Clamp(currentStamina, 0, maxStamina);
 
+        // Exhaustion sound volume scaling
+        if (exhaustionSound != null)
+        {
+            if (currentStamina <= 0)
+            {
+                exhaustionSound.volume = 1.0f;
+                if (!exhaustionSound.isPlaying)
+                {
+                    exhaustionSound.Play();
+                }
+            }
+            else
+            {
+                exhaustionSound.volume = Mathf.Clamp(1.2f - (currentStamina / maxStamina), 0.1f, 1.0f);
+            }
+
+            if (currentStamina >= maxStamina)
+            {
+                exhaustionSound.Stop();
+            }
+        }
+
+        // Footstep sounds logic
+        if (isMoving && characterController.isGrounded)
+        {
+            if (!isPlayingFootsteps)
+            {
+                StartCoroutine(PlayFootsteps());
+            }
+        }
+        else
+        {
+            isPlayingFootsteps = false;
+            footstepSound.Stop(); // Immediately stop footstep sound if not moving
+        }
+
         // Update UI Stamina Bar
         if (staminaBar != null)
         {
             staminaBar.fillAmount = currentStamina / maxStamina;
+        }
+    }
+
+    IEnumerator PlayFootsteps()
+    {
+        isPlayingFootsteps = true;
+
+        while (isMoving && characterController.isGrounded)
+        {
+            if (footstepClips.Length > 0)
+            {
+                footstepSound.clip = footstepClips[Random.Range(0, footstepClips.Length)];
+                footstepSound.Play();
+            }
+
+            float stepInterval = isSprinting ? 0.3f : 0.5f; // Faster footsteps when running
+            yield return new WaitForSeconds(stepInterval);
+
+            // Check if movement stopped before continuing
+            if (!isMoving || !characterController.isGrounded)
+            {
+                break; // Immediately exit loop if movement stops
+            }
+        }
+
+        isPlayingFootsteps = false;
+    }
+    // Method to handle footstep sound when triggered by Animation Event
+    public void OnFootstep()
+    {
+        if (footstepClips.Length > 0 && characterController.isGrounded)
+        {
+            footstepSound.clip = footstepClips[Random.Range(0, footstepClips.Length)];
+            footstepSound.Play();
         }
     }
 }
