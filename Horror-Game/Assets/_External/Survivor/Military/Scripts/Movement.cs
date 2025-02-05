@@ -158,18 +158,18 @@ public class Movement : MonoBehaviour
         }
 
         // Footstep sounds logic
-        if (isMoving && characterController.isGrounded)
-        {
-            if (!isPlayingFootsteps)
-            {
-                StartCoroutine(PlayFootsteps());
-            }
-        }
-        else
-        {
-            isPlayingFootsteps = false;
-            footstepSound.Stop(); // Immediately stop footstep sound if not moving
-        }
+        // if (isMoving && characterController.isGrounded)
+        // {
+        //     if (!isPlayingFootsteps)
+        //     {
+        //         StartCoroutine(PlayFootsteps());
+        //     }
+        // }
+        // else
+        // {
+        //     isPlayingFootsteps = false;
+        //     footstepSound.Stop(); // Immediately stop footstep sound if not moving
+        // }
 
         // Update UI Stamina Bar
         if (staminaBar != null)
@@ -178,36 +178,38 @@ public class Movement : MonoBehaviour
         }
     }
 
-    IEnumerator PlayFootsteps()
-    {
-        isPlayingFootsteps = true;
+    // IEnumerator PlayFootsteps()
+    // {
+    //     isPlayingFootsteps = true;
 
-        while (isMoving && characterController.isGrounded)
-        {
-            if (footstepClips.Length > 0)
-            {
-                footstepSound.clip = footstepClips[Random.Range(0, footstepClips.Length)];
-                footstepSound.Play();
-            }
+    //     while (isMoving && characterController.isGrounded)
+    //     {
+    //         if (footstepClips.Length > 0)
+    //         {
+    //             footstepSound.clip = footstepClips[Random.Range(0, footstepClips.Length)];
+    //             footstepSound.Play();
+    //         }
 
-            float stepInterval = isSprinting ? 0.3f : 0.5f; // Faster footsteps when running
-            yield return new WaitForSeconds(stepInterval);
+    //         float stepInterval = isSprinting ? 0.3f : 0.5f; // Faster footsteps when running
+    //         yield return new WaitForSeconds(stepInterval);
 
-            // Check if movement stopped before continuing
-            if (!isMoving || !characterController.isGrounded)
-            {
-                break; // Immediately exit loop if movement stops
-            }
-        }
+    //         // Check if movement stopped before continuing
+    //         if (!isMoving || !characterController.isGrounded)
+    //         {
+    //             break; // Immediately exit loop if movement stops
+    //         }
+    //     }
 
-        isPlayingFootsteps = false;
-    }
+    //     isPlayingFootsteps = false;
+    // }
+
     // Method to handle footstep sound when triggered by Animation Event
     public void OnFootstep()
     {
         if (footstepClips.Length > 0 && characterController.isGrounded)
         {
             footstepSound.clip = footstepClips[Random.Range(0, footstepClips.Length)];
+            footstepSound.pitch = 0.8f + 0.1f * Random.Range(-1f, 1f);
             footstepSound.Play();
         }
     }

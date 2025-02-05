@@ -332,13 +332,13 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 2c2e1ba634f1c744d95fde35c7d2f14c, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.5
+  m_Volume: 1
   m_Pitch: 1
   Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 238
+  Priority: 256
   DopplerLevel: 1
   MinDistance: 1
   MaxDistance: 500
@@ -1208,8 +1208,8 @@ MonoBehaviour:
   playerCamera: {fileID: 1480095101}
   walkSpeed: 3
   runSpeed: 6
-  jumpPower: 0
-  gravity: 10
+  jumpPower: 10
+  gravity: 30
   lookSpeed: 2
   lookXLimit: 45
   defaultHeight: 2
@@ -1223,7 +1223,11 @@ MonoBehaviour:
   exhaustionSound: {fileID: 345698176}
   footstepSound: {fileID: 744154088}
   footstepClips:
-  - {fileID: 8300000, guid: 2c2e1ba634f1c744d95fde35c7d2f14c, type: 3}
+  - {fileID: 8300000, guid: e56344c3782b45e4f922c2a90e953891, type: 3}
+  - {fileID: 8300000, guid: 4b05f3fab6bd0aa4fb3005b24b041d6e, type: 3}
+  - {fileID: 8300000, guid: 7a5a8cc9ab6f62c419a5f554b35ed4c2, type: 3}
+  - {fileID: 8300000, guid: 4b74fd9086227e1449f8188af452bdd3, type: 3}
+  - {fileID: 8300000, guid: b0e8690d124083c45922f5d478dc141f, type: 3}
 --- !u!143 &543450652602185616
 CharacterController:
   m_ObjectHideFlags: 0
