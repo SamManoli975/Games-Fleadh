@@ -29,8 +29,6 @@ public class Movement : MonoBehaviour
     public UnityEngine.UI.Image staminaBar;
     public AudioSource exhaustionSound;
 
-    public AudioSource footstepSound; // New footstep AudioSource
-    public AudioClip[] footstepClips; // Array of footstep sounds
     private bool isMoving = false;
     private bool isPlayingFootsteps = false;
 
@@ -40,25 +38,23 @@ public class Movement : MonoBehaviour
     private bool canMove = true;
     private Animator animator;
 
+    [SerializeField] private FootstepPlayer footstepPlayer;
+    [SerializeField] private AudioSource footstepAudioSource;
+    [SerializeField] private AudioSource footstepSweetenerAudioSource;
+
     void Start()
     {
         characterController = GetComponent<CharacterController>();
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         currentStamina = maxStamina;
-        
+
 
         if (exhaustionSound != null)
         {
             exhaustionSound.volume = 0f;
         }
         animator = GetComponent<Animator>();
-
-        // Debug check for footstepClips
-        if (footstepClips == null || footstepClips.Length == 0)
-        {
-            Debug.LogError("FootstepClips is not assigned or empty!");
-        }
     }
 
     void Update()
@@ -159,20 +155,6 @@ public class Movement : MonoBehaviour
             }
         }
 
-        // Footstep sounds logic
-        // if (isMoving && characterController.isGrounded)
-        // {
-        //     if (!isPlayingFootsteps)
-        //     {
-        //         StartCoroutine(PlayFootsteps());
-        //     }
-        // }
-        // else
-        // {
-        //     isPlayingFootsteps = false;
-        //     footstepSound.Stop(); // Immediately stop footstep sound if not moving
-        // }
-
         // Update UI Stamina Bar
         if (staminaBar != null)
         {
@@ -180,39 +162,12 @@ public class Movement : MonoBehaviour
         }
     }
 
-    // IEnumerator PlayFootsteps()
-    // {
-    //     isPlayingFootsteps = true;
-
-    //     while (isMoving && characterController.isGrounded)
-    //     {
-    //         if (footstepClips.Length > 0)
-    //         {
-    //             footstepSound.clip = footstepClips[Random.Range(0, footstepClips.Length)];
-    //             footstepSound.Play();
-    //         }
-
-    //         float stepInterval = isSprinting ? 0.3f : 0.5f; // Faster footsteps when running
-    //         yield return new WaitForSeconds(stepInterval);
-
-    //         // Check if movement stopped before continuing
-    //         if (!isMoving || !characterController.isGrounded)
-    //         {
-    //             break; // Immediately exit loop if movement stops
-    //         }
-    //     }
-
-    //     isPlayingFootsteps = false;
-    // }
-
     // Method to handle footstep sound when triggered by Animation Event
     public void OnFootstep()
     {
-        if (footstepClips.Length > 0 && characterController.isGrounded)
+        if (footstepAudioSource != null && characterController.isGrounded && isMoving)
         {
-            footstepSound.clip = footstepClips[Random.Range(0, footstepClips.Length)];
-            footstepSound.pitch = 0.8f + 0.1f * Random.Range(-1f, 1f);
-            footstepSound.Play();
+            footstepPlayer.PlayFootstep(footstepAudioSource, footstepSweetenerAudioSource);
         }
     }
 }
