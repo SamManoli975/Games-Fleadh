@@ -5,6 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(CharacterController))]
 public class Movement : MonoBehaviour
 {
+    public bool allowSprint = false;
     public Camera playerCamera;
     public float walkSpeed = 3f;
     public float runSpeed = 6f;
@@ -62,7 +63,7 @@ public class Movement : MonoBehaviour
         Vector3 right = transform.TransformDirection(Vector3.right);
 
         isMoving = Input.GetAxis("Vertical") != 0 || Input.GetAxis("Horizontal") != 0;
-        bool isRunning = Input.GetKey(KeyCode.LeftShift) && currentStamina > 0;
+        bool isRunning = Input.GetKey(KeyCode.LeftShift) && currentStamina > 0 && allowSprint;
 
         float curSpeedX = canMove ? (isRunning ? runSpeed : walkSpeed) * Input.GetAxis("Vertical") : 0;
         float curSpeedY = canMove ? (isRunning ? runSpeed : walkSpeed) * Input.GetAxis("Horizontal") : 0;
