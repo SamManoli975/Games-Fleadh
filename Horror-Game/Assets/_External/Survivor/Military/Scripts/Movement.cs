@@ -5,9 +5,12 @@ using UnityEngine;
 [RequireComponent(typeof(CharacterController))]
 public class Movement : MonoBehaviour
 {
+    public enum CharacterType { Survivor, Killer }
+    public CharacterType characterType;
     public bool allowSprint = false;
     public Camera playerCamera;
-    public float walkSpeed = 3f;
+    public float survivorSpeed = 3f;
+    public float killerSpeed = 4.5f;
     public float runSpeed = 6f;
     public float jumpPower = 3f;
     public float gravity = 10f;
@@ -43,6 +46,7 @@ public class Movement : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         currentStamina = maxStamina;
+        
 
         if (exhaustionSound != null)
         {
@@ -59,14 +63,14 @@ public class Movement : MonoBehaviour
 
     void Update()
     {
+        float baseSpeed = (characterType == CharacterType.Survivor) ? survivorSpeed : killerSpeed;
         Vector3 forward = transform.TransformDirection(Vector3.forward);
         Vector3 right = transform.TransformDirection(Vector3.right);
-
         isMoving = Input.GetAxis("Vertical") != 0 || Input.GetAxis("Horizontal") != 0;
         bool isRunning = Input.GetKey(KeyCode.LeftShift) && currentStamina > 0 && allowSprint;
 
-        float curSpeedX = canMove ? (isRunning ? runSpeed : walkSpeed) * Input.GetAxis("Vertical") : 0;
-        float curSpeedY = canMove ? (isRunning ? runSpeed : walkSpeed) * Input.GetAxis("Horizontal") : 0;
+        float curSpeedX = canMove ? (isRunning ? runSpeed : baseSpeed) * Input.GetAxis("Vertical") : 0;
+        float curSpeedY = canMove ? (isRunning ? runSpeed : baseSpeed) * Input.GetAxis("Horizontal") : 0;
         float movementDirectionY = moveDirection.y;
         moveDirection = (forward * curSpeedX) + (right * curSpeedY);
 
@@ -88,17 +92,14 @@ public class Movement : MonoBehaviour
             moveDirection.y -= gravity * Time.deltaTime;
         }
 
-        if (Input.GetKey(KeyCode.R) && canMove)
+        if (Input.GetKey(KeyCode.C) && canMove)
         {
             characterController.height = crouchHeight;
-            walkSpeed = crouchSpeed;
-            runSpeed = crouchSpeed;
+            baseSpeed = crouchSpeed;
         }
         else
         {
             characterController.height = defaultHeight;
-            walkSpeed = 3f;
-            runSpeed = 6f;
         }
 
         characterController.Move(moveDirection * Time.deltaTime);

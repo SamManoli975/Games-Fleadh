@@ -1205,8 +1205,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a370266be9f63694e974b5a4147618d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  characterType: 0
+  allowSprint: 1
   playerCamera: {fileID: 1480095101}
-  walkSpeed: 3
+  survivorSpeed: 3
+  killerSpeed: 4.5
   runSpeed: 6
   jumpPower: 10
   gravity: 30
