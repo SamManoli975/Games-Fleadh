@@ -30,7 +30,6 @@ public class Movement : MonoBehaviour
     public AudioSource exhaustionSound;
 
     private bool isMoving = false;
-    private bool isPlayingFootsteps = false;
 
     private Vector3 moveDirection = Vector3.zero;
     private float rotationX = 0;
@@ -49,11 +48,11 @@ public class Movement : MonoBehaviour
         Cursor.visible = false;
         currentStamina = maxStamina;
 
-
         if (exhaustionSound != null)
         {
             exhaustionSound.volume = 0f;
         }
+
         animator = GetComponent<Animator>();
     }
 
@@ -63,7 +62,7 @@ public class Movement : MonoBehaviour
         Vector3 forward = transform.TransformDirection(Vector3.forward);
         Vector3 right = transform.TransformDirection(Vector3.right);
         isMoving = Input.GetAxis("Vertical") != 0 || Input.GetAxis("Horizontal") != 0;
-        bool isRunning = Input.GetKey(KeyCode.LeftShift) && currentStamina > 0 && allowSprint;
+        bool isRunning = allowSprint && Input.GetKey(KeyCode.LeftShift) && currentStamina > 0;
 
         float curSpeedX = canMove ? (isRunning ? runSpeed : baseSpeed) * Input.GetAxis("Vertical") : 0;
         float curSpeedY = canMove ? (isRunning ? runSpeed : baseSpeed) * Input.GetAxis("Horizontal") : 0;
