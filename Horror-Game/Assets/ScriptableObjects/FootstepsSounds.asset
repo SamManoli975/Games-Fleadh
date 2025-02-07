@@ -17,12 +17,43 @@ MonoBehaviour:
     footstepSoundsVariations:
     - {fileID: 8300000, guid: e56344c3782b45e4f922c2a90e953891, type: 3}
     - {fileID: 8300000, guid: 4b05f3fab6bd0aa4fb3005b24b041d6e, type: 3}
+    - {fileID: 8300000, guid: 7a5a8cc9ab6f62c419a5f554b35ed4c2, type: 3}
+    - {fileID: 8300000, guid: 4b74fd9086227e1449f8188af452bdd3, type: 3}
+    - {fileID: 8300000, guid: b0e8690d124083c45922f5d478dc141f, type: 3}
     sweeteners: []
     sweetenersProbability: 0
+  - surfaceType: 1
+    footstepSoundsVariations:
+    - {fileID: 8300000, guid: 287e2cfae5e3c4741bd97351f80a8e90, type: 3}
+    - {fileID: 8300000, guid: 84d6d244e924132418db7f9587cc4537, type: 3}
+    sweeteners:
+    - {fileID: 8300000, guid: 445ee04c19fad704890c304c3fd9cac4, type: 3}
+    sweetenersProbability: 0.05
+  - surfaceType: 2
+    footstepSoundsVariations:
+    - {fileID: 8300000, guid: 69556b39199a43945b1ffee0c1c1e510, type: 3}
+    sweeteners:
+    - {fileID: 8300000, guid: a59df613ea75087478e4457fcb1f8b9d, type: 3}
+    - {fileID: 8300000, guid: a1e8182318bcb91418b98e2be0b4aca4, type: 3}
+    sweetenersProbability: 0.2
+  - surfaceType: 3
+    footstepSoundsVariations:
+    - {fileID: 8300000, guid: a0ed79311b2b11245bb87dcb386901d8, type: 3}
+    - {fileID: 8300000, guid: 5e1317e98d717b54e9ddda187ed897be, type: 3}
+    sweeteners:
+    - {fileID: 8300000, guid: 08a9a28fceb68ff49860f4995c5563c6, type: 3}
+    - {fileID: 8300000, guid: aaae7fe55445dea4bbe206c783ed1ad7, type: 3}
+    sweetenersProbability: 0.08
+  - surfaceType: 4
+    footstepSoundsVariations:
+    - {fileID: 8300000, guid: 8383765a1cfd0844bb9fbf9e78a3d52e, type: 3}
+    sweeteners:
+    - {fileID: 8300000, guid: 022486609d9f9074c9b86d9aa15bf31f, type: 3}
+    sweetenersProbability: 0.08
   - surfaceType: 5
     footstepSoundsVariations:
-    - {fileID: 8300000, guid: e56344c3782b45e4f922c2a90e953891, type: 3}
-    - {fileID: 8300000, guid: 4b05f3fab6bd0aa4fb3005b24b041d6e, type: 3}
+    - {fileID: 8300000, guid: 287e2cfae5e3c4741bd97351f80a8e90, type: 3}
+    - {fileID: 8300000, guid: 445ee04c19fad704890c304c3fd9cac4, type: 3}
     sweeteners:
-    - {fileID: 8300000, guid: 18bddfe234e3d47479a19d75d0b0203c, type: 3}
-    sweetenersProbability: 0.2
+    - {fileID: 8300000, guid: 6cf132fc6490fd44ba7aacf4b81af41c, type: 3}
+    sweetenersProbability: 0.05
