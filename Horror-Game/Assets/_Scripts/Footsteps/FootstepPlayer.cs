@@ -8,13 +8,17 @@ public class FootstepPlayer : MonoBehaviour
     [SerializeField] private Transform raycastOrigin;
     [SerializeField] private LayerMask layerMask;
 
+    [SerializeField] private AudioSource footstepAudioSource;
+    [SerializeField] private AudioSource footstepSweetenerAudioSource;
+
     [SerializeField] private float mainSourceBasePitch = 1f;
     [SerializeField] private float mainSourcePitchVariation = 0.1f;
 
     [SerializeField] private float sweetenerSourceBasePitch = 1f;
     [SerializeField] private float sweetenerSourcePitchVariation = 0.1f;
 
-    public void PlayFootstep(AudioSource mainAudioSource, AudioSource sweetenerAudioSource)
+
+    public void PlayFootstep()
     {
         SurfaceType surfaceType = SurfaceType.standard;
 
@@ -38,16 +42,16 @@ public class FootstepPlayer : MonoBehaviour
 
         if (surfaceFootstepAudio.mainAudioClip != null)
         {
-            mainAudioSource.clip = surfaceFootstepAudio.mainAudioClip;
-            mainAudioSource.pitch = mainSourceBasePitch + mainSourcePitchVariation * Random.Range(-1f, 1f);
-            mainAudioSource.Play();
+            footstepAudioSource.clip = surfaceFootstepAudio.mainAudioClip;
+            footstepAudioSource.pitch = mainSourceBasePitch + mainSourcePitchVariation * Random.Range(-1f, 1f);
+            footstepAudioSource.Play();
         }
 
-        if (sweetenerAudioSource != null && surfaceFootstepAudio.sweetenerAudioClip != null)
+        if (footstepSweetenerAudioSource != null && surfaceFootstepAudio.sweetenerAudioClip != null)
         {
-            sweetenerAudioSource.clip = surfaceFootstepAudio.sweetenerAudioClip;
-            sweetenerAudioSource.pitch = sweetenerSourceBasePitch + sweetenerSourcePitchVariation * Random.Range(-1f, 1f);
-            sweetenerAudioSource.Play();
+            footstepSweetenerAudioSource.clip = surfaceFootstepAudio.sweetenerAudioClip;
+            footstepSweetenerAudioSource.pitch = sweetenerSourceBasePitch + sweetenerSourcePitchVariation * Random.Range(-1f, 1f);
+            footstepSweetenerAudioSource.Play();
         }
     }
 }

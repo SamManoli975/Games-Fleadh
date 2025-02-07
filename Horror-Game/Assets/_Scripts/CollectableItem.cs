@@ -28,10 +28,7 @@ public class CollectableItem : MonoBehaviour
     {
         Inventory inventory = clicker.GetComponent<Inventory>();
         if (inventory == null)
-        {
-            Debug.LogWarning("Object without inventory is trying to collect an item");
             return;
-        }
 
         if (inventory.CanAddItem(itemType))
         {

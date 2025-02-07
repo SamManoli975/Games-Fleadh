@@ -38,8 +38,6 @@ public class Movement : MonoBehaviour
     private Animator animator;
 
     [SerializeField] private FootstepPlayer footstepPlayer;
-    [SerializeField] private AudioSource footstepAudioSource;
-    [SerializeField] private AudioSource footstepSweetenerAudioSource;
 
     void Start()
     {
@@ -164,9 +162,9 @@ public class Movement : MonoBehaviour
     // Method to handle footstep sound when triggered by Animation Event
     public void OnFootstep()
     {
-        if (footstepAudioSource != null && characterController.isGrounded && isMoving)
+        if (characterController.isGrounded && isMoving)
         {
-            footstepPlayer.PlayFootstep(footstepAudioSource, footstepSweetenerAudioSource);
+            footstepPlayer.PlayFootstep();
         }
     }
 }

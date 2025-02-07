@@ -32,7 +32,7 @@ public class UI_Inventory : MonoBehaviour
 
     void UpdateSelectedItemName()
     {
-        if (slots[curSelectedSlot].curItemData != null)
+        if (curSelectedSlot > 0 && curSelectedSlot < slots.Count && slots[curSelectedSlot].curItemData != null)
         {
             curItemNameTextfield.text = slots[curSelectedSlot].curItemData.name;
             curItemNameTextfield.gameObject.SetActive(true);
