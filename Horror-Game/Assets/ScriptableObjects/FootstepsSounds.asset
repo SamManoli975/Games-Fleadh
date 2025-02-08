@@ -24,8 +24,9 @@ MonoBehaviour:
     sweetenersProbability: 0
   - surfaceType: 1
     footstepSoundsVariations:
-    - {fileID: 8300000, guid: 287e2cfae5e3c4741bd97351f80a8e90, type: 3}
-    - {fileID: 8300000, guid: 84d6d244e924132418db7f9587cc4537, type: 3}
+    - {fileID: 8300000, guid: 81fe9379f2acf624a874af75a8df3f92, type: 3}
+    - {fileID: 8300000, guid: 741e24b30d4ec4142b58b0f210ac9895, type: 3}
+    - {fileID: 8300000, guid: 47c2324ed439b0d45b1a57339e80d2c9, type: 3}
     sweeteners:
     - {fileID: 8300000, guid: 445ee04c19fad704890c304c3fd9cac4, type: 3}
     sweetenersProbability: 0.05
@@ -38,8 +39,10 @@ MonoBehaviour:
     sweetenersProbability: 0.2
   - surfaceType: 3
     footstepSoundsVariations:
+    - {fileID: 8300000, guid: d115dacf1257a2445965b282b3c8c044, type: 3}
     - {fileID: 8300000, guid: 080ad76c7548c0e46b8af7eb0d9d67dd, type: 3}
     - {fileID: 8300000, guid: 578556c57bea9924499c71250c83a142, type: 3}
+    - {fileID: 8300000, guid: 7b690c4dc3519b14f9250e862512407d, type: 3}
     sweeteners:
     - {fileID: 8300000, guid: 08a9a28fceb68ff49860f4995c5563c6, type: 3}
     - {fileID: 8300000, guid: aaae7fe55445dea4bbe206c783ed1ad7, type: 3}
@@ -55,8 +58,9 @@ MonoBehaviour:
     sweetenersProbability: 0.08
   - surfaceType: 5
     footstepSoundsVariations:
-    - {fileID: 8300000, guid: 287e2cfae5e3c4741bd97351f80a8e90, type: 3}
-    - {fileID: 8300000, guid: 445ee04c19fad704890c304c3fd9cac4, type: 3}
+    - {fileID: 8300000, guid: 81fe9379f2acf624a874af75a8df3f92, type: 3}
+    - {fileID: 8300000, guid: 741e24b30d4ec4142b58b0f210ac9895, type: 3}
+    - {fileID: 8300000, guid: 47c2324ed439b0d45b1a57339e80d2c9, type: 3}
     sweeteners:
     - {fileID: 8300000, guid: 6cf132fc6490fd44ba7aacf4b81af41c, type: 3}
     sweetenersProbability: 0.05
