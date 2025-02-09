@@ -2268,6 +2268,7 @@ GameObject:
   - component: {fileID: 4009437216201566980}
   - component: {fileID: 4477893939616715211}
   - component: {fileID: 332958740}
+  - component: {fileID: 2019931672}
   m_Layer: 9
   m_Name: Monster
   m_TagString: Untagged
@@ -2314,6 +2315,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e56262f2a3ba9f04fa4b6cca471c1a1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  uI_HoveredMessage: {fileID: 0}
 --- !u!95 &2060371087918107612
 Animator:
   serializedVersion: 5
@@ -2324,7 +2326,7 @@ Animator:
   m_GameObject: {fileID: 4700655125903280924}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 2eb6dad61b9a7c14ea919f20f000c136, type: 3}
-  m_Controller: {fileID: 9100000, guid: f298a949aae55d247a5a5761d2239c79, type: 2}
+  m_Controller: {fileID: 9100000, guid: 31fbf82990b905b46ad7a1497f5e4fae, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 1
   m_ApplyRootMotion: 1
@@ -2428,6 +2430,23 @@ MonoBehaviour:
   mainSourcePitchVariation: 0.1
   sweetenerSourceBasePitch: 1
   sweetenerSourcePitchVariation: 0.1
+--- !u!114 &2019931672
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4700655125903280924}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 995945b3df40e704fb539c6bf042e189, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hitTime: 1
+  hitRange: 3
+  hitLayer:
+    serializedVersion: 2
+    m_Bits: 499
 --- !u!1 &4716785024068236245
 GameObject:
   m_ObjectHideFlags: 0
