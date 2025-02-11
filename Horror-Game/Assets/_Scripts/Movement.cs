@@ -1,14 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 
 [RequireComponent(typeof(CharacterController))]
-public class Movement : MonoBehaviour
+public class Movement : NetworkBehaviour
 {
     public enum CharacterType { Survivor, Killer }
     public CharacterType characterType;
     public bool allowSprint = false;
-    public Camera playerCamera;
+    // usually camera is inside this transform
+    public Transform orientationTransform;
     public float survivorSpeed = 3f;
     public float killerSpeed = 4.5f;
     public float runSpeed = 6f;
@@ -42,8 +44,6 @@ public class Movement : MonoBehaviour
     void Start()
     {
         characterController = GetComponent<CharacterController>();
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
         currentStamina = maxStamina;
 
         if (exhaustionSound != null)
@@ -52,10 +52,19 @@ public class Movement : MonoBehaviour
         }
 
         animator = GetComponent<Animator>();
+
+        // if (IsOwner)
+        // {
+        //     Cursor.lockState = CursorLockMode.Locked;
+        //     Cursor.visible = false;
+        // }
     }
 
     void Update()
     {
+        if (!IsOwner)
+            return;
+
         float baseSpeed = (characterType == CharacterType.Survivor) ? survivorSpeed : killerSpeed;
         Vector3 forward = transform.TransformDirection(Vector3.forward);
         Vector3 right = transform.TransformDirection(Vector3.right);
@@ -101,7 +110,7 @@ public class Movement : MonoBehaviour
         {
             rotationX += -Input.GetAxis("Mouse Y") * lookSpeed;
             rotationX = Mathf.Clamp(rotationX, -lookXLimit, lookXLimit);
-            playerCamera.transform.localRotation = Quaternion.Euler(rotationX, 0, 0);
+            orientationTransform.transform.localRotation = Quaternion.Euler(rotationX, 0, 0);
             transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Mouse X") * lookSpeed, 0);
         }
 

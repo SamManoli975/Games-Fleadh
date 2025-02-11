@@ -7,8 +7,8 @@ using UnityEngine;
 [RequireComponent(typeof(Hand))]
 public class Survivor : MonoBehaviour
 {
-    [SerializeField] UI_Inventory uI_Inventory;
-    [SerializeField] UI_HoveredMessage uI_HoveredMessage;
+    UI_Inventory uI_Inventory;
+    UI_HoveredMessage uI_HoveredMessage;
 
     Clicker clicker;
     Inventory inventory;
@@ -19,6 +19,9 @@ public class Survivor : MonoBehaviour
         clicker = GetComponent<Clicker>();
         inventory = GetComponent<Inventory>();
         hand = GetComponent<Hand>();
+
+        uI_Inventory = UI_Manager.instance.GetInventoryUI();
+        uI_HoveredMessage = UI_Manager.instance.GetHoveredMessageUI();
 
         clicker.onHoveredChange.AddListener(uI_HoveredMessage.HandleHoveredChange);
         inventory.onItemsUpdated.AddListener(uI_Inventory.UpdateSlots);
