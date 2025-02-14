@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.Netcode;
 using UnityEngine;
 
 public class UI_Inventory : MonoBehaviour
@@ -8,9 +9,11 @@ public class UI_Inventory : MonoBehaviour
     [SerializeField] List<UI_InventorySlot> slots;
     [SerializeField] TextMeshProUGUI curItemNameTextfield;
 
+    public Inventory inventory;
+
     int curSelectedSlot = -1;
 
-    void Awake()
+    void Start()
     {
         InitSlots();
         curItemNameTextfield.gameObject.SetActive(false);
@@ -19,20 +22,21 @@ public class UI_Inventory : MonoBehaviour
     void InitSlots()
     {
         for (int i = 0; i < slots.Count; i++)
-            slots[i].UpdateSlot(null);
+            slots[i].UpdateSlot(new ItemStack(ItemType.none, 0));
     }
 
-    public void UpdateSlots(ItemStack[] items)
+    public void UpdateSlots()
     {
+        NetworkList<ItemStack> items = inventory.GetItems();
         for (int i = 0; i < slots.Count; i++)
-            slots[i].UpdateSlot(i < items.Length ? items[i] : null);
+            slots[i].UpdateSlot(i < items.Count ? items[i] : new ItemStack(ItemType.none, 0));
 
         UpdateSelectedItemName();
     }
 
     void UpdateSelectedItemName()
     {
-        if (curSelectedSlot > 0 && curSelectedSlot < slots.Count && slots[curSelectedSlot].curItemData != null)
+        if (curSelectedSlot >= 0 && curSelectedSlot < slots.Count && slots[curSelectedSlot].curItemData != null)
         {
             curItemNameTextfield.text = slots[curSelectedSlot].curItemData.name;
             curItemNameTextfield.gameObject.SetActive(true);

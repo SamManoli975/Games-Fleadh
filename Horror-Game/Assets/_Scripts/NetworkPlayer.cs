@@ -6,19 +6,23 @@ using UnityEngine;
 public class NetworkPlayer : NetworkBehaviour
 {
     [SerializeField] GameObject survivorPrefab;
+    [SerializeField] GameObject monsterPrefab;
 
     public override void OnNetworkSpawn()
     {
+        base.OnNetworkSpawn();
+
         if (IsServer)
             SpawnPlayerObj();
     }
 
     void SpawnPlayerObj()
     {
-        GameObject playerObj = Instantiate(survivorPrefab);
+        GameObject prefabToSpawn = OwnerClientId == 0 ? survivorPrefab : monsterPrefab;
+        Transform spawnpoint = OwnerClientId == 0 ? SpawnPoints.instance.survivorSpawnPoint : SpawnPoints.instance.monsterSpawnPoint;
+        GameObject playerObj = Instantiate(prefabToSpawn, spawnpoint.position, spawnpoint.rotation);
 
         NetworkObject networkObject = playerObj.GetComponent<NetworkObject>();
-        networkObject.Spawn(true);
-        //networkObject.SpawnWithOwnership(OwnerClientId, true);
+        networkObject.SpawnWithOwnership(OwnerClientId, true);
     }
 }

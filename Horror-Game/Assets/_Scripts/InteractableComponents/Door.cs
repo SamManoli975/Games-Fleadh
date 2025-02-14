@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
+using Unity.Netcode.Components;
 using UnityEngine;
 
 // Script made for convenience. It automatically adds and links: Interactable, Lockable, ToggleRotations
-public class Door : MonoBehaviour
+public class Door : NetworkBehaviour, IManagedInteractable
 {
     public bool isClosed = true;
     public bool isLocked = false;
@@ -17,6 +19,7 @@ public class Door : MonoBehaviour
     [Tooltip("Do not forget to add 'Outline' component if set to true")]
     [SerializeField] bool outlineOnHover = false;
     [SerializeField] Outline outline;
+    [SerializeField] InteractableMaster interactableMaster;
 
     [SerializeField] bool doDisableOpenCollider = true;
     [SerializeField] bool doDisableCollidersOnMovement = false;
@@ -26,31 +29,19 @@ public class Door : MonoBehaviour
     Lockable lockable;
     ToggleRotations toggleRotations;
 
-    void Start()
+    void Awake()
     {
-        interactable = gameObject.AddComponent<Interactable>();
-        lockable = gameObject.AddComponent<Lockable>();
-        toggleRotations = gameObject.AddComponent<ToggleRotations>();
+        interactable = gameObject.GetComponent<Interactable>();
+        lockable = gameObject.GetComponent<Lockable>();
+        toggleRotations = gameObject.GetComponent<ToggleRotations>();
+    }
+
+    public override void OnNetworkSpawn()
+    {
+        base.OnNetworkSpawn();
 
         interactable.onInteraction.AddListener(lockable.HandleInteraction);
         lockable.onNotLockedInteraction.AddListener(toggleRotations.Toggle);
-
-        interactable.outlineOnHover = outlineOnHover;
-        interactable.outline = outline;
-
-        lockable.isLocked = isLocked;
-        lockable.requiredKey = requiredKey;
-
-        toggleRotations.isClosed = isClosed;
-        toggleRotations.openRotation = openRotation;
-        toggleRotations.closedRotation = closedRotation;
-
-        toggleRotations.animTime = animTime;
-        toggleRotations.doDisableOpenCollider = doDisableOpenCollider;
-        toggleRotations.doDisableCollidersOnMovement = doDisableCollidersOnMovement;
-        toggleRotations.disableColliderFromProgress = disableColliderFromProgress;
-
-        toggleRotations.movingPart = gameObject;
 
         if (isLocked)
         {
@@ -71,6 +62,68 @@ public class Door : MonoBehaviour
         }
     }
 
+    T AddComponentIfDoesNotHave<T>() where T : UnityEngine.Component
+    {
+        T c = gameObject.GetComponent<T>();
+        if (c == null)
+        {
+            c = gameObject.AddComponent<T>();
+        }
+        return c;
+    }
+
+    public Component[] SetupComponents()
+    {
+        NetworkTransform networkTransform = AddComponentIfDoesNotHave<NetworkTransform>();
+        interactable = AddComponentIfDoesNotHave<Interactable>();
+        lockable = AddComponentIfDoesNotHave<Lockable>();
+        toggleRotations = AddComponentIfDoesNotHave<ToggleRotations>();
+
+        interactable.outlineOnHover = outlineOnHover;
+        interactable.outline = outline;
+        interactable.interactableMaster = interactableMaster;
+
+        lockable.requiredKey = requiredKey;
+
+        lockable.initialIsLocked = isLocked;
+        toggleRotations.initialIsClosed = isClosed;
+
+        toggleRotations.openRotation = openRotation;
+        toggleRotations.closedRotation = closedRotation;
+
+        toggleRotations.animTime = animTime;
+        toggleRotations.doDisableOpenCollider = doDisableOpenCollider;
+        toggleRotations.doDisableCollidersOnMovement = doDisableCollidersOnMovement;
+        toggleRotations.disableColliderFromProgress = disableColliderFromProgress;
+
+        toggleRotations.movingPart = gameObject;
+
+        networkTransform.InLocalSpace = true;
+
+        networkTransform.SyncPositionX = false;
+        networkTransform.SyncPositionY = false;
+        networkTransform.SyncPositionZ = false;
+
+        networkTransform.SyncRotAngleX = false;
+        networkTransform.SyncRotAngleY = true;
+        networkTransform.SyncRotAngleZ = false;
+
+        networkTransform.SyncScaleX = false;
+        networkTransform.SyncScaleY = false;
+        networkTransform.SyncScaleZ = false;
+
+        return new Component[] { this, networkTransform, interactable, lockable, toggleRotations };
+    }
+
+    public SetupInteractableMasterRes SetupInteractableMaster(InteractableMaster interactableMaster)
+    {
+        this.interactableMaster = interactableMaster;
+
+        Component[] modifiedComponents = SetupComponents();
+        interactable = gameObject.GetComponent<Interactable>();
+        return new SetupInteractableMasterRes(modifiedComponents, new List<Interactable> { interactable });
+    }
+
     void HandleUnclocked()
     {
         lockable.onUnlocked.RemoveListener(HandleUnclocked);
@@ -81,7 +134,10 @@ public class Door : MonoBehaviour
 
     void SetOpenCloseMessage(Clicker clicker)
     {
-        if (toggleRotations.isClosed)
+        if (!IsServer)
+            return;
+
+        if (toggleRotations.GetIsClosed())
             interactable.SetHoverMessage("Open");
         else
             interactable.SetHoverMessage("Close");

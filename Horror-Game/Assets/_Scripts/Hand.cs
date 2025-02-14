@@ -1,11 +1,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.Events;
 
 [RequireComponent(typeof(Inventory))]
-public class Hand : MonoBehaviour
+public class Hand : NetworkBehaviour
 {
     public UnityEvent<int> onSelectedSlotChanged;
 
@@ -18,25 +19,47 @@ public class Hand : MonoBehaviour
 
     [SerializeField] Transform itemsDropPoint;
 
-    int selectedSlot = 0;
+    NetworkVariable<int> selectedSlot = new NetworkVariable<int>(-1, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
     Inventory inventory;
+
+    NetworkVariable<ItemType> curHandItemType = new NetworkVariable<ItemType>(ItemType.none);
+    NetworkVariable<NetworkObjectReference> curHandItemObjRef = new NetworkVariable<NetworkObjectReference>();
 
     GameObject curHandItemObj = null;
     HandItem curHandItem = null;
-    ItemType curHandItemType = ItemType.none;
 
     float scrollTimer = 0;
     float storedScroll = 0;
 
-    void Start()
+    void Awake()
     {
         inventory = GetComponent<Inventory>();
-        inventory.onItemsUpdated.AddListener(HandleItemsUpdated);
-        ChangeSelectedSlot(0);
+        inventory.onItemsChanged.AddListener(HandleItemsUpdated);
+    }
+
+    public override void OnNetworkSpawn()
+    {
+        base.OnNetworkSpawn();
+
+        selectedSlot.OnValueChanged += (int previous, int current) => onSelectedSlotChanged.Invoke(current);
+        if (IsServer)
+        {
+            selectedSlot.OnValueChanged += (int previous, int current) => ChangeHandItemBase();
+        }
+
+        curHandItemObjRef.OnValueChanged += HandleCurItemChanged;
+
+        if (IsOwner)
+        {
+            ChangeSelectedSlot(0);
+        }
     }
 
     void Update()
     {
+        if (!IsOwner)
+            return;
+
         ChooseSlot();
 
         if (Input.GetMouseButtonDown(0))
@@ -45,29 +68,37 @@ public class Hand : MonoBehaviour
                 curHandItem.Use();
         }
 
-        if (Input.GetKeyDown(KeyCode.Q) && curHandItemType != ItemType.none)
+        if (Input.GetKeyDown(KeyCode.Q) && curHandItemType.Value != ItemType.none)
         {
             DropCurItem();
         }
     }
 
-    void DropCurItem()
+    [ServerRpc]
+    void DropCurItemServerRpc()
     {
-        // double check
-        if (inventory.GetItemStackAtSlot(selectedSlot) == null)
+        // just if to double check
+        if (inventory.GetItemStackAtSlot(selectedSlot.Value).itemType == ItemType.none)
         {
             Debug.LogError("Trying to throw item which is not in the inventory");
             return;
         }
 
-        ItemData itemData = ItemsDataManager.instance.GetItemData(curHandItemType);
+        ItemData itemData = ItemsDataManager.instance.GetItemData(curHandItemType.Value);
         if (itemData.collectableItemPrefab != null)
         {
             GameObject collectableItem = Instantiate(itemData.collectableItemPrefab);
             collectableItem.transform.position = itemsDropPoint.transform.position;
+            collectableItem.GetComponent<NetworkObject>().Spawn(true);
         }
 
-        inventory.RemoveItemFromSlot(curHandItemType, selectedSlot);
+        inventory.RemoveItemFromSlot(curHandItemType.Value, selectedSlot.Value);
+        curHandItemType.Value = ItemType.none;
+    }
+
+    void DropCurItem()
+    {
+        DropCurItemServerRpc();
     }
 
     void ChooseSlot()
@@ -96,7 +127,7 @@ public class Hand : MonoBehaviour
         {
             scrollTimer = scrollInterval;
 
-            int nextSelectedSlot = Mod(selectedSlot + (int)Mathf.Sign(storedScroll), inventory.GetSlotsCount());
+            int nextSelectedSlot = Mod(selectedSlot.Value + (int)Mathf.Sign(storedScroll), inventory.GetSlotsCount());
             ChangeSelectedSlot(nextSelectedSlot);
 
             storedScroll -= Mathf.Sign(storedScroll);
@@ -125,49 +156,82 @@ public class Hand : MonoBehaviour
 
     void ChangeSelectedSlot(int newValue)
     {
-        selectedSlot = newValue;
-
-        ChangeHandItem();
-
-        onSelectedSlotChanged.Invoke(selectedSlot);
+        selectedSlot.Value = newValue;
     }
 
-    void ChangeHandItem()
+    void HandleCurItemChanged(NetworkObjectReference previous, NetworkObjectReference current)
     {
-        if (curHandItemObj != null)
+        if (!current.TryGet(out NetworkObject netObj))
         {
-            Destroy(curHandItemObj);
+            curHandItemObj = null;
+            curHandItem = null;
+            return;
         }
 
-        curHandItemObj = null;
-        curHandItem = null;
-        curHandItemType = ItemType.none;
+        curHandItemObj = netObj.gameObject;
+        curHandItem = netObj.gameObject.GetComponent<HandItem>();
+        netObj.GetComponent<FollowTransform>().target = handPlace;
+    }
 
-        ItemStack itemStack = inventory.GetItemStackAtSlot(selectedSlot);
-        if (itemStack != null)
+    void ChangeHandItemBase()
+    {
+        if (!IsServer)
+            return;
+
+        if (selectedSlot.Value < 0 || selectedSlot.Value > inventory.GetSlotsCount())
+            return;
+
+        if (curHandItemObj != null)
+        {
+            curHandItemObj.GetComponent<NetworkObject>().Despawn(true);
+        }
+
+        curHandItemObjRef.Value = default;
+        curHandItemType.Value = ItemType.none;
+
+        ItemStack itemStack = inventory.GetItemStackAtSlot(selectedSlot.Value);
+        if (itemStack.itemType != ItemType.none)
         {
             ItemData itemData = ItemsDataManager.instance.GetItemData(itemStack.itemType);
-            curHandItemType = itemStack.itemType;
+            curHandItemType.Value = itemStack.itemType;
 
             if (itemData.handItemPrefab != null)
             {
-                curHandItemObj = Instantiate(itemData.handItemPrefab, handPlace);
-                curHandItemObj.transform.localPosition = Vector3.zero;
+                GameObject newItem = Instantiate(itemData.handItemPrefab);
+                newItem.GetComponent<FollowTransform>().target = handPlace;
+                newItem.GetComponent<NetworkObject>().SpawnWithOwnership(OwnerClientId, true);
 
-                curHandItem = curHandItemObj.GetComponent<HandItem>();
+                curHandItemObjRef.Value = newItem.GetComponent<NetworkObject>();
             }
         }
     }
 
-    void HandleItemsUpdated(ItemStack[] items)
+    [ServerRpc]
+    void ChangeHandItemServerRpc()
     {
-        if ((items[selectedSlot] == null && curHandItemType != ItemType.none) ||
-            (items[selectedSlot] != null && items[selectedSlot].itemType != curHandItemType))
+        ChangeHandItemBase();
+    }
+    void ChangeHandItem()
+    {
+        if (IsOwner)
+            ChangeHandItemServerRpc();
+    }
+
+    void HandleItemsUpdated()
+    {
+        var items = inventory.GetItems();
+
+        if (selectedSlot.Value < 0 || selectedSlot.Value > inventory.GetSlotsCount())
+            return;
+
+        if (items[selectedSlot.Value].itemType != curHandItemType.Value)
+        {
             ChangeHandItem();
+        }
     }
 
     public int GetSelectedSlot()
     {
-        return selectedSlot;
+        return selectedSlot.Value;
     }
 }

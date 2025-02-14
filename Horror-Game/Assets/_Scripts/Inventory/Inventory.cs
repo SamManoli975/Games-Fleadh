@@ -1,28 +1,43 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class Inventory : MonoBehaviour
+public class Inventory : NetworkBehaviour
 {
-    public UnityEvent<ItemStack[]> onItemsUpdated;
+    public UnityEvent onItemsChanged = new UnityEvent();
 
-    [SerializeField] int slotsCount = 7;
+    const int slotsCount = 7;
 
-    ItemStack[] items;
+    NetworkList<ItemStack> items;
 
     void Awake()
     {
-        items = new ItemStack[slotsCount];
-        for (int i = 0; i < items.Length; i++)
-            items[i] = null;
+        items = new NetworkList<ItemStack>();
+    }
+
+    public override void OnNetworkSpawn()
+    {
+        base.OnNetworkSpawn();
+
+        if (IsServer)
+        {
+            for (int i = 0; i < slotsCount; i++)
+                items.Add(new ItemStack(ItemType.none, 0));
+        }
+
+        items.OnListChanged += (NetworkListEvent<ItemStack> changeEvent) => onItemsChanged.Invoke();
     }
 
     void RemoveOneItemFromSlot(int slot)
     {
-        items[slot].count--;
-        if (items[slot].count == 0)
-            items[slot] = null;
+        ItemStack itemStack = items[slot];
+        itemStack.count--;
+        if (itemStack.count == 0)
+            itemStack.itemType = ItemType.none;
+
+        items[slot] = itemStack;
     }
 
     public int GetSlotsCount()
@@ -39,7 +54,7 @@ public class Inventory : MonoBehaviour
     {
         for (int i = 0; i < slotsCount; i++)
         {
-            if (items[i] != null && items[i].itemType == itemType)
+            if (items[i].itemType == itemType)
             {
                 return true;
             }
@@ -54,17 +69,17 @@ public class Inventory : MonoBehaviour
 
         if (itemData.isStackable)
         {
-            for (int i = 0; i < items.Length; i++)
+            for (int i = 0; i < items.Count; i++)
             {
-                if (items[i] != null && items[i].itemType == itemType)
+                if (items[i].itemType == itemType)
                     return true;
             }
         }
 
         // could not add to existing stack, so looking for an empty place
-        for (int i = 0; i < items.Length; i++)
+        for (int i = 0; i < items.Count; i++)
         {
-            if (items[i] == null)
+            if (items[i].itemType == ItemType.none)
                 return true;
         }
 
@@ -73,6 +88,9 @@ public class Inventory : MonoBehaviour
 
     public void AddItem(ItemType itemType, int priorityAddPlace = -1)
     {
+        if (!IsServer)
+            return;
+
         if (!CanAddItem(itemType))
         {
             Debug.LogError("Cannot add this item to the inventory (probably inventory is full)");
@@ -87,9 +105,9 @@ public class Inventory : MonoBehaviour
         {
             for (int i = 0; i < slotsCount; i++)
             {
-                if (items[i] != null && items[i].itemType == itemType)
+                if (items[i].itemType == itemType)
                 {
-                    items[i].count += 1;
+                    items[i] = new ItemStack(items[i].itemType, items[i].count + 1);
                     addedToExistingStack = true;
                     break;
                 }
@@ -99,16 +117,16 @@ public class Inventory : MonoBehaviour
         if (!addedToExistingStack)
         {
             // if possible, add to priority slot
-            if (priorityAddPlace >= 0 && priorityAddPlace < items.Length && items[priorityAddPlace] == null)
+            if (priorityAddPlace >= 0 && priorityAddPlace < items.Count && items[priorityAddPlace].itemType == ItemType.none)
             {
                 items[priorityAddPlace] = new ItemStack(itemType, 1);
             }
             else
             {
                 // find empty place to put the item (searching from start to end)
-                for (int i = 0; i < items.Length; i++)
+                for (int i = 0; i < items.Count; i++)
                 {
-                    if (items[i] == null)
+                    if (items[i].itemType == ItemType.none)
                     {
                         items[i] = new ItemStack(itemType, 1);
                         break;
@@ -116,12 +134,13 @@ public class Inventory : MonoBehaviour
                 }
             }
         }
-
-        onItemsUpdated.Invoke(items);
     }
 
     public void RemoveItem(ItemType itemType, int priorityRemovePlace = -1)
     {
+        if (!IsServer)
+            return;
+
         if (!HasItem(itemType))
         {
             Debug.LogError("No item of type '" + itemType + "' in the inventory to remove");
@@ -129,8 +148,7 @@ public class Inventory : MonoBehaviour
         }
 
         // trying to remove from the priority place first
-        if (priorityRemovePlace >= 0 && priorityRemovePlace < items.Length
-        && items[priorityRemovePlace] != null && items[priorityRemovePlace].itemType == itemType)
+        if (priorityRemovePlace >= 0 && priorityRemovePlace < items.Count && items[priorityRemovePlace].itemType == itemType)
         {
             RemoveOneItemFromSlot(priorityRemovePlace);
         }
@@ -138,26 +156,28 @@ public class Inventory : MonoBehaviour
         {
             for (int i = 0; i < slotsCount; i++)
             {
-                if (items[i] != null && items[i].itemType == itemType)
+                if (items[i].itemType == itemType)
                 {
                     RemoveOneItemFromSlot(i);
                     break;
                 }
             }
         }
-
-        onItemsUpdated.Invoke(items);
     }
 
     public void RemoveItemFromSlot(ItemType itemType, int slot)
     {
-        if (slot >= 0 && slot < items.Length
-        && items[slot] != null && items[slot].itemType == itemType)
+        if (!IsServer)
+            return;
+
+        if (slot >= 0 && slot < items.Count && items[slot].itemType == itemType)
         {
             RemoveOneItemFromSlot(slot);
         }
-
-        onItemsUpdated.Invoke(items);
     }
 
+    public NetworkList<ItemStack> GetItems()
+    {
+        return items;
+    }
 }

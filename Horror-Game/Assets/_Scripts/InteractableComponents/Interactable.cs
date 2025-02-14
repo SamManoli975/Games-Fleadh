@@ -1,23 +1,41 @@
-using System.Collections;
 using System.Collections.Generic;
-using System.Security.Cryptography;
+using Unity.Collections;
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class Interactable : MonoBehaviour
+public class Interactable : NetworkBehaviour, IManagedInteractable
 {
     public UnityEvent<Clicker> onInteraction = new UnityEvent<Clicker>();
     public UnityEvent<string> onHoverMessageChanged = new UnityEvent<string>();
 
     [Tooltip("Message to display when the object is hovered")]
-    [SerializeField] string hoverMessage;
+    public string initialHoverMessage = "";
 
     [Tooltip("Do not forget to add 'Outline' component if set to true")]
     public bool outlineOnHover = true;
 
     public Outline outline;
+    public InteractableMaster interactableMaster;
 
-    protected virtual void Start()
+    NetworkVariable<FixedString128Bytes> hoverMessage;
+
+    void Awake()
+    {
+        hoverMessage = new NetworkVariable<FixedString128Bytes>(initialHoverMessage);
+    }
+
+    public override void OnNetworkSpawn()
+    {
+        base.OnNetworkSpawn();
+
+        hoverMessage.OnValueChanged += (oldValue, newValue) =>
+        {
+            onHoverMessageChanged?.Invoke(newValue.ToString());
+        };
+    }
+
+    void Start()
     {
         if (outlineOnHover)
         {
@@ -50,12 +68,18 @@ public class Interactable : MonoBehaviour
 
     public void SetHoverMessage(string msg)
     {
-        hoverMessage = msg;
-        onHoverMessageChanged.Invoke(hoverMessage);
+        if (IsServer)
+            hoverMessage.Value = new FixedString128Bytes(msg);
     }
 
     public string GetHoverMessage()
     {
-        return hoverMessage;
+        return hoverMessage.Value.ToString();
+    }
+
+    public SetupInteractableMasterRes SetupInteractableMaster(InteractableMaster interactableMaster)
+    {
+        this.interactableMaster = interactableMaster;
+        return new SetupInteractableMasterRes(new Component[] { this }, new List<Interactable> { this });
     }
 }

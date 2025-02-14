@@ -1,8 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
+using Unity.Netcode;
 using UnityEngine;
 
-public class FootstepPlayer : MonoBehaviour
+public class FootstepPlayer : NetworkBehaviour
 {
     [SerializeField] private float rayLength = 3f;
     [SerializeField] private Transform raycastOrigin;
@@ -18,7 +20,13 @@ public class FootstepPlayer : MonoBehaviour
     [SerializeField] private float sweetenerSourcePitchVariation = 0.1f;
 
 
-    public void PlayFootstep()
+    [ServerRpc]
+    void PlayFootstepServerRpc()
+    {
+        PlayFootstepClientRpc();
+    }
+    [ClientRpc]
+    void PlayFootstepClientRpc()
     {
         SurfaceType surfaceType = SurfaceType.standard;
 
@@ -53,5 +61,11 @@ public class FootstepPlayer : MonoBehaviour
             footstepSweetenerAudioSource.pitch = sweetenerSourceBasePitch + sweetenerSourcePitchVariation * Random.Range(-1f, 1f);
             footstepSweetenerAudioSource.Play();
         }
+    }
+
+    public void PlayFootstep()
+    {
+        if (IsOwner)
+            PlayFootstepServerRpc();
     }
 }

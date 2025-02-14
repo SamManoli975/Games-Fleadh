@@ -1,10 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 
-public class ToggleOrientation : MonoBehaviour
+public class ToggleOrientation : NetworkBehaviour
 {
-    public bool isClosed = true;
+    public bool initialIsClosed = true;
+    NetworkVariable<bool> isClosed = new NetworkVariable<bool>(true);
+    private bool localPredictionIsClosed;
 
     public float animTime = 0.3f;
 
@@ -14,11 +17,16 @@ public class ToggleOrientation : MonoBehaviour
     public bool doDisableCollidersOnMovement = false;
     public float disableColliderFromProgress = 0;
 
-    Collider[] movingPartColliders = new Collider[0];
+    protected Collider[] movingPartColliders = new Collider[0];
     protected float curClosedProgress = 0;
 
-    public virtual void Start()
+    NetworkVariable<bool> isCollidersTrigger = new NetworkVariable<bool>(true);
+
+    void Awake()
     {
+        isClosed = new NetworkVariable<bool>(initialIsClosed);
+        localPredictionIsClosed = initialIsClosed;
+
         if (doDisableCollidersOnMovement || doDisableOpenCollider)
         {
             movingPartColliders = movingPart.GetComponents<Collider>();
@@ -28,23 +36,42 @@ public class ToggleOrientation : MonoBehaviour
                 doDisableOpenCollider = false;
             }
         }
+    }
 
-        if (isClosed)
+    public override void OnNetworkSpawn()
+    {
+        base.OnNetworkSpawn();
+
+        if (isClosed.Value)
             Close();
         else
             Open();
 
-        curClosedProgress = isClosed ? 1 : 0;
+        curClosedProgress = isClosed.Value ? 1 : 0;
         SetMovingPartTransform();
+
+        isCollidersTrigger.OnValueChanged += (bool previous, bool current) => SetCollidersTrigger(current);
+        isClosed.OnValueChanged += (bool previous, bool current) => { localPredictionIsClosed = current; };
+    }
+
+
+    void SetCollidersTrigger(bool isTrigger)
+    {
+        for (int i = 0; i < movingPartColliders.Length; i++)
+        {
+            movingPartColliders[i].isTrigger = isTrigger;
+        }
     }
 
     void Update()
     {
-        if ((isClosed && curClosedProgress < 1) || (!isClosed && curClosedProgress > 0))
+        bool curIsClosed = GetIsClosed();
+
+        if ((curIsClosed && curClosedProgress < 1) || (!curIsClosed && curClosedProgress > 0))
         {
             float curProgress;
 
-            if (isClosed)
+            if (curIsClosed)
             {
                 curClosedProgress += Time.deltaTime / animTime;
                 if (curClosedProgress > 1)
@@ -61,21 +88,18 @@ public class ToggleOrientation : MonoBehaviour
                 curProgress = 1 - curClosedProgress;
             }
 
-            if (doDisableCollidersOnMovement)
+            if (IsServer)
             {
-                bool isTrigger = curProgress != 1 && disableColliderFromProgress <= curProgress && curProgress <= 1 - disableColliderFromProgress;
-                for (int i = 0; i < movingPartColliders.Length; i++)
+                if (doDisableCollidersOnMovement)
                 {
-                    movingPartColliders[i].isTrigger = isTrigger;
+                    bool isTrigger = curProgress != 1 && disableColliderFromProgress <= curProgress && curProgress <= 1 - disableColliderFromProgress;
+                    isCollidersTrigger.Value = isTrigger;
                 }
-            }
 
-            if (doDisableOpenCollider)
-            {
-                bool isTrigger = !isClosed || curClosedProgress != 1;
-                for (int i = 0; i < movingPartColliders.Length; i++)
+                if (doDisableOpenCollider)
                 {
-                    movingPartColliders[i].isTrigger = isTrigger;
+                    bool isTrigger = !isClosed.Value || curClosedProgress != 1;
+                    isCollidersTrigger.Value = isTrigger;
                 }
             }
 
@@ -85,17 +109,27 @@ public class ToggleOrientation : MonoBehaviour
 
     public void Open()
     {
-        isClosed = false;
+        localPredictionIsClosed = false;
+
+        if (!IsServer)
+            return;
+
+        isClosed.Value = false;
     }
 
     public void Close()
     {
-        isClosed = true;
+        localPredictionIsClosed = true;
+
+        if (!IsServer)
+            return;
+
+        isClosed.Value = true;
     }
 
     public void Toggle(Clicker clicker)
     {
-        if (isClosed)
+        if (GetIsClosed())
             Open();
         else
             Close();
@@ -115,6 +149,7 @@ public class ToggleOrientation : MonoBehaviour
 
     public bool GetIsClosed()
     {
-        return isClosed;
+        bool curIsClosed = IsServer ? isClosed.Value : localPredictionIsClosed;
+        return curIsClosed;
     }
 }

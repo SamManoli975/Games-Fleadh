@@ -1,20 +1,27 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class Lockable : MonoBehaviour
+public class Lockable : NetworkBehaviour
 {
-
     public UnityEvent<Clicker> onNotLockedInteraction = new UnityEvent<Clicker>();
     public UnityEvent onUnlocked = new UnityEvent();
 
     public ItemType requiredKey = ItemType.none;
-    public bool isLocked = true;
+    public bool initialIsLocked = true;
+
+    NetworkVariable<bool> isLocked = new NetworkVariable<bool>(true);
+
+    void Awake()
+    {
+        isLocked = new NetworkVariable<bool>(initialIsLocked);
+    }
 
     public void HandleInteraction(Clicker clicker)
     {
-        if (!isLocked)
+        if (!isLocked.Value)
         {
             onNotLockedInteraction.Invoke(clicker);
             return;
@@ -33,7 +40,7 @@ public class Lockable : MonoBehaviour
 
         int selectedSlot = hand.GetSelectedSlot();
         ItemStack selectedStack = inventory.GetItemStackAtSlot(selectedSlot);
-        if (selectedStack != null && selectedStack.itemType == requiredKey)
+        if (selectedStack.itemType == requiredKey)
         {
             inventory.RemoveItemFromSlot(requiredKey, selectedSlot);
             Unclock();
@@ -42,7 +49,10 @@ public class Lockable : MonoBehaviour
 
     void Unclock()
     {
-        isLocked = false;
+        if (!IsServer)
+            return;
+
+        isLocked.Value = false;
         onUnlocked.Invoke();
     }
 }

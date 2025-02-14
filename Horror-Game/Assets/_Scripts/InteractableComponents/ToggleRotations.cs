@@ -1,16 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Unity.Netcode;
 
 public class ToggleRotations : ToggleOrientation
 {
     public float openRotation = 90;
     public float closedRotation = 0;
-
-    public override void Start()
-    {
-        base.Start();
-    }
 
     protected override void SetMovingPartTransform()
     {

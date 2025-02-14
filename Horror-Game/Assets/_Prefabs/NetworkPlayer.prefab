@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 527390721
+  GlobalObjectIdHash: 1800626058
   InScenePlacedSourceGlobalObjectIdHash: 0
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
@@ -67,3 +67,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   survivorPrefab: {fileID: 5428424476274472939, guid: 103d1dd0b6c46b041a9e5d4b702441dc, type: 3}
+  monsterPrefab: {fileID: 4700655125903280924, guid: 304ae356af7577140be2b8e0d0e7caeb, type: 3}

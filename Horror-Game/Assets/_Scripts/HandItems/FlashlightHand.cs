@@ -1,21 +1,38 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 
 public class FlashlightHand : HandItem
 {
     [SerializeField] GameObject lightObj;
 
-    bool isOn = false;
+    NetworkVariable<bool> isOn = new NetworkVariable<bool>(false);
 
-    void Start()
+    public override void OnNetworkSpawn()
     {
-        lightObj.SetActive(isOn);
+        base.OnNetworkSpawn();
+
+        lightObj.SetActive(isOn.Value);
+        isOn.OnValueChanged += HandleOnStatusChange;
+    }
+
+    [ServerRpc]
+    void ToggleFlashlightServerRpc()
+    {
+        isOn.Value = !isOn.Value;
+    }
+
+    void HandleOnStatusChange(bool previous, bool current)
+    {
+        lightObj.SetActive(current);
     }
 
     public override void Use()
     {
-        isOn = !isOn;
-        lightObj.SetActive(isOn);
+        // client anticipate
+        // lightObj.SetActive(!isOn.Value);
+
+        ToggleFlashlightServerRpc();
     }
 }

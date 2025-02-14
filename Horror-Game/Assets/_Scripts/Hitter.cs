@@ -1,9 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
-public class Hitter : MonoBehaviour
+public class Hitter : NetworkBehaviour
 {
     [SerializeField] private float hitRechargeTime = 0.2f;
     [SerializeField] private float hitRange = 3f;
@@ -22,6 +23,9 @@ public class Hitter : MonoBehaviour
 
     void Update()
     {
+        if (!IsOwner)
+            return;
+
         if (Input.GetMouseButtonDown(0))
         {
             if (!hitting && readyToHit)

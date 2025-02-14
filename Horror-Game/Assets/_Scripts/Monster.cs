@@ -13,6 +13,11 @@ public class Monster : MonoBehaviour
     {
         clicker = GetComponent<Clicker>();
 
-        clicker.onHoveredChange.AddListener(uI_HoveredMessage.HandleHoveredChange);
+        if (UI_Manager.instance != null)
+        {
+            uI_HoveredMessage = UI_Manager.instance.GetHoveredMessageUI();
+
+            clicker.onHoveredChange.AddListener(uI_HoveredMessage.HandleHoveredChange);
+        }
     }
 }

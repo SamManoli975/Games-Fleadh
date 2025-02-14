@@ -15,7 +15,7 @@ public class UI_InventorySlot : MonoBehaviour
     // if stack is null, then there is not item in this slot
     public void UpdateSlot(ItemStack stack)
     {
-        if (stack == null)
+        if (stack.itemType == ItemType.none)
         {
             itemIconImage.gameObject.SetActive(false);
             countTextfield.gameObject.SetActive(false);

@@ -3059,8 +3059,8 @@ GameObject:
   - component: {fileID: 4620257674927304017}
   - component: {fileID: 1656866393245464363}
   - component: {fileID: 4620257674927304012}
-  - component: {fileID: 5837004752583328323}
   - component: {fileID: 27949805}
+  - component: {fileID: 5837004752583328323}
   - component: {fileID: 4620257674927304019}
   - component: {fileID: 9128153538631564597}
   - component: {fileID: 1670772808710599667}
@@ -3148,20 +3148,6 @@ CharacterController:
   m_SkinWidth: 0.0001
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 1, z: 0}
---- !u!114 &5837004752583328323
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5428424476274472939}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 421b2f7b0cd9ccb4b9d7d8c4a5bdc138, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  uI_Inventory: {fileID: 0}
-  uI_HoveredMessage: {fileID: 0}
 --- !u!114 &27949805
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3174,7 +3160,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 1810388293
+  GlobalObjectIdHash: 362563344
   InScenePlacedSourceGlobalObjectIdHash: 362563344
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
@@ -3183,6 +3169,18 @@ MonoBehaviour:
   SpawnWithObservers: 1
   DontDestroyWithOwner: 0
   AutoObjectParentSync: 1
+--- !u!114 &5837004752583328323
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5428424476274472939}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 421b2f7b0cd9ccb4b9d7d8c4a5bdc138, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &4620257674927304019
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3204,7 +3202,7 @@ MonoBehaviour:
   jumpPower: 10
   gravity: 30
   lookSpeed: 2
-  lookXLimit: 45
+  lookXLimit: 80
   defaultHeight: 2
   crouchHeight: 0.7
   crouchSpeed: 3
@@ -3270,10 +3268,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d6323be53bab2b45ad4a644cafb0498, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  onItemsUpdated:
+  onItemsChanged:
     m_PersistentCalls:
       m_Calls: []
-  slotsCount: 7
 --- !u!114 &7349191576997640610
 MonoBehaviour:
   m_ObjectHideFlags: 0

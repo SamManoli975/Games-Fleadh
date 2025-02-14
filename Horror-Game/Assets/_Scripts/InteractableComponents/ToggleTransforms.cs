@@ -7,11 +7,6 @@ public class ToggleTransforms : ToggleOrientation
     public Transform openPoint;
     public Transform closedPoint;
 
-    public override void Start()
-    {
-        base.Start();
-    }
-
     protected override void SetMovingPartTransform()
     {
         movingPart.transform.position = Vector3.Lerp(openPoint.position, closedPoint.position, Ease(curClosedProgress));

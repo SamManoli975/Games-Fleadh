@@ -1,17 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.Events;
 
-public enum InteractionType
-{
-    leftMouse,
-    rightMouse,
-    interactionKey
-}
-
-public class Clicker : MonoBehaviour
+public class Clicker : NetworkBehaviour
 {
     public UnityEvent<Interactable> onHoveredChange;
 
@@ -26,13 +20,62 @@ public class Clicker : MonoBehaviour
 
     void Update()
     {
+        if (!IsOwner)
+            return;
+
         SelectInteractable();
 
         if (curHovered != null)
         {
             if (Input.GetKeyDown(KeyCode.E))
-                curHovered.Interact(this);
+                InteractWithSelectedObject();
         }
+    }
+
+    [ServerRpc]
+    void InteractWithObjectServerRpc(NetworkObjectReference objRef, int interactableNum = -1)
+    {
+        if (!objRef.TryGet(out NetworkObject netObj))
+        {
+            Debug.LogError("Failed to retrieve object from its NetworkObjectReference");
+            return;
+        }
+
+        Interactable interactable;
+        if (interactableNum != -1)
+        {
+            InteractableMaster interactableMaster = netObj.GetComponent<InteractableMaster>();
+            interactable = interactableMaster.GetInteractableByNum(interactableNum);
+        }
+        else
+        {
+            interactable = netObj.GetComponent<Interactable>();
+        }
+
+        if (interactable != null)
+        {
+            interactable.Interact(this);
+        }
+    }
+    void InteractWithSelectedObject()
+    {
+        // client prediction
+        if (!IsServer)
+            curHovered.Interact(this);
+
+        NetworkObjectReference objRef = default;
+        int interactableNum = -1;
+        if (curHovered.interactableMaster != null)
+        {
+            InteractableMaster interactableMaster = curHovered.interactableMaster;
+            objRef = interactableMaster.gameObject.GetComponent<NetworkObject>();
+            interactableNum = interactableMaster.GetInteractableNum(curHovered);
+        }
+        else
+        {
+            objRef = curHovered.GetComponent<NetworkObject>();
+        }
+        InteractWithObjectServerRpc(objRef, interactableNum);
     }
 
     void SelectInteractable()
