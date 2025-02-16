@@ -26,6 +26,8 @@ public class NetworkPlayersManager : MonoBehaviour
     Dictionary<ulong, bool> spawnedActualPlayer = new Dictionary<ulong, bool>();
     Dictionary<ulong, PlayerRole> playersRoles = new Dictionary<ulong, PlayerRole>();
 
+    public string lobbyCode = "";
+
     private void Awake()
     {
         if (instance == null)
