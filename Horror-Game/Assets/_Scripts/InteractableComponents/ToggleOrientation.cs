@@ -20,7 +20,7 @@ public class ToggleOrientation : NetworkBehaviour
     protected Collider[] movingPartColliders = new Collider[0];
     protected float curClosedProgress = 0;
 
-    NetworkVariable<bool> isCollidersTrigger = new NetworkVariable<bool>(true);
+    NetworkVariable<bool> isCollidersTrigger = new NetworkVariable<bool>(false);
 
     void Awake()
     {

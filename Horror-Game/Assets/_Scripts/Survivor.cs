@@ -43,5 +43,18 @@ public class Survivor : NetworkBehaviour
                 health.onCurHealthUpdate.AddListener(uI_Hearts.HandleHealthUpdated);
             }
         }
+
+        if (IsServer)
+        {
+            health.onDied.AddListener(HandleDeath);
+        }
+    }
+
+    void HandleDeath()
+    {
+        if (GameManager.instance != null)
+        {
+            GameManager.instance.EndGame(PlayerRole.monster);
+        }
     }
 }

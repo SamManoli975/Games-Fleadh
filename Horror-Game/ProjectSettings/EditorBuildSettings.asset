@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/_Scenes/Other/PlayerObjects.unity
     guid: 03f0e579667c2c3458dcc4bd6a0defb7
+  - enabled: 1
+    path: Assets/_Scenes/Other/KonstantinScene.unity
+    guid: 12da8e866e3f5c24da784a11a3e33ebd
   m_configObjects: {}
