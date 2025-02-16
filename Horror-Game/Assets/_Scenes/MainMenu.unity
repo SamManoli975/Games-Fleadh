@@ -935,7 +935,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d0405ba1bf7fff4095c508c76ad1010, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameScene: MainScene
+  gameScene: PlayerObjects
   playerPrefab: {fileID: 7401318430074497655, guid: 9e0f17acae102c1488847c2ff494e5a6, type: 3}
 --- !u!4 &1763577969
 Transform:
@@ -1003,7 +1003,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fb731477e40d3d4b96695fe6df09bf4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameScene: MainScene
+  gameScene: PlayerObjects
   hostBtn: {fileID: 1557308825}
   clientBtn: {fileID: 622635}
 --- !u!1 &1818963014
