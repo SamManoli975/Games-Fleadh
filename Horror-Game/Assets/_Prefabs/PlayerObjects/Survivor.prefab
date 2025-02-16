@@ -3068,6 +3068,7 @@ GameObject:
   - component: {fileID: 7349191576997640610}
   - component: {fileID: 1686901419}
   - component: {fileID: 8036971549372532981}
+  - component: {fileID: 9103613671730310703}
   m_Layer: 6
   m_Name: Survivor
   m_TagString: Untagged
@@ -3139,7 +3140,7 @@ CharacterController:
   m_GameObject: {fileID: 5428424476274472939}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Height: 2
   m_Radius: 0.5
@@ -3160,7 +3161,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 362563344
+  GlobalObjectIdHash: 1810388293
   InScenePlacedSourceGlobalObjectIdHash: 362563344
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
@@ -3337,6 +3338,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TransitionStateInfoList: []
   m_Animator: {fileID: 1656866393245464363}
+--- !u!114 &9103613671730310703
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5428424476274472939}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f73fea17317f7de4ab3f0eb3fbb0d631, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onCurHealthUpdate:
+    m_PersistentCalls:
+      m_Calls: []
+  onDied:
+    m_PersistentCalls:
+      m_Calls: []
+  maxHealth: 3
 --- !u!1 &5705931406576586463
 GameObject:
   m_ObjectHideFlags: 0

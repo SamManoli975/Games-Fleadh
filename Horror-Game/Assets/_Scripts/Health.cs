@@ -1,26 +1,31 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class Health : MonoBehaviour, IHitable
+public class Health : NetworkBehaviour, IHitable
 {
     public UnityEvent<int> onCurHealthUpdate;
     public UnityEvent onDied;
 
     [SerializeField] int maxHealth = 2;
 
-    public int curHealth = 0;
+    NetworkVariable<int> curHealth = new NetworkVariable<int>();
 
-    void Start()
+    public override void OnNetworkSpawn()
     {
-        SetCurHealth(maxHealth);
+        base.OnNetworkSpawn();
+
+        curHealth.OnValueChanged += (int previous, int current) => onCurHealthUpdate.Invoke(current);
+
+        if (IsOwner)
+            SetCurHealth(maxHealth);
     }
 
     void SetCurHealth(int newValue)
     {
-        curHealth = newValue;
-        onCurHealthUpdate.Invoke(curHealth);
+        curHealth.Value = newValue;
     }
 
     void Die()
@@ -31,8 +36,11 @@ public class Health : MonoBehaviour, IHitable
 
     public void GetHit()
     {
-        SetCurHealth(curHealth - 1);
-        if (curHealth <= 0)
+        if (!IsServer)
+            return;
+
+        SetCurHealth(curHealth.Value - 1);
+        if (curHealth.Value <= 0)
             Die();
     }
 }

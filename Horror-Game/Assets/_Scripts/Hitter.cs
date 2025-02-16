@@ -8,6 +8,7 @@ public class Hitter : NetworkBehaviour
 {
     [SerializeField] private float hitRechargeTime = 0.2f;
     [SerializeField] private float hitRange = 3f;
+    [SerializeField] private float sphereCastRadius = 0.2f;
     [SerializeField] private LayerMask hitLayer;
     [SerializeField] Transform hitRayOrigin;
 
@@ -48,9 +49,10 @@ public class Hitter : NetworkBehaviour
         readyToHit = true;
     }
 
-    public void OnHitAttackPoint()
+    [ServerRpc]
+    void DoHitServerRpc()
     {
-        if (Physics.Raycast(hitRayOrigin.position, hitRayOrigin.forward, out RaycastHit hit, hitRange, hitLayer))
+        if (Physics.SphereCast(hitRayOrigin.position, sphereCastRadius, hitRayOrigin.forward, out RaycastHit hit, hitRange, hitLayer))
         {
             IHitable hitable = hit.collider.GetComponent<IHitable>();
             if (hitable != null)
@@ -58,6 +60,12 @@ public class Hitter : NetworkBehaviour
                 hitable.GetHit();
             }
         }
+    }
+
+    public void OnHitAttackPoint()
+    {
+        if (IsOwner)
+            DoHitServerRpc();
     }
 
     public void OnHitEnd()

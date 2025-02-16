@@ -11,10 +11,12 @@ public class Survivor : NetworkBehaviour
 {
     UI_Inventory uI_Inventory;
     UI_HoveredMessage uI_HoveredMessage;
+    UI_Hearts uI_Hearts;
 
     Clicker clicker;
     Inventory inventory;
     Hand hand;
+    Health health;
 
     public override void OnNetworkSpawn()
     {
@@ -23,6 +25,7 @@ public class Survivor : NetworkBehaviour
         clicker = GetComponent<Clicker>();
         inventory = GetComponent<Inventory>();
         hand = GetComponent<Hand>();
+        health = GetComponent<Health>();
 
         if (IsOwner)
         {
@@ -30,12 +33,14 @@ public class Survivor : NetworkBehaviour
             {
                 uI_Inventory = UI_Manager.instance.GetInventoryUI();
                 uI_HoveredMessage = UI_Manager.instance.GetHoveredMessageUI();
+                uI_Hearts = UI_Manager.instance.GetHeartsUI();
+
+                uI_Inventory.inventory = inventory;
 
                 clicker.onHoveredChange.AddListener(uI_HoveredMessage.HandleHoveredChange);
                 inventory.onItemsChanged.AddListener(uI_Inventory.UpdateSlots);
                 hand.onSelectedSlotChanged.AddListener(uI_Inventory.UpdateSelectedSlot);
-
-                uI_Inventory.inventory = inventory;
+                health.onCurHealthUpdate.AddListener(uI_Hearts.HandleHealthUpdated);
             }
         }
     }

@@ -23,7 +23,6 @@ public class Movement : NetworkBehaviour
     public float crouchSpeed = 3f;
 
     public float maxStamina = 3f;
-    private float currentStamina;
     public float staminaRegenRate = 1f;
     public float staminaRegenDelay = 2f;
     private float timeSinceLastSprint = 0f;
@@ -41,10 +40,16 @@ public class Movement : NetworkBehaviour
 
     [SerializeField] private FootstepPlayer footstepPlayer;
 
+    private NetworkVariable<float> currentStamina;
+
+    void Awake()
+    {
+        currentStamina = new NetworkVariable<float>(maxStamina, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+    }
+
     void Start()
     {
         characterController = GetComponent<CharacterController>();
-        currentStamina = maxStamina;
 
         if (exhaustionSound != null)
         {
@@ -53,11 +58,19 @@ public class Movement : NetworkBehaviour
 
         animator = GetComponent<Animator>();
 
-        // if (IsOwner)
-        // {
-        //     Cursor.lockState = CursorLockMode.Locked;
-        //     Cursor.visible = false;
-        // }
+        if (IsOwner)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
+    }
+
+    public override void OnNetworkSpawn()
+    {
+        base.OnNetworkSpawn();
+
+        if (IsOwner)
+            GetComponent<CharacterController>().enabled = true;
     }
 
     void Update()
@@ -69,7 +82,7 @@ public class Movement : NetworkBehaviour
         Vector3 forward = transform.TransformDirection(Vector3.forward);
         Vector3 right = transform.TransformDirection(Vector3.right);
         isMoving = Input.GetAxis("Vertical") != 0 || Input.GetAxis("Horizontal") != 0;
-        bool isRunning = allowSprint && Input.GetKey(KeyCode.LeftShift) && currentStamina > 0;
+        bool isRunning = allowSprint && Input.GetKey(KeyCode.LeftShift) && currentStamina.Value > 0;
 
         float curSpeedX = canMove ? (isRunning ? runSpeed : baseSpeed) * Input.GetAxis("Vertical") : 0;
         float curSpeedY = canMove ? (isRunning ? runSpeed : baseSpeed) * Input.GetAxis("Horizontal") : 0;
@@ -118,31 +131,41 @@ public class Movement : NetworkBehaviour
         if (isRunning)
         {
             isSprinting = true;
-            currentStamina -= Time.deltaTime;
+            currentStamina.Value -= Time.deltaTime;
             timeSinceLastSprint = 0f;
-
-            if (!exhaustionSound.isPlaying)
-            {
-                exhaustionSound.Play();
-            }
         }
         else
         {
             isSprinting = false;
             timeSinceLastSprint += Time.deltaTime;
 
-            if (timeSinceLastSprint >= staminaRegenDelay && currentStamina < maxStamina)
+            if (timeSinceLastSprint >= staminaRegenDelay && currentStamina.Value < maxStamina)
             {
-                currentStamina += staminaRegenRate * Time.deltaTime;
+                currentStamina.Value += staminaRegenRate * Time.deltaTime;
             }
         }
 
-        currentStamina = Mathf.Clamp(currentStamina, 0, maxStamina);
+        currentStamina.Value = Mathf.Clamp(currentStamina.Value, 0, maxStamina);
 
-        // Exhaustion sound volume scaling
+        // Update UI Stamina Bar
+        if (staminaBar != null)
+        {
+            staminaBar.fillAmount = currentStamina.Value / maxStamina;
+        }
+
+        HandleExhaustionSoundBase(isRunning);
+    }
+
+    void HandleExhaustionSoundBase(bool isRunning)
+    {
         if (exhaustionSound != null)
         {
-            if (currentStamina <= 0)
+            if (isRunning && !exhaustionSound.isPlaying)
+            {
+                exhaustionSound.Play();
+            }
+
+            if (currentStamina.Value <= 0)
             {
                 exhaustionSound.volume = 1.0f;
                 if (!exhaustionSound.isPlaying)
@@ -152,19 +175,13 @@ public class Movement : NetworkBehaviour
             }
             else
             {
-                exhaustionSound.volume = Mathf.Clamp(1.2f - (currentStamina / maxStamina), 0.1f, 1.0f);
+                exhaustionSound.volume = Mathf.Clamp(1.2f - (currentStamina.Value / maxStamina), 0.1f, 1.0f);
             }
 
-            if (currentStamina >= maxStamina)
+            if (currentStamina.Value >= maxStamina)
             {
                 exhaustionSound.Stop();
             }
-        }
-
-        // Update UI Stamina Bar
-        if (staminaBar != null)
-        {
-            staminaBar.fillAmount = currentStamina / maxStamina;
         }
     }
 

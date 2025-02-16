@@ -265,12 +265,13 @@ GameObject:
   - component: {fileID: 4720850667141267161}
   - component: {fileID: 1440979264557896950}
   - component: {fileID: 8889880978671641079}
-  - component: {fileID: 7338497715067668551}
   - component: {fileID: 7338497715067668550}
   - component: {fileID: 1273745468620146724}
   - component: {fileID: 4208645894138866290}
   - component: {fileID: 746832049175622029}
   - component: {fileID: 5694479760139495043}
+  - component: {fileID: 1012764234}
+  - component: {fileID: 1012764235}
   m_Layer: 0
   m_Name: cabinet_drawer_01
   m_TagString: Untagged
@@ -343,20 +344,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &7338497715067668551
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 607280842986644470}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -1925900947484028036, guid: 57f7da9926d23b545bfa1970b4283dd6, type: 3}
 --- !u!114 &7338497715067668550
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -378,7 +365,7 @@ MonoBehaviour:
   outlineOnHover: 0
   outline: {fileID: 0}
   interactableMaster: {fileID: 4150914592999552030}
-  doDisableOpenCollider: 1
+  doDisableOpenCollider: 0
   doDisableCollidersOnMovement: 0
   disableColliderFromProgress: 0
 --- !u!114 &1273745468620146724
@@ -469,11 +456,37 @@ MonoBehaviour:
   initialIsClosed: 1
   animTime: 0.3
   movingPart: {fileID: 607280842986644470}
-  doDisableOpenCollider: 1
+  doDisableOpenCollider: 0
   doDisableCollidersOnMovement: 0
   disableColliderFromProgress: 0
   openPoint: {fileID: 7338497714442727509}
   closedPoint: {fileID: 7338497713265896868}
+--- !u!65 &1012764234
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 607280842986644470}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.38479832, y: 0.1155957, z: 0.44116038}
+  m_Center: {x: 2.0608736e-36, y: -0.000000059604645, z: -0.20178938}
+--- !u!65 &1012764235
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 607280842986644470}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.38479832, y: 0.1155957, z: 0.44116038}
+  m_Center: {x: 2.0608736e-36, y: -0.000000059604645, z: -0.20178938}
 --- !u!1 &642581475152758004
 GameObject:
   m_ObjectHideFlags: 0
@@ -1303,7 +1316,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 4265704472
+  GlobalObjectIdHash: 3471897866
   InScenePlacedSourceGlobalObjectIdHash: 1577809853
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1

@@ -2283,8 +2283,8 @@ GameObject:
   - component: {fileID: 4477893939616715211}
   - component: {fileID: 332958740}
   - component: {fileID: 2019931672}
-  - component: {fileID: 7598517985991331485}
   - component: {fileID: 2300573950033219184}
+  - component: {fileID: -339602722448687549}
   m_Layer: 9
   m_Name: Monster
   m_TagString: Untagged
@@ -2363,7 +2363,7 @@ CharacterController:
   m_GameObject: {fileID: 4700655125903280924}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Height: 2
   m_Radius: 0.5
@@ -2486,7 +2486,21 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 499
   hitRayOrigin: {fileID: 6943574238685455482}
---- !u!114 &7598517985991331485
+--- !u!114 &2300573950033219184
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4700655125903280924}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a5f3a46a6afe8041bcac5f1dd77cee9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TransitionStateInfoList: []
+  m_Animator: {fileID: 2060371087918107612}
+--- !u!114 &-339602722448687549
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2517,20 +2531,6 @@ MonoBehaviour:
   InLocalSpace: 0
   Interpolate: 1
   SlerpPosition: 0
---- !u!114 &2300573950033219184
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4700655125903280924}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3a5f3a46a6afe8041bcac5f1dd77cee9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  TransitionStateInfoList: []
-  m_Animator: {fileID: 2060371087918107612}
 --- !u!1 &4716785024068236245
 GameObject:
   m_ObjectHideFlags: 0

@@ -8,6 +8,7 @@ public class UI_Manager : MonoBehaviour
 
     [SerializeField] UI_Inventory uI_Inventory;
     [SerializeField] UI_HoveredMessage uI_HoveredMessage;
+    [SerializeField] UI_Hearts uI_Hearts;
 
     void Awake()
     {
@@ -15,6 +16,7 @@ public class UI_Manager : MonoBehaviour
 
         uI_Inventory.gameObject.SetActive(false);
         uI_HoveredMessage.gameObject.SetActive(false);
+        uI_Hearts.gameObject.SetActive(false);
     }
 
     public UI_Inventory GetInventoryUI()
@@ -27,5 +29,11 @@ public class UI_Manager : MonoBehaviour
     {
         uI_HoveredMessage.gameObject.SetActive(true);
         return uI_HoveredMessage;
+    }
+
+    public UI_Hearts GetHeartsUI()
+    {
+        uI_Hearts.gameObject.SetActive(true);
+        return uI_Hearts;
     }
 }
