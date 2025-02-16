@@ -41,6 +41,7 @@ public class Movement : NetworkBehaviour
     [SerializeField] private FootstepPlayer footstepPlayer;
 
     private NetworkVariable<float> currentStamina;
+    private NetworkVariable<bool> isRunning = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
 
     void Awake()
     {
@@ -71,6 +72,12 @@ public class Movement : NetworkBehaviour
 
         if (IsOwner)
             GetComponent<CharacterController>().enabled = true;
+
+        if (!IsOwner)
+        {
+            currentStamina.OnValueChanged += (float previous, float current) => HandleExhaustionSound();
+            isRunning.OnValueChanged += (bool previous, bool current) => HandleExhaustionSound();
+        }
     }
 
     void Update()
@@ -82,16 +89,16 @@ public class Movement : NetworkBehaviour
         Vector3 forward = transform.TransformDirection(Vector3.forward);
         Vector3 right = transform.TransformDirection(Vector3.right);
         isMoving = Input.GetAxis("Vertical") != 0 || Input.GetAxis("Horizontal") != 0;
-        bool isRunning = allowSprint && Input.GetKey(KeyCode.LeftShift) && currentStamina.Value > 0;
+        isRunning.Value = allowSprint && Input.GetKey(KeyCode.LeftShift) && currentStamina.Value > 0;
 
-        float curSpeedX = canMove ? (isRunning ? runSpeed : baseSpeed) * Input.GetAxis("Vertical") : 0;
-        float curSpeedY = canMove ? (isRunning ? runSpeed : baseSpeed) * Input.GetAxis("Horizontal") : 0;
+        float curSpeedX = canMove ? (isRunning.Value ? runSpeed : baseSpeed) * Input.GetAxis("Vertical") : 0;
+        float curSpeedY = canMove ? (isRunning.Value ? runSpeed : baseSpeed) * Input.GetAxis("Horizontal") : 0;
         float movementDirectionY = moveDirection.y;
         moveDirection = (forward * curSpeedX) + (right * curSpeedY);
 
         // Update Animator Parameters
         animator.SetBool("isMoving", isMoving);
-        animator.SetBool("isRunning", isRunning);
+        animator.SetBool("isRunning", isRunning.Value);
 
         if (Input.GetButton("Jump") && canMove && characterController.isGrounded)
         {
@@ -128,7 +135,7 @@ public class Movement : NetworkBehaviour
         }
 
         // Sprinting logic (stamina handling)
-        if (isRunning)
+        if (isRunning.Value)
         {
             isSprinting = true;
             currentStamina.Value -= Time.deltaTime;
@@ -153,14 +160,14 @@ public class Movement : NetworkBehaviour
             staminaBar.fillAmount = currentStamina.Value / maxStamina;
         }
 
-        HandleExhaustionSoundBase(isRunning);
+        HandleExhaustionSound();
     }
 
-    void HandleExhaustionSoundBase(bool isRunning)
+    void HandleExhaustionSound()
     {
         if (exhaustionSound != null)
         {
-            if (isRunning && !exhaustionSound.isPlaying)
+            if (isRunning.Value && !exhaustionSound.isPlaying)
             {
                 exhaustionSound.Play();
             }
