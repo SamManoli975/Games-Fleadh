@@ -5,16 +5,9 @@ using Unity.Netcode;
 using UnityEngine.SceneManagement;
 using UnityEngine.Events;
 
-public enum PlayerRole
+public class NetworkPlayersSpawner : MonoBehaviour
 {
-    none,
-    survivor,
-    monster
-}
-
-public class NetworkPlayersManager : MonoBehaviour
-{
-    public static NetworkPlayersManager instance;
+    public static NetworkPlayersSpawner instance;
 
     [HideInInspector]
     public UnityEvent onAllPlayersSpawned = new UnityEvent();
@@ -24,9 +17,6 @@ public class NetworkPlayersManager : MonoBehaviour
 
     Dictionary<ulong, NetworkPlayer> spawnedPlayerObject = new Dictionary<ulong, NetworkPlayer>();
     Dictionary<ulong, bool> spawnedActualPlayer = new Dictionary<ulong, bool>();
-    Dictionary<ulong, PlayerRole> playersRoles = new Dictionary<ulong, PlayerRole>();
-
-    public string lobbyCode = "";
 
     private void Awake()
     {
@@ -44,17 +34,28 @@ public class NetworkPlayersManager : MonoBehaviour
     void Start()
     {
         NetworkManager.Singleton.OnServerStarted += SetupSceneManagerCallbacks;
-        NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnected;
-        NetworkManager.Singleton.OnClientDisconnectCallback += OnClientDisconnected;
+        NetworkGameManager.instance.OnClientConnectedCallback += OnClientConnected;
+        NetworkGameManager.instance.OnClientDisconnectCallback += OnClientDisconnected;
     }
 
     void SetupSceneManagerCallbacks()
     {
-        NetworkManager.Singleton.SceneManager.OnLoadComplete += OnSceneLoaded;
+        if (!NetworkManager.Singleton.IsServer)
+            return;
+        Debug.Log("Subbing");
+        NetworkManager.Singleton.SceneManager.OnLoadEventCompleted += OnSceneLoadEvent;
     }
 
+    void OnSceneLoadEvent(string sceneName, LoadSceneMode loadSceneMode, List<ulong> clientsCompleted, List<ulong> clientsTimedOut)
+    {
+        Debug.Log("Load event " + clientsCompleted.Count);
+        if (clientsCompleted.Count == NetworkManager.Singleton.ConnectedClients.Count)
+        {
+            OnSceneLoaded(sceneName);
+        }
+    }
 
-    private void OnSceneLoaded(ulong clientId, string sceneName, LoadSceneMode mode)
+    void OnSceneLoaded(string sceneName)
     {
         if (!NetworkManager.Singleton.IsServer)
             return;
@@ -65,7 +66,7 @@ public class NetworkPlayersManager : MonoBehaviour
             // spawn player manually for each connected client
             foreach (NetworkClient client in NetworkManager.Singleton.ConnectedClientsList)
             {
-                if (!spawnedPlayerObject.ContainsKey(clientId))
+                if (!spawnedPlayerObject.ContainsKey(client.ClientId))
                     SpawnPlayer(client.ClientId);
             }
         }
@@ -76,8 +77,7 @@ public class NetworkPlayersManager : MonoBehaviour
         if (!NetworkManager.Singleton.IsServer)
             return;
 
-        Debug.Log($"New client connected: {clientId}");
-        playersRoles[clientId] = GetNewPlayerRole(clientId);
+        Debug.Log("in spawn manager");
 
         // players spawning handling
         if (spawnPlayerInScenes.Contains(SceneManager.GetActiveScene().name) && NetworkManager.Singleton.IsServer)
@@ -86,20 +86,6 @@ public class NetworkPlayersManager : MonoBehaviour
             if (!spawnedPlayerObject.ContainsKey(clientId))
                 SpawnPlayer(clientId);
         }
-    }
-
-    private void SpawnPlayer(ulong clientId)
-    {
-        if (!NetworkManager.Singleton.IsServer)
-            return;
-
-        if (spawnedPlayerObject.ContainsKey(clientId))
-            return;
-
-        GameObject playerInstance = Instantiate(playerPrefab);
-        playerInstance.GetComponent<NetworkObject>().SpawnAsPlayerObject(clientId);
-
-        spawnedPlayerObject[clientId] = playerInstance.GetComponent<NetworkPlayer>();
     }
 
     private void OnClientDisconnected(ulong clientId)
@@ -111,35 +97,20 @@ public class NetworkPlayersManager : MonoBehaviour
         spawnedPlayerObject.Remove(clientId);
     }
 
-
-    PlayerRole GetNewPlayerRole(ulong clientId)
+    private void SpawnPlayer(ulong clientId)
     {
-        return clientId == 0 ? PlayerRole.survivor : PlayerRole.monster;
-        // if (!playersRoles.ContainsValue(PlayerRole.monster))
-        // {
-        //     return PlayerRole.monster;
-        // }
+        if (!NetworkManager.Singleton.IsServer)
+            return;
 
-        // return PlayerRole.survivor;
-    }
+        Debug.Log("spawning for " + clientId);
 
-    // only can start if there is 1 monster and there are 2 players
-    bool CanStartGame()
-    {
-        if (playersRoles.Count != 2)
-            return false;
+        if (spawnedPlayerObject.ContainsKey(clientId))
+            return;
 
-        int monstersCount = 0;
-        foreach (KeyValuePair<ulong, PlayerRole> entry in playersRoles)
-        {
-            if (entry.Value == PlayerRole.monster)
-                monstersCount++;
-        }
+        GameObject playerInstance = Instantiate(playerPrefab);
+        playerInstance.GetComponent<NetworkObject>().SpawnAsPlayerObject(clientId);
 
-        if (monstersCount != 1)
-            return false;
-
-        return true;
+        spawnedPlayerObject[clientId] = playerInstance.GetComponent<NetworkPlayer>();
     }
 
     public void ActualPlayerSpawned(ulong spawnedCliendId)
@@ -162,21 +133,13 @@ public class NetworkPlayersManager : MonoBehaviour
         }
     }
 
-    public PlayerRole GetPlayerRole(ulong clientId)
-    {
-        if (!playersRoles.ContainsKey(clientId))
-            return PlayerRole.none;
-
-        return playersRoles[clientId];
-    }
-
     public Dictionary<ulong, NetworkPlayer> GetSpawnedPlayerObject()
     {
         return spawnedPlayerObject;
     }
 
-    public Dictionary<ulong, PlayerRole> GetPlayersRoles()
+    public void PrepareForNewScene()
     {
-        return playersRoles;
+        spawnedPlayerObject.Clear();
     }
 }

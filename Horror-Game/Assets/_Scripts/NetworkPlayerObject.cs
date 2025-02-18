@@ -5,18 +5,19 @@ using UnityEngine;
 
 public class NetworkPlayerObject : NetworkBehaviour
 {
-    [ServerRpc]
-    void ActualPlayerSpawnedServerRpc()
-    {
-        NetworkPlayersManager.instance.ActualPlayerSpawned(OwnerClientId);
+    NetworkPlayer networkPlayer;
 
+    void Start()
+    {
+        if (IsOwner)
+        {
+            networkPlayer.PlayerObjectSpawned();
+            Debug.Log("In start");
+        }
     }
 
-    public override void OnNetworkSpawn()
+    public void SetNetworkPlayer(NetworkPlayer networkPlayer)
     {
-        base.OnNetworkSpawn();
-
-        if (IsOwner)
-            ActualPlayerSpawnedServerRpc();
+        this.networkPlayer = networkPlayer;
     }
 }

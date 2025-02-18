@@ -11,6 +11,7 @@ using Unity.Services.Relay.Models;
 using Unity.Networking.Transport.Relay;
 using Unity.Netcode.Transports.UTP;
 using UnityEngine.SceneManagement;
+using System;
 
 
 public class UI_ConnectionPanel : MonoBehaviour
@@ -39,36 +40,58 @@ public class UI_ConnectionPanel : MonoBehaviour
         await AuthenticationService.Instance.SignInAnonymouslyAsync();
 
         hostBtn.onClick.AddListener(CreateRelay);
-        clientBtn.onClick.AddListener(() => JoinRelay(joinCodeInput.text));
+        clientBtn.onClick.AddListener(() => JoinRelay(joinCodeInput.text.Trim()));
     }
 
     public async void CreateRelay()
     {
-        Allocation allocation = await RelayService.Instance.CreateAllocationAsync(2);
-        string joinCode = await RelayService.Instance.GetJoinCodeAsync(allocation.AllocationId);
-        Debug.Log(joinCode);
-
-        NetworkPlayersManager.instance.lobbyCode = joinCode;
-
-        RelayServerData relayServerData = new RelayServerData(allocation, "dtls");
-        NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(relayServerData);
-
-        if (NetworkManager.Singleton.StartHost())
+        try
         {
-            Debug.Log("Host started");
-            NetworkManager.Singleton.SceneManager.LoadScene(gameScene, LoadSceneMode.Single);
+            Allocation allocation = await RelayService.Instance.CreateAllocationAsync(2);
+            string joinCode = await RelayService.Instance.GetJoinCodeAsync(allocation.AllocationId);
+            Debug.Log(joinCode);
+
+            NetworkGameManager.instance.SetLobbyCode(joinCode);
+
+            RelayServerData relayServerData = new RelayServerData(allocation, "dtls");
+            NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(relayServerData);
+
+            if (NetworkManager.Singleton.StartHost())
+            {
+                Debug.Log("Host started");
+                NetworkManager.Singleton.SceneManager.LoadScene(gameScene, LoadSceneMode.Single);
+            }
+            else
+            {
+                throw new Exception("Could not start host");
+            }
+        }
+        catch (Exception e)
+        {
+            Debug.LogError("Error while creating relay:\n" + e);
         }
     }
 
     public async void JoinRelay(string joinCode)
     {
-        var joinAllocation = await RelayService.Instance.JoinAllocationAsync(joinCode);
-        var relayServerData = new RelayServerData(joinAllocation, "dtls");
-        NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(relayServerData);
-
-        if (NetworkManager.Singleton.StartClient())
+        try
         {
-            Debug.Log("Client started");
+            var joinAllocation = await RelayService.Instance.JoinAllocationAsync(joinCode);
+            var relayServerData = new RelayServerData(joinAllocation, "dtls");
+            NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(relayServerData);
+
+            if (NetworkManager.Singleton.StartClient())
+            {
+                Debug.Log("Client started");
+            }
+            else
+            {
+                throw new Exception("Could not start client");
+            }
+        }
+        catch (Exception e)
+        {
+            Debug.LogError("Error while joining relay:\n" + e);
         }
     }
 }

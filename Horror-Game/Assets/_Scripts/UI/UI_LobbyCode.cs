@@ -9,6 +9,6 @@ public class UI_LobbyCode : MonoBehaviour
 
     void Start()
     {
-        codeTextField.text = NetworkPlayersManager.instance.lobbyCode;
+        codeTextField.text = NetworkGameManager.instance.GetLobbyCode();
     }
 }

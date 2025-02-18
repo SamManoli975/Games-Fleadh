@@ -13,7 +13,7 @@ public class GameManager : NetworkBehaviour
     {
         instance = this;
 
-        NetworkPlayersManager.instance.onAllPlayersSpawned.AddListener(StartGame);
+        NetworkPlayersSpawner.instance.onAllPlayersSpawned.AddListener(StartGame);
     }
 
     void StartGame()
@@ -41,7 +41,7 @@ public class GameManager : NetworkBehaviour
         if (!NetworkManager.Singleton.IsServer)
             return;
 
-        Dictionary<ulong, PlayerRole> playersRoles = NetworkPlayersManager.instance.GetPlayersRoles();
+        Dictionary<ulong, PlayerRole> playersRoles = NetworkGameManager.instance.GetPlayersRoles();
         foreach (KeyValuePair<ulong, PlayerRole> entry in playersRoles)
         {
             Debug.Log(entry.Key);
