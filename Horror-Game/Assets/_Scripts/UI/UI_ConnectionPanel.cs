@@ -21,6 +21,7 @@ public class UI_ConnectionPanel : MonoBehaviour
     [SerializeField] Button hostBtn;
     [SerializeField] Button clientBtn;
     [SerializeField] TMP_InputField joinCodeInput;
+    [SerializeField] GameObject connectingPanel;
 
     async void Start()
     {
@@ -45,6 +46,8 @@ public class UI_ConnectionPanel : MonoBehaviour
 
     public async void CreateRelay()
     {
+        connectingPanel.SetActive(true);
+
         try
         {
             Allocation allocation = await RelayService.Instance.CreateAllocationAsync(2);
@@ -68,12 +71,15 @@ public class UI_ConnectionPanel : MonoBehaviour
         }
         catch (Exception e)
         {
+            connectingPanel.SetActive(false);
             Debug.LogError("Error while creating relay:\n" + e);
         }
     }
 
     public async void JoinRelay(string joinCode)
     {
+        connectingPanel.SetActive(true);
+
         try
         {
             var joinAllocation = await RelayService.Instance.JoinAllocationAsync(joinCode);
@@ -91,6 +97,7 @@ public class UI_ConnectionPanel : MonoBehaviour
         }
         catch (Exception e)
         {
+            connectingPanel.SetActive(false);
             Debug.LogError("Error while joining relay:\n" + e);
         }
     }
