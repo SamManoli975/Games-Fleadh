@@ -29,7 +29,7 @@ public class UI_ConnectionPanel : MonoBehaviour
 
         // ParrelSync should only be used within the Unity Editor so you should use the UNITY_EDITOR define
 #if UNITY_EDITOR
-        if (ParrelSync.ClonesManager.IsClone())
+        if (ParrelSync.ClonesManager.IsClone() && !AuthenticationService.Instance.IsSignedIn)
         {
             // When using a ParrelSync clone, switch to a different authentication profile to force the clone
             // to sign in as a different anonymous user account.
@@ -38,7 +38,8 @@ public class UI_ConnectionPanel : MonoBehaviour
         }
 #endif
 
-        await AuthenticationService.Instance.SignInAnonymouslyAsync();
+        if (!AuthenticationService.Instance.IsSignedIn)
+            await AuthenticationService.Instance.SignInAnonymouslyAsync();
 
         hostBtn.onClick.AddListener(CreateRelay);
         clientBtn.onClick.AddListener(() => JoinRelay(joinCodeInput.text.Trim()));

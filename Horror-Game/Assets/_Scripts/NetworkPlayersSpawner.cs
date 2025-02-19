@@ -20,15 +20,14 @@ public class NetworkPlayersSpawner : MonoBehaviour
 
     private void Awake()
     {
-        if (instance == null)
-        {
-            instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
+        if (instance != null && instance != this)
         {
             Destroy(gameObject);
+            return;
         }
+
+        instance = this;
+        DontDestroyOnLoad(gameObject);
     }
 
     void Start()
@@ -138,8 +137,9 @@ public class NetworkPlayersSpawner : MonoBehaviour
         return spawnedPlayerObject;
     }
 
-    public void PrepareForNewScene()
+    public void Reset()
     {
         spawnedPlayerObject.Clear();
+        spawnedActualPlayer.Clear();
     }
 }

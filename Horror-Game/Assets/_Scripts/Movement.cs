@@ -61,9 +61,28 @@ public class Movement : NetworkBehaviour
 
         if (IsOwner)
         {
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
+            if (GameManager.instance != null)
+            {
+                GameManager.instance.onGameStarted += LockCursor;
+                GameManager.instance.onGameEnded += UnlockCursor;
+            }
+            else
+            {
+                LockCursor();
+            }
         }
+    }
+
+    void LockCursor()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+    }
+
+    void UnlockCursor()
+    {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
     }
 
     public override void OnNetworkSpawn()
@@ -83,6 +102,9 @@ public class Movement : NetworkBehaviour
     void Update()
     {
         if (!IsOwner)
+            return;
+
+        if (GameManager.instance != null && !GameManager.instance.IsGameRunning())
             return;
 
         float baseSpeed = (characterType == CharacterType.Survivor) ? survivorSpeed : killerSpeed;

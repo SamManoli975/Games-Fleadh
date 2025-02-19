@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class UI_LobbyCode : MonoBehaviour
 {
-    [SerializeField] TextMeshProUGUI codeTextField;
+    [SerializeField] TMP_InputField codeTextField;
 
     void Start()
     {

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
 using System;
+using UnityEngine.SceneManagement;
 
 public enum PlayerRole
 {
@@ -19,27 +20,40 @@ public class NetworkGameManager : MonoBehaviour
     public event Action<ulong> OnClientConnectedCallback;
     public event Action<ulong> OnClientDisconnectCallback;
 
+    [SerializeField] string mainMenu;
+
     Dictionary<ulong, PlayerRole> playersRoles = new Dictionary<ulong, PlayerRole>();
 
     string lobbyCode = "";
 
     private void Awake()
     {
-        if (instance == null)
-        {
-            instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
+        if (instance != null && instance != this)
         {
             Destroy(gameObject);
+            return;
         }
+
+        instance = this;
+        DontDestroyOnLoad(gameObject);
     }
 
     void Start()
     {
         NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnected;
         NetworkManager.Singleton.OnClientDisconnectCallback += OnClientDisconnected;
+        NetworkManager.Singleton.OnServerStopped += HandleServerStopped;
+    }
+
+    void HandleServerStopped(bool _someBool)
+    {
+        ResetState();
+    }
+
+    void ResetState()
+    {
+        playersRoles.Clear();
+        NetworkPlayersSpawner.instance.Reset();
     }
 
     private void OnClientConnected(ulong clientId)
@@ -55,10 +69,31 @@ public class NetworkGameManager : MonoBehaviour
 
     private void OnClientDisconnected(ulong clientId)
     {
+        if (clientId == NetworkManager.Singleton.LocalClientId)
+        {
+            Debug.Log("Local client disconnected, returning to main menu...");
+            ReturnToMainMenu();
+        }
+
         if (!NetworkManager.Singleton.IsServer)
             return;
 
         OnClientDisconnectCallback?.Invoke(clientId);
+    }
+
+    private void ReturnToMainMenu()
+    {
+        // Make sure network is fully shut down
+        if (NetworkManager.Singleton.IsConnectedClient || NetworkManager.Singleton.IsListening)
+        {
+            NetworkManager.Singleton.Shutdown();
+        }
+
+        // Unlock cursor just in case
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+
+        SceneLoader.instance.LoadScene(mainMenu);
     }
 
     PlayerRole GetNewPlayerRole(ulong clientId)
@@ -73,7 +108,7 @@ public class NetworkGameManager : MonoBehaviour
     }
 
     // only can start if there is 1 monster and there are 2 players
-    bool CanStartGame()
+    public bool CanStartGame()
     {
         if (playersRoles.Count != 2)
             return false;

@@ -29,7 +29,6 @@ public class NetworkPlayer : NetworkBehaviour
         }
 
         netObj.GetComponent<NetworkPlayerObject>().SetNetworkPlayer(this);
-        Debug.Log("here");
     }
 
     void SpawnPlayerObj()

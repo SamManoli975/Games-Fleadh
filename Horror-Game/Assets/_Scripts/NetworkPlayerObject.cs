@@ -12,7 +12,6 @@ public class NetworkPlayerObject : NetworkBehaviour
         if (IsOwner)
         {
             networkPlayer.PlayerObjectSpawned();
-            Debug.Log("In start");
         }
     }
 
