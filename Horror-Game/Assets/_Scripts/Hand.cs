@@ -93,7 +93,7 @@ public class Hand : NetworkBehaviour
         }
 
         inventory.RemoveItemFromSlot(curHandItemType.Value, selectedSlot.Value);
-        curHandItemType.Value = ItemType.none;
+        curHandItemType.Value = inventory.GetItemStackAtSlot(selectedSlot.Value).itemType;
     }
 
     void DropCurItem()

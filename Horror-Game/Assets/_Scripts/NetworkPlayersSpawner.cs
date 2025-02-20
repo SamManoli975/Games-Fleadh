@@ -41,7 +41,6 @@ public class NetworkPlayersSpawner : MonoBehaviour
     {
         if (!NetworkManager.Singleton.IsServer)
             return;
-        Debug.Log("Subbing");
         NetworkManager.Singleton.SceneManager.OnLoadEventCompleted += OnSceneLoadEvent;
     }
 

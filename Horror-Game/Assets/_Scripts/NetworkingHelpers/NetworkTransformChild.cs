@@ -8,12 +8,14 @@ public class NetworkTransformChild : MonoBehaviour
 {
     public Transform target;
     Vector3 offset;
+    bool isOffsetSet = false;
 
-    void Start()
+    void Awake()
     {
-        if (target != null)
+        if (!isOffsetSet && target != null)
         {
             offset = transform.position - target.transform.position;
+            isOffsetSet = true;
         }
     }
 
@@ -28,5 +30,13 @@ public class NetworkTransformChild : MonoBehaviour
     void SyncTransform()
     {
         transform.position = target.transform.position + offset;
+    }
+
+    public void SetTarget(Transform target, Vector3 offset)
+    {
+        this.target = target;
+
+        isOffsetSet = true;
+        this.offset = offset;
     }
 }

@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &2435142581511081971
+--- !u!1 &1403791453883487194
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,53 +8,46 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 2438747060880317803}
-  - component: {fileID: 2431268978357316481}
-  - component: {fileID: 2420970723991392313}
-  - component: {fileID: -16831117746995447}
-  - component: {fileID: 2349224068681060975}
-  - component: {fileID: 2349224068681060972}
-  - component: {fileID: 2349224068681060974}
-  - component: {fileID: 309898154639865415}
-  - component: {fileID: 6099080389121927871}
-  - component: {fileID: -907120198190692916}
+  - component: {fileID: 1398422808121147714}
+  - component: {fileID: 1372898477892908968}
+  - component: {fileID: 1380667396212231184}
   m_Layer: 0
-  m_Name: FlashlightItem
+  m_Name: Flashlight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &2438747060880317803
+--- !u!4 &1398422808121147714
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2435142581511081971}
-  m_LocalRotation: {x: 0, y: 0.70710677, z: 0.70710677, w: 0}
-  m_LocalPosition: {x: 0.375, y: 1.035, z: 2.797}
+  m_GameObject: {fileID: 1403791453883487194}
+  m_LocalRotation: {x: -0, y: 0.7071068, z: 0.7071068, w: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 3, y: 3, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 2438747060880317803}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -90, y: 90, z: 90}
---- !u!33 &2431268978357316481
+--- !u!33 &1372898477892908968
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2435142581511081971}
+  m_GameObject: {fileID: 1403791453883487194}
   m_Mesh: {fileID: 4300000, guid: 9a3b57f0a1248be419dd9c4d54748512, type: 3}
---- !u!23 &2420970723991392313
+--- !u!23 &1380667396212231184
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2435142581511081971}
+  m_GameObject: {fileID: 1403791453883487194}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -93,6 +86,45 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &2435142581511081971
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2438747060880317803}
+  - component: {fileID: -16831117746995447}
+  - component: {fileID: 6099080389121927871}
+  - component: {fileID: -907120198190692916}
+  - component: {fileID: 2349224068681060974}
+  - component: {fileID: 2349224068681060975}
+  - component: {fileID: 309898154639865415}
+  - component: {fileID: 2349224068681060972}
+  m_Layer: 0
+  m_Name: FlashlightItem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2438747060880317803
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2435142581511081971}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -4.683484, y: 0.75975627, z: 8.244832}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1398422808121147714}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &-16831117746995447
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -114,7 +146,7 @@ MonoBehaviour:
   SpawnWithObservers: 1
   DontDestroyWithOwner: 0
   AutoObjectParentSync: 1
---- !u!114 &2349224068681060975
+--- !u!114 &6099080389121927871
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -123,26 +155,41 @@ MonoBehaviour:
   m_GameObject: {fileID: 2435142581511081971}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3b862edec338944479fa1977b1629850, type: 3}
+  m_Script: {fileID: 11500000, guid: e96cb6065543e43c4a752faaa1468eb1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemType: 1
-  outlineOnHover: 1
-  outline: {fileID: 2349224068681060974}
-  interactableMaster: {fileID: 0}
---- !u!65 &2349224068681060972
-BoxCollider:
+  UseUnreliableDeltas: 0
+  SyncPositionX: 1
+  SyncPositionY: 1
+  SyncPositionZ: 1
+  SyncRotAngleX: 1
+  SyncRotAngleY: 1
+  SyncRotAngleZ: 1
+  SyncScaleX: 0
+  SyncScaleY: 0
+  SyncScaleZ: 0
+  PositionThreshold: 0.001
+  RotAngleThreshold: 0.01
+  ScaleThreshold: 0.01
+  UseQuaternionSynchronization: 0
+  UseQuaternionCompression: 0
+  UseHalfFloatPrecision: 0
+  InLocalSpace: 0
+  Interpolate: 1
+  SlerpPosition: 0
+--- !u!114 &-907120198190692916
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2435142581511081971}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.07204321, y: 0.2305718, z: 0.07315462}
-  m_Center: {x: -0.000000020489091, y: 0, z: 0}
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a121d21ca4d1e944aa77cc608206feb4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 0}
 --- !u!114 &2349224068681060974
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -583,6 +630,22 @@ MonoBehaviour:
     - {x: -0.4873077, y: -0.5752177, z: -0.65700513}
     - {x: 0, y: -0.28523436, z: -0.95845777}
     - {x: 0, y: -0.57952154, z: -0.8149569}
+--- !u!114 &2349224068681060975
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2435142581511081971}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b862edec338944479fa1977b1629850, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemType: 1
+  outlineOnHover: 1
+  outline: {fileID: 2349224068681060974}
+  interactableMaster: {fileID: 0}
 --- !u!114 &309898154639865415
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -605,47 +668,16 @@ MonoBehaviour:
   outlineOnHover: 1
   outline: {fileID: 2349224068681060974}
   interactableMaster: {fileID: 0}
---- !u!114 &6099080389121927871
-MonoBehaviour:
+--- !u!65 &2349224068681060972
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2435142581511081971}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e96cb6065543e43c4a752faaa1468eb1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  UseUnreliableDeltas: 0
-  SyncPositionX: 1
-  SyncPositionY: 1
-  SyncPositionZ: 1
-  SyncRotAngleX: 0
-  SyncRotAngleY: 0
-  SyncRotAngleZ: 0
-  SyncScaleX: 0
-  SyncScaleY: 0
-  SyncScaleZ: 0
-  PositionThreshold: 0.001
-  RotAngleThreshold: 0.01
-  ScaleThreshold: 0.01
-  UseQuaternionSynchronization: 0
-  UseQuaternionCompression: 0
-  UseHalfFloatPrecision: 0
-  InLocalSpace: 0
-  Interpolate: 1
-  SlerpPosition: 0
---- !u!114 &-907120198190692916
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2435142581511081971}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a121d21ca4d1e944aa77cc608206feb4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  target: {fileID: 0}
+  serializedVersion: 2
+  m_Size: {x: 0.2683463, y: 0.19911715, z: 0.69780874}
+  m_Center: {x: -0.0022275448, y: -0.014868036, z: 0.019625902}

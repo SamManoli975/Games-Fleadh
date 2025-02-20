@@ -10,7 +10,7 @@ public class UI_WaitingScreen : MonoBehaviour
 
     void Start()
     {
-        if (!GameManager.instance.IsGameRunning())
+        if (GameManager.instance != null && !GameManager.instance.IsGameRunning())
         {
             Show();
             GameManager.instance.onGameStarted += Hide;

@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &7196255955651736815
+--- !u!1 &1110818351788836686
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,45 +8,45 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 7196255955651736812}
-  - component: {fileID: 7196255955651736814}
-  - component: {fileID: 7196255955651736813}
+  - component: {fileID: 1110818351788836685}
+  - component: {fileID: 1110818351788836684}
+  - component: {fileID: 1110818351788836683}
   m_Layer: 0
-  m_Name: GameManager
+  m_Name: ItemsSpawnerManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &7196255955651736812
+--- !u!4 &1110818351788836685
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7196255955651736815}
+  m_GameObject: {fileID: 1110818351788836686}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 956.3889, y: 440.54785, z: 6.6288886}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7196255955651736814
+--- !u!114 &1110818351788836684
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7196255955651736815}
+  m_GameObject: {fileID: 1110818351788836686}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 2016001684
-  InScenePlacedSourceGlobalObjectIdHash: 1938214442
+  GlobalObjectIdHash: 3570787208
+  InScenePlacedSourceGlobalObjectIdHash: 1661977345
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
   ActiveSceneSynchronization: 0
@@ -54,15 +54,25 @@ MonoBehaviour:
   SpawnWithObservers: 1
   DontDestroyWithOwner: 0
   AutoObjectParentSync: 1
---- !u!114 &7196255955651736813
+--- !u!114 &1110818351788836683
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7196255955651736815}
+  m_GameObject: {fileID: 1110818351788836686}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 805edffe664d9b84495b68275c934cca, type: 3}
+  m_Script: {fileID: 11500000, guid: 352aba061a4d86348b7e3dd6af2ef25a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spawnableItemDatas:
+  - itemPrefab: {fileID: 2724920519054411267, guid: e4735a27e0f4a494d8b7b5dd1b7ee7e2, type: 3}
+    itemSpawnerType: 0
+    spawnCount: 5
+  - itemPrefab: {fileID: 2238431236258981127, guid: a8e859ebb4b7c324591cb8971a1fb9a9, type: 3}
+    itemSpawnerType: 1
+    spawnCount: 3
+  - itemPrefab: {fileID: 2435142581511081971, guid: 390b3989104516944a8298e91f4d6919, type: 3}
+    itemSpawnerType: 2
+    spawnCount: 2

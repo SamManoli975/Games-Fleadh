@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
 
-enum GameState
+public enum GameState
 {
     preparing,
     running,
@@ -15,8 +15,8 @@ public class GameManager : NetworkBehaviour
 {
     public static GameManager instance;
 
-    public Action onGameStarted;
-    public Action onGameEnded;
+    public event Action onGameStarted;
+    public event Action onGameEnded;
 
     NetworkVariable<GameState> gameState = new NetworkVariable<GameState>(GameState.preparing);
 

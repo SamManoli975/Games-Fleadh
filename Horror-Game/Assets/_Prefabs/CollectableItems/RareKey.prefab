@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 4508861804337935873}
   - component: {fileID: -8214575726783607157}
   m_Layer: 0
-  m_Name: key2Item
+  m_Name: RareKey
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

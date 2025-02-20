@@ -6,8 +6,8 @@ public enum ItemType
 {
     none,
     flashlight,
-    key1,
-    key2
+    keyCommon,
+    keyRare
 }
 
 [System.Serializable]

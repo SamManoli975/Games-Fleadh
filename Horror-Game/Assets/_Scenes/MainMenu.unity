@@ -3483,10 +3483,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3569440673271594274, guid: b104b96358a4e3e499cdb49616a8b4fe, type: 3}
-      propertyPath: mainMenu
-      value: MainMenu
-      objectReference: {fileID: 0}
     - target: {fileID: 3569440673271594303, guid: b104b96358a4e3e499cdb49616a8b4fe, type: 3}
       propertyPath: m_Name
       value: NetworkGameManager
@@ -3547,18 +3543,6 @@ PrefabInstance:
     - target: {fileID: 5762797267073518655, guid: e4e8c2025be29b448a58f4fb3b125b8e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7302452489100788190, guid: e4e8c2025be29b448a58f4fb3b125b8e, type: 3}
-      propertyPath: spawnPlayerInScenes.Array.size
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 7302452489100788190, guid: e4e8c2025be29b448a58f4fb3b125b8e, type: 3}
-      propertyPath: spawnPlayerInScenes.Array.data[1]
-      value: PlayerObjects
-      objectReference: {fileID: 0}
-    - target: {fileID: 7302452489100788190, guid: e4e8c2025be29b448a58f4fb3b125b8e, type: 3}
-      propertyPath: spawnPlayerInScenes.Array.data[2]
-      value: MainScene
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e4e8c2025be29b448a58f4fb3b125b8e, type: 3}
