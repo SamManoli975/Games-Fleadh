@@ -3163,7 +3163,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 1810388293
+  GlobalObjectIdHash: 362563344
   InScenePlacedSourceGlobalObjectIdHash: 362563344
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
@@ -3196,23 +3196,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a370266be9f63694e974b5a4147618d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characterType: 0
-  allowSprint: 1
   orientationTransform: {fileID: 6685421896897102064}
-  survivorSpeed: 7
-  killerSpeed: 4.5
+  movementSpeed: 3
   runSpeed: 12
+  crouchSpeed: 3
+  allowSprint: 1
   jumpPower: 10
   gravity: 30
   lookSpeed: 2
   lookXLimit: 80
   defaultHeight: 2
   crouchHeight: 0.7
-  crouchSpeed: 3
   maxStamina: 3
   staminaRegenRate: 1
   staminaRegenDelay: 2
-  isSprinting: 0
   staminaBar: {fileID: 0}
   exhaustionSound: {fileID: 5157970250599511388}
   footstepPlayer: {fileID: 9128153538631564597}

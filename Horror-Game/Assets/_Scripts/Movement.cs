@@ -1,47 +1,63 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Netcode;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
+
+public enum MovementState
+{
+    idle,
+    walking,
+    running,
+    crouching,
+    crouchingMoving
+}
 
 [RequireComponent(typeof(CharacterController))]
 public class Movement : NetworkBehaviour
 {
-    public enum CharacterType { Survivor, Killer }
-    public CharacterType characterType;
-    public bool allowSprint = false;
     // usually camera is inside this transform
     public Transform orientationTransform;
-    public float survivorSpeed = 3f;
-    public float killerSpeed = 4.5f;
+
+    public float movementSpeed = 3f;
     public float runSpeed = 6f;
+    public float crouchSpeed = 3f;
+
+    public bool allowSprint = false;
+
     public float jumpPower = 3f;
     public float gravity = 10f;
+
     public float lookSpeed = 2f;
     public float lookXLimit = 45f;
+
     public float defaultHeight = 2f;
     public float crouchHeight = 1f;
-    public float crouchSpeed = 3f;
 
     public float maxStamina = 3f;
     public float staminaRegenRate = 1f;
     public float staminaRegenDelay = 2f;
-    private float timeSinceLastSprint = 0f;
-    public bool isSprinting = false;
-    public UnityEngine.UI.Image staminaBar;
+
+
+    public Image staminaBar;
     public AudioSource exhaustionSound;
 
-    private bool isMoving = false;
+    float timeSinceLastSprint = 0f;
 
     private Vector3 moveDirection = Vector3.zero;
     private float rotationX = 0;
     private CharacterController characterController;
-    private bool canMove = true;
     private Animator animator;
 
     [SerializeField] private FootstepPlayer footstepPlayer;
 
     private NetworkVariable<float> currentStamina;
-    private NetworkVariable<bool> isRunning = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+    private NetworkVariable<MovementState> movementState = new NetworkVariable<MovementState>(MovementState.idle, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+
+    CapsuleCollider capsuleCollider;
+    Vector3 originalCcCenter;
+    float orientationOriginalY;
 
     void Awake()
     {
@@ -50,7 +66,10 @@ public class Movement : NetworkBehaviour
 
     void Start()
     {
+        capsuleCollider = GetComponent<CapsuleCollider>();
         characterController = GetComponent<CharacterController>();
+        originalCcCenter = characterController.center;
+        orientationOriginalY = orientationTransform.localPosition.y;
 
         if (exhaustionSound != null)
         {
@@ -95,7 +114,7 @@ public class Movement : NetworkBehaviour
         if (!IsOwner)
         {
             currentStamina.OnValueChanged += (float previous, float current) => HandleExhaustionSound();
-            isRunning.OnValueChanged += (bool previous, bool current) => HandleExhaustionSound();
+            movementState.OnValueChanged += (MovementState previous, MovementState current) => HandleExhaustionSound();
         }
     }
 
@@ -107,22 +126,64 @@ public class Movement : NetworkBehaviour
         if (GameManager.instance != null && !GameManager.instance.IsGameRunning())
             return;
 
-        float baseSpeed = (characterType == CharacterType.Survivor) ? survivorSpeed : killerSpeed;
+        bool isMoving = Input.GetAxis("Vertical") != 0 || Input.GetAxis("Horizontal") != 0;
+        bool isRunning = allowSprint && Input.GetKey(KeyCode.LeftShift) && currentStamina.Value > 0;
+        bool isCrouching = allowSprint && Input.GetKey(KeyCode.LeftControl);
+
+        // determining cur state
+        MovementState prevState = movementState.Value;
+        movementState.Value = MovementState.idle;
+        if (isMoving && isRunning)
+        {
+            movementState.Value = MovementState.running;
+            if (prevState != movementState.Value)
+                animator.SetTrigger("goRunning");
+        }
+        else if (isMoving && isCrouching)
+        {
+            movementState.Value = MovementState.crouchingMoving;
+            if (prevState != movementState.Value)
+                animator.SetTrigger("goCrouchingMoving");
+        }
+        else if (isMoving)
+        {
+            movementState.Value = MovementState.walking;
+            if (prevState != movementState.Value)
+                animator.SetTrigger("goWalking");
+        }
+        else if (isCrouching)
+        {
+            movementState.Value = MovementState.crouching;
+            if (prevState != movementState.Value)
+                animator.SetTrigger("goCrouching");
+        }
+        else
+        {
+            movementState.Value = MovementState.idle;
+            if (prevState != movementState.Value)
+                animator.SetTrigger("goIdle");
+        }
+
+        float curSpeed = movementSpeed;
+        if (movementState.Value == MovementState.running)
+        {
+            curSpeed = runSpeed;
+        }
+        else if (movementState.Value == MovementState.crouching || movementState.Value == MovementState.crouchingMoving)
+        {
+            curSpeed = crouchSpeed;
+        }
+
+        float curSpeedX = curSpeed * Input.GetAxis("Vertical");
+        float curSpeedY = curSpeed * Input.GetAxis("Horizontal");
+
         Vector3 forward = transform.TransformDirection(Vector3.forward);
         Vector3 right = transform.TransformDirection(Vector3.right);
-        isMoving = Input.GetAxis("Vertical") != 0 || Input.GetAxis("Horizontal") != 0;
-        isRunning.Value = allowSprint && Input.GetKey(KeyCode.LeftShift) && currentStamina.Value > 0;
-
-        float curSpeedX = canMove ? (isRunning.Value ? runSpeed : baseSpeed) * Input.GetAxis("Vertical") : 0;
-        float curSpeedY = canMove ? (isRunning.Value ? runSpeed : baseSpeed) * Input.GetAxis("Horizontal") : 0;
         float movementDirectionY = moveDirection.y;
         moveDirection = (forward * curSpeedX) + (right * curSpeedY);
 
-        // Update Animator Parameters
-        animator.SetBool("isMoving", isMoving);
-        animator.SetBool("isRunning", isRunning.Value);
-
-        if (Input.GetButton("Jump") && canMove && characterController.isGrounded)
+        // jamping handling
+        if (Input.GetButton("Jump") && characterController.isGrounded)
         {
             moveDirection.y = jumpPower;
         }
@@ -136,36 +197,57 @@ public class Movement : NetworkBehaviour
             moveDirection.y -= gravity * Time.deltaTime;
         }
 
-        if (Input.GetKey(KeyCode.C) && canMove)
+        // crouching handling
+        bool nowCrouching = movementState.Value == MovementState.crouching || movementState.Value == MovementState.crouchingMoving;
+        bool wasCrouching = prevState == MovementState.crouching || prevState == MovementState.crouchingMoving;
+        if (nowCrouching)
         {
-            characterController.height = crouchHeight;
-            baseSpeed = crouchSpeed;
+            if (!wasCrouching)
+            {
+                characterController.height = crouchHeight;
+                characterController.center = originalCcCenter * crouchHeight / defaultHeight;
+                capsuleCollider.height = characterController.height;
+                capsuleCollider.center = characterController.center;
+
+                Vector3 orientationTransformPos = orientationTransform.localPosition;
+                orientationTransformPos.y = orientationOriginalY * crouchHeight / defaultHeight;
+                orientationTransform.localPosition = orientationTransformPos;
+            }
         }
         else
         {
-            characterController.height = defaultHeight;
+            if (wasCrouching)
+            {
+                float yDiff = (defaultHeight - crouchHeight) / 2;
+                characterController.enabled = false;
+                transform.position += new Vector3(0, yDiff * transform.localScale.y, 0);
+                characterController.enabled = true;
+                characterController.height = defaultHeight;
+                characterController.center = originalCcCenter;
+                capsuleCollider.height = characterController.height;
+                capsuleCollider.center = characterController.center;
+
+                Vector3 orientationTransformPos = orientationTransform.localPosition;
+                orientationTransformPos.y = orientationOriginalY;
+                orientationTransform.localPosition = orientationTransformPos;
+            }
         }
 
         characterController.Move(moveDirection * Time.deltaTime);
 
-        if (canMove)
-        {
-            rotationX += -Input.GetAxis("Mouse Y") * lookSpeed;
-            rotationX = Mathf.Clamp(rotationX, -lookXLimit, lookXLimit);
-            orientationTransform.transform.localRotation = Quaternion.Euler(rotationX, 0, 0);
-            transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Mouse X") * lookSpeed, 0);
-        }
+        rotationX += -Input.GetAxis("Mouse Y") * lookSpeed;
+        rotationX = Mathf.Clamp(rotationX, -lookXLimit, lookXLimit);
+        orientationTransform.transform.localRotation = Quaternion.Euler(rotationX, 0, 0);
+        transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Mouse X") * lookSpeed, 0);
 
         // Sprinting logic (stamina handling)
-        if (isRunning.Value)
+        if (movementState.Value == MovementState.running)
         {
-            isSprinting = true;
             currentStamina.Value -= Time.deltaTime;
             timeSinceLastSprint = 0f;
         }
         else
         {
-            isSprinting = false;
             timeSinceLastSprint += Time.deltaTime;
 
             if (timeSinceLastSprint >= staminaRegenDelay && currentStamina.Value < maxStamina)
@@ -189,7 +271,7 @@ public class Movement : NetworkBehaviour
     {
         if (exhaustionSound != null)
         {
-            if (isRunning.Value && !exhaustionSound.isPlaying)
+            if (movementState.Value == MovementState.running && !exhaustionSound.isPlaying)
             {
                 exhaustionSound.Play();
             }
@@ -217,9 +299,9 @@ public class Movement : NetworkBehaviour
     // Method to handle footstep sound when triggered by Animation Event
     public void OnFootstep()
     {
-        if (characterController.isGrounded && isMoving)
+        if (characterController.isGrounded && movementState.Value != MovementState.idle)
         {
-            footstepPlayer.PlayFootstep();
+            footstepPlayer.PlayFootstep(movementState.Value == MovementState.crouching || movementState.Value == MovementState.crouchingMoving);
         }
     }
 }

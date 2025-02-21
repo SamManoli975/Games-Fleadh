@@ -21,12 +21,17 @@ public class FootstepPlayer : NetworkBehaviour
 
 
     [ServerRpc]
-    void PlayFootstepServerRpc()
+    void PlayFootstepServerRpc(bool isCrouching)
     {
-        PlayFootstepClientRpc();
+        PlayFootstepClientRpc(isCrouching);
     }
     [ClientRpc]
-    void PlayFootstepClientRpc()
+    void PlayFootstepClientRpc(bool isCrouching)
+    {
+        if (!IsOwner)
+            PlayFootstepBase(isCrouching);
+    }
+    void PlayFootstepBase(bool isCrouching)
     {
         SurfaceType surfaceType = SurfaceType.standard;
 
@@ -63,9 +68,12 @@ public class FootstepPlayer : NetworkBehaviour
         }
     }
 
-    public void PlayFootstep()
+    public void PlayFootstep(bool isCrouching)
     {
         if (IsOwner)
-            PlayFootstepServerRpc();
+        {
+            PlayFootstepBase(isCrouching);
+            PlayFootstepServerRpc(isCrouching);
+        }
     }
 }
