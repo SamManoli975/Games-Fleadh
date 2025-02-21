@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Microsoft.Unity.VisualStudio.Editor;
 using UnityEngine;
 
 public class UI_Manager : MonoBehaviour
@@ -9,6 +10,7 @@ public class UI_Manager : MonoBehaviour
     [SerializeField] UI_Inventory uI_Inventory;
     [SerializeField] UI_HoveredMessage uI_HoveredMessage;
     [SerializeField] UI_Hearts uI_Hearts;
+    [SerializeField] UI_StaminaBar uI_StaminaBar;
 
     void Awake()
     {
@@ -17,6 +19,7 @@ public class UI_Manager : MonoBehaviour
         uI_Inventory.gameObject.SetActive(false);
         uI_HoveredMessage.gameObject.SetActive(false);
         uI_Hearts.gameObject.SetActive(false);
+        uI_StaminaBar.gameObject.SetActive(false);
     }
 
     public UI_Inventory GetInventoryUI()
@@ -35,5 +38,11 @@ public class UI_Manager : MonoBehaviour
     {
         uI_Hearts.gameObject.SetActive(true);
         return uI_Hearts;
+    }
+
+    public UI_StaminaBar GetStaminaBarUI()
+    {
+        uI_StaminaBar.gameObject.SetActive(true);
+        return uI_StaminaBar;
     }
 }
