@@ -14,19 +14,28 @@ public enum ItemSpawnerType
 public class ItemSpawner : MonoBehaviour
 {
     [SerializeField] ItemSpawnerType itemSpawnerType;
+    [SerializeField] Transform overrideParent;
 
     ItemType itemTypeToSpawn;
     bool hasParent = false;
     Vector3 originalParentOffeset;
 
+    Transform parent;
+
     void Awake()
     {
         ItemsSpawnerManager.instance.AddItemSpawner(this);
 
-        if (transform.parent != null)
+        parent = overrideParent;
+        if (parent == null)
+        {
+            parent = transform.parent;
+        }
+
+        if (parent != null)
         {
             hasParent = true;
-            originalParentOffeset = transform.position - transform.parent.gameObject.transform.position;
+            originalParentOffeset = transform.position - parent.position;
         }
     }
 
@@ -52,7 +61,7 @@ public class ItemSpawner : MonoBehaviour
 
         if (hasParent)
         {
-            collectableItem.GetComponent<NetworkTransformChild>().SetTarget(transform.parent, originalParentOffeset);
+            collectableItem.GetComponent<NetworkTransformChild>().SetTarget(parent, originalParentOffeset);
         }
 
         collectableItem.GetComponent<NetworkObject>().Spawn(true);

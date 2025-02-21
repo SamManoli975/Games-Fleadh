@@ -67,12 +67,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnableItemDatas:
-  - itemPrefab: {fileID: 2724920519054411267, guid: e4735a27e0f4a494d8b7b5dd1b7ee7e2, type: 3}
+  - itemType: 2
     itemSpawnerType: 0
     spawnCount: 5
-  - itemPrefab: {fileID: 2238431236258981127, guid: a8e859ebb4b7c324591cb8971a1fb9a9, type: 3}
+  - itemType: 3
     itemSpawnerType: 1
     spawnCount: 3
-  - itemPrefab: {fileID: 2435142581511081971, guid: 390b3989104516944a8298e91f4d6919, type: 3}
+  - itemType: 1
     itemSpawnerType: 2
-    spawnCount: 2
+    spawnCount: 10
