@@ -4,24 +4,30 @@ using UnityEngine;
 
 public class TriggerSound : MonoBehaviour
 {
-    public AudioSource audioSource; // Reference to the AudioSource
-    private bool hasPlayed = false; // To ensure the sound plays only once
-
-    void Start()
+    void Update()
     {
-        if (audioSource == null)
+        if (Input.GetKeyDown(KeyCode.H)) // Press "H" to trigger the howl
         {
-            audioSource = GetComponent<AudioSource>();
+            SoundManager.instance.PlayHowlSound(gameObject);
         }
     }
 
-    void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
-        // Check if the entering object is the player (or another tag of interest)
-        if (!hasPlayed && other.CompareTag("Player"))
+        if (other.CompareTag("Player"))
         {
-            audioSource.Play(); // Play the sound
-            hasPlayed = true;  // Ensure it plays only once
+            // Stop the wind sound when the player enters the trigger
+            SoundManager.instance.StopWindSound(other.gameObject);
+            SoundManager.instance.PlayHowlSound(other.gameObject);
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            // Restart the wind sound when the player exits the trigger
+            SoundManager.instance.PlayWindSound(other.gameObject);
         }
     }
 }
