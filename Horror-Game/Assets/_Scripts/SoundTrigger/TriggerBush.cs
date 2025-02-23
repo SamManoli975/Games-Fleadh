@@ -87,7 +87,7 @@ public class TriggerBush : NetworkBehaviour
         }
     }
 
-    // ✅ ServerRpc to Stop the Sound
+    // Server to Stop the Sound
     [ServerRpc(RequireOwnership = false)]
     private void StopBushSoundServerRpc()
     {

@@ -41,7 +41,7 @@ public class TriggerSound : MonoBehaviour
             {
                 // Stop the wind sound when the player enters the trigger
                 SoundManager.instance.StopWindSound(other.gameObject);
-                SoundManager.instance.PlayHowlSound(other.gameObject);
+                //SoundManager.instance.PlayHowlSound(other.gameObject);
 
                 // Start playing floor sounds at random intervals, between 2 and 5 seconds
                 SoundManager.instance.SoundsPlayingAtRandomIntervals(other.gameObject, 3f, 10f, new string[] { "Floor1", "Floor2", "Floor3" }, "floor");
@@ -67,6 +67,8 @@ public class TriggerSound : MonoBehaviour
 
                 // Play thunder sounds
                 SoundManager.instance.SoundsPlayingAtRandomIntervals(other.gameObject, 30f, 60f, new string[] { "Thunder" }, "Thunder");
+                SoundManager.instance.SoundsPlayingAtRandomIntervals(other.gameObject, 30f, 60f, new string[] { "howl" }, "howl");
+                SoundManager.instance.SoundsPlayingAtRandomIntervals(other.gameObject, 5f, 6f, new string[] { "whispers" }, "whispers");
             }
         }
     }

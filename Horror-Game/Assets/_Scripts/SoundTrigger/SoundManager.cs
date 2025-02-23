@@ -10,6 +10,8 @@ public class SoundManager : MonoBehaviour
     private Coroutine floorSoundCoroutine;
     private Coroutine mouseSoundCoroutine;
     private Coroutine thunderSoundCoroutine;
+    private Coroutine howlSoundCoroutine;
+    private Coroutine whispersSoundCoroutine;
 
     private void Awake()
     {
@@ -92,6 +94,20 @@ public class SoundManager : MonoBehaviour
 
             thunderSoundCoroutine = StartCoroutine(PlaySoundAtRandomIntervals(player, minInterval, maxInterval, soundNames));
         }
+        else if(soundType == "howl")
+        {
+            if (howlSoundCoroutine != null)
+                StopCoroutine(howlSoundCoroutine);
+
+            howlSoundCoroutine = StartCoroutine(PlaySoundAtRandomIntervals(player, minInterval, maxInterval, soundNames));
+        }
+        else if(soundType == "whispers")
+        {
+            if (whispersSoundCoroutine != null)
+                StopCoroutine(whispersSoundCoroutine);
+
+            whispersSoundCoroutine = StartCoroutine(PlaySoundAtRandomIntervals(player, minInterval, maxInterval, soundNames));
+        }
 
     }
 
@@ -130,6 +146,16 @@ public class SoundManager : MonoBehaviour
         {
             StopCoroutine(thunderSoundCoroutine);
             thunderSoundCoroutine = null;
+        }
+        if(howlSoundCoroutine != null)
+        {
+            StopCoroutine(howlSoundCoroutine);
+            howlSoundCoroutine = null;
+        }
+        if(whispersSoundCoroutine != null)
+        {
+            StopCoroutine(whispersSoundCoroutine);
+            whispersSoundCoroutine = null;
         }
     }
 
