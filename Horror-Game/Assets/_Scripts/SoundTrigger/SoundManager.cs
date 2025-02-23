@@ -5,8 +5,11 @@ public class SoundManager : MonoBehaviour
 {
     public static SoundManager instance;
 
+    
+
     private Coroutine floorSoundCoroutine;
     private Coroutine mouseSoundCoroutine;
+    private Coroutine thunderSoundCoroutine;
 
     private void Awake()
     {
@@ -48,6 +51,7 @@ public class SoundManager : MonoBehaviour
         }
     }
 
+
     // Public methods for playing specific sounds
     public void StopWindSound(GameObject player)
     {
@@ -81,6 +85,14 @@ public class SoundManager : MonoBehaviour
 
             mouseSoundCoroutine = StartCoroutine(PlaySoundAtRandomIntervals(player, minInterval, maxInterval, soundNames));
         }
+        else if (soundType == "Thunder") 
+        {
+            if (thunderSoundCoroutine != null)
+                StopCoroutine(thunderSoundCoroutine);
+
+            thunderSoundCoroutine = StartCoroutine(PlaySoundAtRandomIntervals(player, minInterval, maxInterval, soundNames));
+        }
+
     }
 
     // Coroutine to play a sound at random intervals
@@ -114,5 +126,13 @@ public class SoundManager : MonoBehaviour
             StopCoroutine(mouseSoundCoroutine);
             mouseSoundCoroutine = null;
         }
+        if (thunderSoundCoroutine != null)
+        {
+            StopCoroutine(thunderSoundCoroutine);
+            thunderSoundCoroutine = null;
+        }
     }
+
+    
+
 }
