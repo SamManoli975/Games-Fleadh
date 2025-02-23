@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TriggerBush : MonoBehaviour
+public class TriggerBush : NetworkBehaviour
 {
     public EnvironmentType environmentType = EnvironmentType.Bush;
 
