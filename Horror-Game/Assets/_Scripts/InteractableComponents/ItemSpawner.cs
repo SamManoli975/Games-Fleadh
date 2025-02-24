@@ -8,7 +8,8 @@ public enum ItemSpawnerType
 {
     keyCommon,
     keyRare,
-    largeObject
+    largeObject,
+    keyGate
 }
 
 public class ItemSpawner : MonoBehaviour

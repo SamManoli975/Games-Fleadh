@@ -49,7 +49,7 @@ public class SoundManager : MonoBehaviour
         }
         else
         {
-            Debug.LogError($"Sound '{soundName}' not found or already playing.");
+            //Debug.LogError($"Sound '{soundName}' not found or already playing.");
         }
     }
 

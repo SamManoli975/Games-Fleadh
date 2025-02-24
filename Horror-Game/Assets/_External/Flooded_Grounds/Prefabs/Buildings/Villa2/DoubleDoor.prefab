@@ -27,7 +27,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7279276922670791173}
-  m_LocalRotation: {x: 0.000000021855694, y: -0, z: -8.881784e-16, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 493.90332, y: 20.509993, z: 503.46762}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -66,8 +66,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 4177268114
-  InScenePlacedSourceGlobalObjectIdHash: 0
+  GlobalObjectIdHash: 3345827833
+  InScenePlacedSourceGlobalObjectIdHash: 3104680491
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
   ActiveSceneSynchronization: 0
@@ -185,6 +185,26 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 143294, guid: 63af1593199c01a4189047182644f168, type: 3}
   m_PrefabInstance: {fileID: 7279276921677521759}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &7279276921677521732
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7279276921677647073}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3210839e0abca240a8e0b4137175218, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  initialIsClosed: 1
+  animTime: 0.3
+  movingPart: {fileID: 7279276921677647073}
+  doDisableOpenCollider: 1
+  doDisableCollidersOnMovement: 0
+  disableColliderFromProgress: 0
+  openRotation: 110
+  closedRotation: 0
 --- !u!114 &7279276921677521754
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -238,26 +258,6 @@ MonoBehaviour:
   InLocalSpace: 1
   Interpolate: 1
   SlerpPosition: 0
---- !u!114 &7279276921677521732
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7279276921677647073}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a3210839e0abca240a8e0b4137175218, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  initialIsClosed: 1
-  animTime: 0.3
-  movingPart: {fileID: 7279276921677647073}
-  doDisableOpenCollider: 1
-  doDisableCollidersOnMovement: 0
-  disableColliderFromProgress: 0
-  openRotation: 110
-  closedRotation: 0
 --- !u!4 &7279276921677877251 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 439132, guid: 63af1593199c01a4189047182644f168, type: 3}

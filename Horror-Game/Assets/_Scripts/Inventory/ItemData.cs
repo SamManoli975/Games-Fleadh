@@ -7,7 +7,8 @@ public enum ItemType
     none,
     flashlight,
     keyCommon,
-    keyRare
+    keyRare,
+    gateKey
 }
 
 [System.Serializable]

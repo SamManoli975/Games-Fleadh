@@ -4372,6 +4372,82 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 415016, guid: 4743926f06b7fdc4c93033724c776cdc, type: 3}
   m_PrefabInstance: {fileID: 38879692}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &39414234
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 39414235}
+  - component: {fileID: 39414237}
+  - component: {fileID: 39414236}
+  m_Layer: 5
+  m_Name: StaminaBarBackground
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &39414235
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 39414234}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1170780972}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 273.0582, y: 8.3138}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &39414236
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 39414234}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.22264141, g: 0.22264141, b: 0.22264141, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &39414237
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 39414234}
+  m_CullTransparentMesh: 1
 --- !u!1001 &39551546
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -17675,7 +17751,7 @@ GameObject:
   m_Component:
   - component: {fileID: 146439087}
   - component: {fileID: 146439088}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Bush
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -31016,7 +31092,7 @@ GameObject:
   - component: {fileID: 266442066}
   - component: {fileID: 266442067}
   - component: {fileID: 266442068}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: BushTrigger (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -34870,7 +34946,7 @@ GameObject:
   - component: {fileID: 302317509}
   - component: {fileID: 302317508}
   - component: {fileID: 302317510}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: BushTrigger (13)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -36218,7 +36294,7 @@ GameObject:
   - component: {fileID: 316658760}
   - component: {fileID: 316658762}
   - component: {fileID: 316658761}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: HouseTrigger (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -37842,7 +37918,7 @@ GameObject:
   m_Component:
   - component: {fileID: 327709776}
   - component: {fileID: 327709777}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Bush
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -58668,7 +58744,7 @@ GameObject:
   - component: {fileID: 340245839}
   - component: {fileID: 340245840}
   - component: {fileID: 340245841}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: BushTrigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -67882,7 +67958,7 @@ GameObject:
   m_Component:
   - component: {fileID: 418346993}
   - component: {fileID: 418346994}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Bush
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -71647,7 +71723,7 @@ GameObject:
   - component: {fileID: 454302973}
   - component: {fileID: 454302974}
   - component: {fileID: 454302975}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: HouseTrigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -78847,7 +78923,7 @@ GameObject:
   - component: {fileID: 522981933}
   - component: {fileID: 522981935}
   - component: {fileID: 522981934}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: HouseTrigger (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -79655,7 +79731,7 @@ GameObject:
   - component: {fileID: 528948390}
   - component: {fileID: 528948392}
   - component: {fileID: 528948391}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: HouseTrigger (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -84797,7 +84873,7 @@ GameObject:
   - component: {fileID: 572522698}
   - component: {fileID: 572522697}
   - component: {fileID: 572522699}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: BushTrigger (10)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -85756,7 +85832,7 @@ GameObject:
   m_Component:
   - component: {fileID: 580638032}
   - component: {fileID: 580638033}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Bush
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -88201,7 +88277,7 @@ GameObject:
   - component: {fileID: 600766676}
   - component: {fileID: 600766678}
   - component: {fileID: 600766677}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: HouseTrigger (13)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -97802,7 +97878,7 @@ GameObject:
   - component: {fileID: 682300761}
   - component: {fileID: 682300763}
   - component: {fileID: 682300762}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: HouseTrigger (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -98791,7 +98867,7 @@ GameObject:
   - component: {fileID: 687767041}
   - component: {fileID: 687767043}
   - component: {fileID: 687767042}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: HouseTrigger (12)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -109250,7 +109326,7 @@ GameObject:
   m_Component:
   - component: {fileID: 789629780}
   - component: {fileID: 789629781}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Bush
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -109816,7 +109892,7 @@ GameObject:
   m_Component:
   - component: {fileID: 791597433}
   - component: {fileID: 791597434}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Bush
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -111539,7 +111615,7 @@ GameObject:
   - component: {fileID: 815290661}
   - component: {fileID: 815290663}
   - component: {fileID: 815290662}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: HouseTrigger (9)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -113749,7 +113825,7 @@ GameObject:
   - component: {fileID: 831289540}
   - component: {fileID: 831289539}
   - component: {fileID: 831289541}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: BushTrigger (8)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -128567,7 +128643,7 @@ GameObject:
   m_Component:
   - component: {fileID: 965868620}
   - component: {fileID: 965868621}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Bush
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -133213,7 +133289,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1012181480}
   - component: {fileID: 1012181481}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Bush
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -140640,7 +140716,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1082890798}
   - component: {fileID: 1082890799}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Bush
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -141242,7 +141318,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1086060019}
   - component: {fileID: 1086060020}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Bush
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -142378,6 +142454,82 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1253365200111565818, guid: 8109e9e16ba4cc04b8e0928aea897927, type: 3}
   m_PrefabInstance: {fileID: 1091860437}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1092231931
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1092231932}
+  - component: {fileID: 1092231934}
+  - component: {fileID: 1092231933}
+  m_Layer: 5
+  m_Name: StaminaBar
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1092231932
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1092231931}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1170780972}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 273.0582, y: 8.3138}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1092231933
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1092231931}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 65eca1706f3c7d0429fdef183658c26a, type: 3}
+  m_Type: 3
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 0
+  m_FillAmount: 0.502
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1092231934
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1092231931}
+  m_CullTransparentMesh: 1
 --- !u!1001 &1092871307
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -147186,6 +147338,7 @@ RectTransform:
   - {fileID: 367346992}
   - {fileID: 1817650434}
   - {fileID: 531556607}
+  - {fileID: 1170780972}
   m_Father: {fileID: 1437179320}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -151069,6 +151222,58 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 480730, guid: 1893b7edd0ad11b4e9f6f17eeb9455b6, type: 3}
   m_PrefabInstance: {fileID: 1170736654}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1170780971
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1170780972}
+  - component: {fileID: 1170780973}
+  m_Layer: 5
+  m_Name: StaminaBarUI
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1170780972
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1170780971}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 39414235}
+  - {fileID: 1092231932}
+  m_Father: {fileID: 1132803175}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -804.55115, y: 409.70007}
+  m_SizeDelta: {x: -1646.9417, y: -1071.6862}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1170780973
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1170780971}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ece54d808176ca409281fd0ef2c73cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  staminaBarFillImage: {fileID: 1092231933}
 --- !u!1001 &1171461967
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -152466,7 +152671,7 @@ GameObject:
   - component: {fileID: 1183736361}
   - component: {fileID: 1183736363}
   - component: {fileID: 1183736362}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: HouseTrigger (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -154436,7 +154641,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1205889383}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Triggers
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -158666,7 +158871,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1240517798}
   - component: {fileID: 1240517799}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Bush
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -161309,7 +161514,7 @@ GameObject:
   - component: {fileID: 1262300763}
   - component: {fileID: 1262300765}
   - component: {fileID: 1262300764}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: HouseTrigger (14)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -167301,7 +167506,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1319658147}
   - component: {fileID: 1319658148}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Bush
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -175915,7 +176120,7 @@ GameObject:
   - component: {fileID: 1393484383}
   - component: {fileID: 1393484385}
   - component: {fileID: 1393484384}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: HouseTrigger (10)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -185434,7 +185639,7 @@ GameObject:
   - component: {fileID: 1470820900}
   - component: {fileID: 1470820899}
   - component: {fileID: 1470820901}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: BushTrigger (12)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -186987,7 +187192,7 @@ GameObject:
   - component: {fileID: 1480611560}
   - component: {fileID: 1480611559}
   - component: {fileID: 1480611561}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: BushTrigger (7)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -191144,7 +191349,7 @@ GameObject:
   - component: {fileID: 1512198155}
   - component: {fileID: 1512198154}
   - component: {fileID: 1512198156}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: BushTrigger (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -195623,7 +195828,7 @@ GameObject:
   - component: {fileID: 1553876278}
   - component: {fileID: 1553876279}
   - component: {fileID: 1553876280}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: BushTrigger (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -209012,7 +209217,7 @@ GameObject:
   - component: {fileID: 1664901861}
   - component: {fileID: 1664901860}
   - component: {fileID: 1664901862}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: BushTrigger (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -228216,7 +228421,7 @@ GameObject:
   - component: {fileID: 1847760654}
   - component: {fileID: 1847760655}
   - component: {fileID: 1847760656}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: BushTrigger (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -229732,7 +229937,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1856501085}
   - component: {fileID: 1856501086}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Bush
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -230689,7 +230894,7 @@ GameObject:
   - component: {fileID: 1862250170}
   - component: {fileID: 1862250172}
   - component: {fileID: 1862250171}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: HouseTrigger (8)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -232585,7 +232790,7 @@ GameObject:
   - component: {fileID: 1875244376}
   - component: {fileID: 1875244375}
   - component: {fileID: 1875244377}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: BushTrigger (9)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -234920,7 +235125,7 @@ GameObject:
   - component: {fileID: 1898744561}
   - component: {fileID: 1898744562}
   - component: {fileID: 1898744563}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: BushTrigger (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -237618,7 +237823,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1927557649}
   - component: {fileID: 1927557650}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Bush
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -240425,7 +240630,7 @@ GameObject:
   - component: {fileID: 1950643577}
   - component: {fileID: 1950643579}
   - component: {fileID: 1950643578}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: HouseTrigger (11)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -240712,7 +240917,7 @@ GameObject:
   - component: {fileID: 1954870501}
   - component: {fileID: 1954870503}
   - component: {fileID: 1954870502}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: HouseTrigger (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -253574,7 +253779,7 @@ GameObject:
   - component: {fileID: 2070132202}
   - component: {fileID: 2070132204}
   - component: {fileID: 2070132203}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: HouseTrigger (7)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -254837,7 +255042,7 @@ GameObject:
   - component: {fileID: 2078764637}
   - component: {fileID: 2078764636}
   - component: {fileID: 2078764638}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: BushTrigger (11)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -260081,7 +260286,7 @@ MonoBehaviour:
   uI_Inventory: {fileID: 367346993}
   uI_HoveredMessage: {fileID: 1817650435}
   uI_Hearts: {fileID: 531556608}
-  uI_StaminaBar: {fileID: 0}
+  uI_StaminaBar: {fileID: 1170780973}
 --- !u!1001 &2126052548
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -263137,10 +263342,6 @@ PrefabInstance:
     - target: {fileID: 7279276922670791170, guid: a3d03672d1e90bf41a6e06dfb6154e1e, type: 3}
       propertyPath: GlobalObjectIdHash
       value: 3345827833
-      objectReference: {fileID: 0}
-    - target: {fileID: 7279276922670791170, guid: a3d03672d1e90bf41a6e06dfb6154e1e, type: 3}
-      propertyPath: InScenePlacedSourceGlobalObjectIdHash
-      value: 3104680491
       objectReference: {fileID: 0}
     - target: {fileID: 7279276922670791173, guid: a3d03672d1e90bf41a6e06dfb6154e1e, type: 3}
       propertyPath: m_Name
