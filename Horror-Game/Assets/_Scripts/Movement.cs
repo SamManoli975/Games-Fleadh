@@ -299,6 +299,9 @@ public class Movement : NetworkBehaviour
     // Method to handle footstep sound when triggered by Animation Event
     public void OnFootstep()
     {
+        if(!IsOwner)
+            return;
+
         if (characterController.isGrounded && movementState.Value != MovementState.idle)
         {
             footstepPlayer.PlayFootstep(movementState.Value == MovementState.crouching || movementState.Value == MovementState.crouchingMoving);

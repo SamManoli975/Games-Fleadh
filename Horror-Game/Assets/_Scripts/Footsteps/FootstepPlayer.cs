@@ -35,23 +35,36 @@ public class FootstepPlayer : NetworkBehaviour
     {
         SurfaceType surfaceType = SurfaceType.standard;
 
-        RaycastHit hit;
-        if (Physics.Raycast(raycastOrigin.transform.position, -raycastOrigin.transform.up, out hit, rayLength, layerMask))
-        {
-            FootstepSurface footstepSurface = hit.collider.GetComponent<FootstepSurface>();
-            if (footstepSurface != null)
+        FootstepSurface footstepSurface = null;
+
+        // determine if we are inside the surface object
+        Collider[] colliders = Physics.OverlapSphere(raycastOrigin.transform.position, 0.1f, layerMask);
+        if(colliders.Length > 0) {
+            footstepSurface = colliders[0].GetComponent<FootstepSurface>();
+            if (footstepSurface == null)
             {
-                surfaceType = footstepSurface.GetSufraceType();
+                Debug.LogError(colliders[0].name + " object is on the footstep surface layer but it does not have 'FootstepSurface' script");
             }
-            else
+        }
+
+        // no try raycast down
+        if (footstepSurface == null && Physics.Raycast(raycastOrigin.transform.position, -raycastOrigin.transform.up, out RaycastHit hit, rayLength, layerMask, QueryTriggerInteraction.Collide))
+        {
+            footstepSurface = hit.collider.GetComponent<FootstepSurface>();
+            if (footstepSurface == null)
             {
                 Debug.LogError(hit.collider.name + " object is on the footstep surface layer but it does not have 'FootstepSurface' script");
             }
         }
 
+        if(footstepSurface != null) {
+            surfaceType = footstepSurface.GetSufraceType();
+        }
+
         SurfaceFootstepAudio surfaceFootstepAudio = FootstepsManager.instance.GetSurfaceAudioClips(surfaceType);
         if (surfaceFootstepAudio == null)
             return;
+
 
         if (surfaceFootstepAudio.mainAudioClip != null)
         {
