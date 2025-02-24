@@ -33,7 +33,7 @@ MonoBehaviour:
     handItemPrefab: {fileID: 0}
   - itemType: 4
     name: Gate Key
-    image: {fileID: 21300000, guid: 7ed4bf615827f0e4bb499ed6cbf1ee03, type: 3}
+    image: {fileID: 21300000, guid: 5fa16af390e5f394f88191e86693d53f, type: 3}
     isStackable: 1
     collectableItemPrefab: {fileID: 2238431236258981127, guid: f06d801b4c5fbcc4c862f83eb28bc4d1, type: 3}
     handItemPrefab: {fileID: 0}

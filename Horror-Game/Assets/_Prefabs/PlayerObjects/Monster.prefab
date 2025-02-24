@@ -2681,7 +2681,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 668270750
+  GlobalObjectIdHash: 3986861631
   InScenePlacedSourceGlobalObjectIdHash: 3986861631
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
@@ -2703,7 +2703,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   orientationTransform: {fileID: 5580652356509563859}
-  movementSpeed: 3
+  movementSpeed: 10
   runSpeed: 6
   crouchSpeed: 3
   allowSprint: 0
