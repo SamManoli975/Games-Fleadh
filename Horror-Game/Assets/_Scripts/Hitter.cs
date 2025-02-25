@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
 
-[RequireComponent(typeof(Animator))]
 public class Hitter : NetworkBehaviour
 {
     [SerializeField] private float hitRechargeTime = 0.2f;
@@ -15,11 +14,22 @@ public class Hitter : NetworkBehaviour
     bool readyToHit = true;
     bool hitting = false;
 
-    Animator animator;
+    [SerializeField] Animator animator;
+    [SerializeField] GameObject localVisual;
+    Animator localAnimator;
+
+    public override void OnNetworkSpawn()
+    {
+        base.OnNetworkSpawn();
+
+        if(!IsOwner) {
+            localVisual.SetActive(false);
+        }
+    }
 
     void Start()
     {
-        animator = GetComponent<Animator>();
+        localAnimator = localVisual.GetComponent<Animator>();
     }
 
     void Update()
@@ -41,12 +51,18 @@ public class Hitter : NetworkBehaviour
         readyToHit = false;
 
         animator.SetTrigger("AxeAttack");
+        localAnimator.SetTrigger("AxeAttack");
     }
 
     IEnumerator RechargeHit()
     {
         yield return new WaitForSeconds(hitRechargeTime);
         readyToHit = true;
+    }
+
+    void AfterSuccessfulHit() {
+        animator.SetTrigger("HitTaunt");
+        localAnimator.SetTrigger("HitTaunt");
     }
 
     [ServerRpc]
@@ -58,6 +74,7 @@ public class Hitter : NetworkBehaviour
             if (hitable != null)
             {
                 hitable.GetHit();
+                AfterSuccessfulHit();
             }
         }
     }

@@ -19,6 +19,18 @@ public class FootstepPlayer : NetworkBehaviour
     [SerializeField] private float sweetenerSourceBasePitch = 1f;
     [SerializeField] private float sweetenerSourcePitchVariation = 0.1f;
 
+    float footstepAudioSourceBaseVolume = 1f;
+    float footstepSweetenerAudioSourceBaseVolume = 1f;
+
+    void Start()
+    {
+        if(footstepAudioSource != null) {
+            footstepAudioSourceBaseVolume = footstepAudioSource.volume;
+        }
+        if(footstepSweetenerAudioSource != null) {
+            footstepSweetenerAudioSourceBaseVolume = footstepSweetenerAudioSource.volume;
+        }
+    }
 
     [ServerRpc]
     void PlayFootstepServerRpc(bool isCrouching)
@@ -70,6 +82,7 @@ public class FootstepPlayer : NetworkBehaviour
         {
             footstepAudioSource.clip = surfaceFootstepAudio.mainAudioClip;
             footstepAudioSource.pitch = mainSourceBasePitch + mainSourcePitchVariation * Random.Range(-1f, 1f);
+            footstepAudioSource.volume = isCrouching ? footstepAudioSourceBaseVolume / 5f : footstepAudioSourceBaseVolume;
             footstepAudioSource.Play();
         }
 
@@ -77,6 +90,7 @@ public class FootstepPlayer : NetworkBehaviour
         {
             footstepSweetenerAudioSource.clip = surfaceFootstepAudio.sweetenerAudioClip;
             footstepSweetenerAudioSource.pitch = sweetenerSourceBasePitch + sweetenerSourcePitchVariation * Random.Range(-1f, 1f);
+            footstepSweetenerAudioSource.volume = isCrouching ? footstepSweetenerAudioSourceBaseVolume / 5f : footstepSweetenerAudioSourceBaseVolume;
             footstepSweetenerAudioSource.Play();
         }
     }

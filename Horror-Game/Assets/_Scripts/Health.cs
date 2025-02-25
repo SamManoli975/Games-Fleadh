@@ -10,6 +10,7 @@ public class Health : NetworkBehaviour, IHitable
     public UnityEvent onDied;
 
     [SerializeField] int maxHealth = 2;
+    [SerializeField] AudioSource hitSource;
 
     NetworkVariable<int> curHealth = new NetworkVariable<int>();
 
@@ -19,7 +20,7 @@ public class Health : NetworkBehaviour, IHitable
 
         curHealth.OnValueChanged += (int previous, int current) => onCurHealthUpdate.Invoke(current);
 
-        if (IsOwner)
+        if (IsServer)
             SetCurHealth(maxHealth);
     }
 
@@ -34,12 +35,22 @@ public class Health : NetworkBehaviour, IHitable
         onDied.Invoke();
     }
 
+    [ClientRpc]
+    void PlayHitSoundClientRpc() {
+        if(IsServer)
+            return;
+
+        hitSource.Play();
+    }
+
     public void GetHit()
     {
         if (!IsServer)
             return;
 
         SetCurHealth(curHealth.Value - 1);
+        hitSource.Play();
+        PlayHitSoundClientRpc();
         if (curHealth.Value <= 0)
             Die();
     }

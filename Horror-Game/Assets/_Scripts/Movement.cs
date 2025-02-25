@@ -48,7 +48,7 @@ public class Movement : NetworkBehaviour
     private Vector3 moveDirection = Vector3.zero;
     private float rotationX = 0;
     private CharacterController characterController;
-    private Animator animator;
+    [SerializeField] private Animator animator;
 
     [SerializeField] private FootstepPlayer footstepPlayer;
 
@@ -58,6 +58,8 @@ public class Movement : NetworkBehaviour
     CapsuleCollider capsuleCollider;
     Vector3 originalCcCenter;
     float orientationOriginalY;
+
+    [SerializeField] bool isStunned;
 
     void Awake()
     {
@@ -75,8 +77,6 @@ public class Movement : NetworkBehaviour
         {
             exhaustionSound.volume = 0f;
         }
-
-        animator = GetComponent<Animator>();
 
         if (IsOwner)
         {
@@ -116,6 +116,8 @@ public class Movement : NetworkBehaviour
             currentStamina.OnValueChanged += (float previous, float current) => HandleExhaustionSound();
             movementState.OnValueChanged += (MovementState previous, MovementState current) => HandleExhaustionSound();
         }
+
+        movementState.OnValueChanged += HandleMovementStateChange;
     }
 
     void Update()
@@ -126,13 +128,20 @@ public class Movement : NetworkBehaviour
         if (GameManager.instance != null && !GameManager.instance.IsGameRunning())
             return;
 
+        rotationX += -Input.GetAxis("Mouse Y") * lookSpeed;
+        rotationX = Mathf.Clamp(rotationX, -lookXLimit, lookXLimit);
+        orientationTransform.transform.localRotation = Quaternion.Euler(rotationX, 0, 0);
+        transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Mouse X") * lookSpeed, 0);
+
+        if(isStunned)
+                return;
+
         bool isMoving = Input.GetAxis("Vertical") != 0 || Input.GetAxis("Horizontal") != 0;
         bool isRunning = allowSprint && Input.GetKey(KeyCode.LeftShift) && currentStamina.Value > 0;
         bool isCrouching = allowSprint && Input.GetKey(KeyCode.LeftControl);
 
         // determining cur state
         MovementState prevState = movementState.Value;
-        movementState.Value = MovementState.idle;
         if (isMoving && isRunning)
         {
             movementState.Value = MovementState.running;
@@ -197,48 +206,7 @@ public class Movement : NetworkBehaviour
             moveDirection.y -= gravity * Time.deltaTime;
         }
 
-        // crouching handling
-        bool nowCrouching = movementState.Value == MovementState.crouching || movementState.Value == MovementState.crouchingMoving;
-        bool wasCrouching = prevState == MovementState.crouching || prevState == MovementState.crouchingMoving;
-        if (nowCrouching)
-        {
-            if (!wasCrouching)
-            {
-                characterController.height = crouchHeight;
-                characterController.center = originalCcCenter * crouchHeight / defaultHeight;
-                capsuleCollider.height = characterController.height;
-                capsuleCollider.center = characterController.center;
-
-                Vector3 orientationTransformPos = orientationTransform.localPosition;
-                orientationTransformPos.y = orientationOriginalY * crouchHeight / defaultHeight;
-                orientationTransform.localPosition = orientationTransformPos;
-            }
-        }
-        else
-        {
-            if (wasCrouching)
-            {
-                float yDiff = (defaultHeight - crouchHeight) / 2;
-                characterController.enabled = false;
-                transform.position += new Vector3(0, yDiff * transform.localScale.y, 0);
-                characterController.enabled = true;
-                characterController.height = defaultHeight;
-                characterController.center = originalCcCenter;
-                capsuleCollider.height = characterController.height;
-                capsuleCollider.center = characterController.center;
-
-                Vector3 orientationTransformPos = orientationTransform.localPosition;
-                orientationTransformPos.y = orientationOriginalY;
-                orientationTransform.localPosition = orientationTransformPos;
-            }
-        }
-
         characterController.Move(moveDirection * Time.deltaTime);
-
-        rotationX += -Input.GetAxis("Mouse Y") * lookSpeed;
-        rotationX = Mathf.Clamp(rotationX, -lookXLimit, lookXLimit);
-        orientationTransform.transform.localRotation = Quaternion.Euler(rotationX, 0, 0);
-        transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Mouse X") * lookSpeed, 0);
 
         // Sprinting logic (stamina handling)
         if (movementState.Value == MovementState.running)
@@ -265,6 +233,53 @@ public class Movement : NetworkBehaviour
         }
 
         HandleExhaustionSound();
+    }
+
+    void HandleMovementStateChange(MovementState previous, MovementState current) {
+        // crouching handling
+        bool nowCrouching = current == MovementState.crouching || current == MovementState.crouchingMoving;
+        bool wasCrouching = previous == MovementState.crouching || previous == MovementState.crouchingMoving;
+        if (nowCrouching)
+        {
+            if (!wasCrouching)
+            {
+                characterController.height = crouchHeight;
+                characterController.center = originalCcCenter * crouchHeight / defaultHeight;
+                capsuleCollider.height = characterController.height;
+                capsuleCollider.center = characterController.center;
+
+                if(IsOwner) 
+                {
+                    Vector3 orientationTransformPos = orientationTransform.localPosition;
+                    orientationTransformPos.y = orientationOriginalY * crouchHeight / defaultHeight;
+                    orientationTransform.localPosition = orientationTransformPos;
+                }
+            }
+        }
+        else
+        {
+            if (wasCrouching)
+            {
+                if(IsOwner) 
+                {
+                    float yDiff = (defaultHeight - crouchHeight) / 2;
+                    characterController.enabled = false;
+                    transform.position += new Vector3(0, yDiff * transform.localScale.y, 0);
+                    characterController.enabled = true;
+                }
+
+                characterController.height = defaultHeight;
+                characterController.center = originalCcCenter;
+                capsuleCollider.height = characterController.height;
+                capsuleCollider.center = characterController.center;
+
+                 if(IsOwner) {
+                    Vector3 orientationTransformPos = orientationTransform.localPosition;
+                    orientationTransformPos.y = orientationOriginalY;
+                    orientationTransform.localPosition = orientationTransformPos;
+                }
+            }
+        }
     }
 
     void HandleExhaustionSound()
@@ -306,5 +321,17 @@ public class Movement : NetworkBehaviour
         {
             footstepPlayer.PlayFootstep(movementState.Value == MovementState.crouching || movementState.Value == MovementState.crouchingMoving);
         }
+    }
+
+    public void SetIsStunned(bool value) {
+        isStunned = value;
+    }
+
+    public void OnEndTaunt() {
+        SetIsStunned(false);
+    }
+
+    public void OnStartTaunt() {
+        SetIsStunned(true);
     }
 }

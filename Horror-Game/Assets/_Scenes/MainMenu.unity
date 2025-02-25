@@ -2802,7 +2802,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fb731477e40d3d4b96695fe6df09bf4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameScene: MainScene
+  gameScene: KonstantinScene
   hostBtn: {fileID: 1557308825}
   clientBtn: {fileID: 622635}
   joinCodeInput: {fileID: 92354921}
