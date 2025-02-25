@@ -9,8 +9,15 @@ public class UI_InventorySlot : MonoBehaviour
     [SerializeField] Image backgroundImage;
     [SerializeField] Image itemIconImage;
     [SerializeField] TextMeshProUGUI countTextfield;
+    [SerializeField] GameObject upArrow;
+    [SerializeField] GameObject downArrow;
 
     public ItemData curItemData;
+
+    void Awake()
+    {
+        Deselect();
+    }
 
     // if stack is null, then there is not item in this slot
     public void UpdateSlot(ItemStack stack)
@@ -41,12 +48,14 @@ public class UI_InventorySlot : MonoBehaviour
 
     public void Select()
     {
-        backgroundImage.color = Color.gray;
+        upArrow.SetActive(true);
+        downArrow.SetActive(true);
     }
 
     public void Deselect()
     {
-        backgroundImage.color = Color.white;
+        upArrow.SetActive(false);
+        downArrow.SetActive(false);
     }
 
 }

@@ -8,7 +8,7 @@ public class Inventory : NetworkBehaviour
 {
     public UnityEvent onItemsChanged = new UnityEvent();
 
-    const int slotsCount = 7;
+    const int slotsCount = 6;
 
     NetworkList<ItemStack> items;
 
