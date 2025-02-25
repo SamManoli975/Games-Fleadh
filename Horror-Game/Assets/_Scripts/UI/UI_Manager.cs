@@ -12,6 +12,10 @@ public class UI_Manager : MonoBehaviour
     [SerializeField] UI_Hearts uI_Hearts;
     [SerializeField] UI_StaminaBar uI_StaminaBar;
 
+    [SerializeField] UI_Ability highlightSurvivorAbility;
+    [SerializeField] UI_Ability shrinkAbility;
+
+
     void Awake()
     {
         instance = this;
@@ -20,6 +24,11 @@ public class UI_Manager : MonoBehaviour
         uI_HoveredMessage.gameObject.SetActive(false);
         uI_Hearts.gameObject.SetActive(false);
         uI_StaminaBar.gameObject.SetActive(false);
+
+        if(highlightSurvivorAbility != null)
+            highlightSurvivorAbility.gameObject.SetActive(false);
+        if(shrinkAbility != null)
+            shrinkAbility.gameObject.SetActive(false);
     }
 
     public UI_Inventory GetInventoryUI()
@@ -44,5 +53,23 @@ public class UI_Manager : MonoBehaviour
     {
         uI_StaminaBar.gameObject.SetActive(true);
         return uI_StaminaBar;
+    }
+
+    public UI_Ability GetHighlightSurvivorAbilityUI()
+    {
+        if(highlightSurvivorAbility == null)
+            return null;
+
+        highlightSurvivorAbility.gameObject.SetActive(true);
+        return highlightSurvivorAbility;
+    }
+
+     public UI_Ability GetShrinkAbilityUI()
+    {
+        if(shrinkAbility == null)
+            return null;
+
+        shrinkAbility.gameObject.SetActive(true);
+        return shrinkAbility;
     }
 }

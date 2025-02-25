@@ -9,6 +9,8 @@ using UnityEngine;
 [RequireComponent(typeof(Hand))]
 public class Survivor : NetworkBehaviour
 {
+    public static Survivor instance;
+
     UI_Inventory uI_Inventory;
     UI_HoveredMessage uI_HoveredMessage;
     UI_Hearts uI_Hearts;
@@ -19,6 +21,11 @@ public class Survivor : NetworkBehaviour
     Hand hand;
     Health health;
     Movement movement;
+
+    void Awake()
+    {
+        instance = this;
+    }
 
     public override void OnNetworkSpawn()
     {
