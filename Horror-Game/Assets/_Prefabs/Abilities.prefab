@@ -144,8 +144,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Y
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 9fb4ef85d31b4f24c93c0e17d12e133d, type: 2}
+  m_sharedMaterial: {fileID: 9181588818245977120, guid: 9fb4ef85d31b4f24c93c0e17d12e133d, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -436,10 +436,10 @@ RectTransform:
   m_Father: {fileID: 1072486788046892200}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -794, y: -370}
-  m_SizeDelta: {x: 285.12, y: 285.12}
+  m_AnchorMin: {x: 0.013, y: 0.02037037}
+  m_AnchorMax: {x: 0.16554168, y: 0.2907037}
+  m_AnchoredPosition: {x: -5.5, y: 1.999939}
+  m_SizeDelta: {x: -7.880005, y: -6.880005}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1072486788149257507
 MonoBehaviour:
@@ -675,8 +675,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Y
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 9fb4ef85d31b4f24c93c0e17d12e133d, type: 2}
+  m_sharedMaterial: {fileID: 9181588818245977120, guid: 9fb4ef85d31b4f24c93c0e17d12e133d, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -853,10 +853,10 @@ RectTransform:
   m_Father: {fileID: 1072486788046892200}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 633, y: -370}
-  m_SizeDelta: {x: 285.12, y: 285.12}
+  m_AnchorMin: {x: 0.013, y: 0.030555556}
+  m_AnchorMax: {x: 0.16554168, y: 0.2907037}
+  m_AnchoredPosition: {x: -5.659912, y: -3.500061}
+  m_SizeDelta: {x: -5.880005, y: 4.119995}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1072486789280775305
 MonoBehaviour:

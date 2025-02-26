@@ -3779,7 +3779,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fb731477e40d3d4b96695fe6df09bf4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameScene: MainScene
+  gameScene: Filming
   hostBtn: {fileID: 1557308825}
   clientBtn: {fileID: 1946872069}
   joinCodeInput: {fileID: 92354921}
@@ -4936,6 +4936,14 @@ PrefabInstance:
     - target: {fileID: 5762797267073518655, guid: e4e8c2025be29b448a58f4fb3b125b8e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7302452489100788190, guid: e4e8c2025be29b448a58f4fb3b125b8e, type: 3}
+      propertyPath: spawnPlayerInScenes.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7302452489100788190, guid: e4e8c2025be29b448a58f4fb3b125b8e, type: 3}
+      propertyPath: spawnPlayerInScenes.Array.data[3]
+      value: Filming
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e4e8c2025be29b448a58f4fb3b125b8e, type: 3}
