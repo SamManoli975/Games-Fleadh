@@ -98,7 +98,7 @@ public class NetworkGameManager : MonoBehaviour
 
     PlayerRole GetNewPlayerRole(ulong clientId)
     {
-        return clientId != 0 ? PlayerRole.survivor : PlayerRole.monster;
+        return clientId == 0 ? PlayerRole.survivor : PlayerRole.monster;
         // if (!playersRoles.ContainsValue(PlayerRole.monster))
         // {
         //     return PlayerRole.monster;
