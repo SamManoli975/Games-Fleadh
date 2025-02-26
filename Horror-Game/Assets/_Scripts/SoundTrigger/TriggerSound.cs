@@ -44,7 +44,7 @@ public class TriggerSound : MonoBehaviour
                 //SoundManager.instance.PlayHowlSound(other.gameObject);
 
                 // Start playing floor sounds at random intervals, between 2 and 5 seconds
-                SoundManager.instance.SoundsPlayingAtRandomIntervals(other.gameObject, 3f, 10f, new string[] { "Floor1", "Floor2", "Floor3" }, "floor");
+                SoundManager.instance.SoundsPlayingAtRandomIntervals(other.gameObject, 5f, 10f, new string[] { "Floor1", "Floor2", "Floor3" }, "floor");
 
                 // Start playing mouse sounds at random intervals, between 1 and 3 seconds
                 SoundManager.instance.SoundsPlayingAtRandomIntervals(other.gameObject, 20f, 30f, new string[] { "Mouse1", "Mouse2" }, "mouse");
@@ -68,7 +68,7 @@ public class TriggerSound : MonoBehaviour
                 // Play thunder sounds
                 SoundManager.instance.SoundsPlayingAtRandomIntervals(other.gameObject, 30f, 60f, new string[] { "Thunder" }, "Thunder");
                 SoundManager.instance.SoundsPlayingAtRandomIntervals(other.gameObject, 30f, 60f, new string[] { "howl" }, "howl");
-                SoundManager.instance.SoundsPlayingAtRandomIntervals(other.gameObject, 5f, 6f, new string[] { "whispers" }, "whispers");
+                SoundManager.instance.SoundsPlayingAtRandomIntervals(other.gameObject, 40f, 70f, new string[] { "whispers" }, "whispers");
             }
         }
     }
