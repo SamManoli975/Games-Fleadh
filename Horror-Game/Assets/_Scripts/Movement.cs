@@ -138,7 +138,7 @@ public class Movement : NetworkBehaviour
 
         bool isMoving = Input.GetAxis("Vertical") != 0 || Input.GetAxis("Horizontal") != 0;
         bool isRunning = allowSprint && Input.GetKey(KeyCode.LeftShift) && currentStamina.Value > 0;
-        bool isCrouching = allowSprint && Input.GetKey(KeyCode.LeftControl);
+        bool isCrouching = allowSprint && Input.GetKey(KeyCode.C);
 
         // determining cur state
         MovementState prevState = movementState.Value;
