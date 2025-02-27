@@ -17,7 +17,7 @@ public enum MovementState
 [RequireComponent(typeof(CharacterController))]
 public class Movement : NetworkBehaviour
 {
-    // usually camera is inside this transform
+    
     public Transform orientationTransform;
 
     public float movementSpeed = 3f;
@@ -140,7 +140,7 @@ public class Movement : NetworkBehaviour
         bool isRunning = allowSprint && Input.GetKey(KeyCode.LeftShift) && currentStamina.Value > 0;
         bool isCrouching = allowSprint && Input.GetKey(KeyCode.C);
 
-        // determining cur state
+        
         MovementState prevState = movementState.Value;
         if (isMoving && isRunning)
         {
@@ -191,7 +191,7 @@ public class Movement : NetworkBehaviour
         float movementDirectionY = moveDirection.y;
         moveDirection = (forward * curSpeedX) + (right * curSpeedY);
 
-        // jamping handling
+        
         if (Input.GetButton("Jump") && characterController.isGrounded)
         {
             moveDirection.y = jumpPower;
@@ -208,7 +208,7 @@ public class Movement : NetworkBehaviour
 
         characterController.Move(moveDirection * Time.deltaTime);
 
-        // Sprinting logic (stamina handling)
+        
         if (movementState.Value == MovementState.running)
         {
             currentStamina.Value -= Time.deltaTime;
@@ -226,7 +226,7 @@ public class Movement : NetworkBehaviour
 
         currentStamina.Value = Mathf.Clamp(currentStamina.Value, 0, maxStamina);
 
-        // Update UI Stamina Bar
+        
         if (staminaBar != null)
         {
             staminaBar.fillAmount = currentStamina.Value / maxStamina;
@@ -236,7 +236,7 @@ public class Movement : NetworkBehaviour
     }
 
     void HandleMovementStateChange(MovementState previous, MovementState current) {
-        // crouching handling
+        
         bool nowCrouching = current == MovementState.crouching || current == MovementState.crouchingMoving;
         bool wasCrouching = previous == MovementState.crouching || previous == MovementState.crouchingMoving;
         if (nowCrouching)
@@ -311,7 +311,7 @@ public class Movement : NetworkBehaviour
         }
     }
 
-    // Method to handle footstep sound when triggered by Animation Event
+    
     public void OnFootstep()
     {
         if(!IsOwner)
