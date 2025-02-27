@@ -2056,6 +2056,9 @@ GameObject:
   - component: {fileID: 3448908861077583058}
   - component: {fileID: 3448908861074699646}
   - component: {fileID: 3448908861075659332}
+  - component: {fileID: 8169194364189305661}
+  - component: {fileID: 7692287137730481015}
+  - component: {fileID: 7039060292729859726}
   m_Layer: 0
   m_Name: Chest of drawers
   m_TagString: Untagged
@@ -2128,6 +2131,45 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &8169194364189305661
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3448908861077821978}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.5619629, y: 1.3451511, z: 0.04624882}
+  m_Center: {x: 0.0003791907, y: 0.001334022, z: -0.03625709}
+--- !u!65 &7692287137730481015
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3448908861077821978}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.5619629, y: 1.3512403, z: 0.053134114}
+  m_Center: {x: 0.00037919072, y: -0.0050520194, z: -0.40405375}
+--- !u!65 &7039060292729859726
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3448908861077821978}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.5619629, y: 1.3647244, z: 0.052786335}
+  m_Center: {x: 0.00037919072, y: -0.0016922109, z: -0.21154337}
 --- !u!1 &3448908861077823128
 GameObject:
   m_ObjectHideFlags: 0
