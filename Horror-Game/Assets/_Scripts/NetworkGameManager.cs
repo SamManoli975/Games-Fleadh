@@ -71,6 +71,7 @@ public class NetworkGameManager : MonoBehaviour
     {
         if (clientId == NetworkManager.Singleton.LocalClientId)
         {
+            Debug.Log("Disconnect reason: " + NetworkManager.Singleton.DisconnectReason);
             Debug.Log("Local client disconnected, returning to main menu...");
             ReturnToMainMenu();
         }
