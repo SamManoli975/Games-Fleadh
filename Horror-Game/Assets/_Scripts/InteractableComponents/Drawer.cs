@@ -7,6 +7,8 @@ using UnityEngine;
 // Script made for convenience. It automatically adds and links: Interactable, Lockable, ToggleRotations
 public class Drawer : NetworkBehaviour, IManagedInteractable
 {
+
+    
     public bool isClosed = true;
     public bool isLocked = false;
     public ItemType requiredKey = ItemType.none;
@@ -29,6 +31,10 @@ public class Drawer : NetworkBehaviour, IManagedInteractable
     Lockable lockable;
     ToggleTransforms toggleTransforms;
 
+    public AudioSource audioSource; // AudioSource for playing sounds
+    public AudioClip openSound;     // Sound for opening the drawer
+    public AudioClip closeSound;
+
     void Awake()
     {
         interactable = gameObject.GetComponent<Interactable>();
@@ -42,6 +48,9 @@ public class Drawer : NetworkBehaviour, IManagedInteractable
 
         interactable.onInteraction.AddListener(lockable.HandleInteraction);
         lockable.onNotLockedInteraction.AddListener(toggleTransforms.Toggle);
+        //functino to play sounds
+        lockable.onNotLockedInteraction.AddListener(OnDrawerStateChanged);
+
 
         if (isLocked)
         {
@@ -61,6 +70,23 @@ public class Drawer : NetworkBehaviour, IManagedInteractable
             interactable.onInteraction.AddListener(SetOpenCloseMessage);
         }
     }
+
+    private void OnDrawerStateChanged(Clicker clicker)
+    {
+        
+
+        // Play the corresponding sound when the drawer's state changes
+        if (toggleTransforms.GetIsClosed())
+        {
+            PlayOpenSound();
+        }
+        else
+        {
+           
+            PlayCloseSound();
+        }
+    }
+
 
     T AddComponentIfDoesNotHave<T>() where T : UnityEngine.Component
     {
@@ -141,5 +167,24 @@ public class Drawer : NetworkBehaviour, IManagedInteractable
             interactable.SetHoverMessage("Open");
         else
             interactable.SetHoverMessage("Close");
+    }
+
+    private void PlayOpenSound()
+    {
+        if (openSound != null && audioSource != null)
+        {
+            audioSource.clip = openSound;
+            audioSource.Play();
+        }
+    }
+
+    private void PlayCloseSound()
+    {
+        if (closeSound != null && audioSource != null)
+        {
+            audioSource.clip = closeSound;
+            audioSource.Play();
+        }
+
     }
 }

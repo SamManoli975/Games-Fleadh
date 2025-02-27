@@ -22,6 +22,9 @@ public class ToggleOrientation : NetworkBehaviour
 
     NetworkVariable<bool> isCollidersTrigger = new NetworkVariable<bool>(false);
 
+ 
+
+
     void Awake()
     {
         isClosed = new NetworkVariable<bool>(initialIsClosed);
@@ -54,6 +57,8 @@ public class ToggleOrientation : NetworkBehaviour
         isClosed.OnValueChanged += (bool previous, bool current) => { localPredictionIsClosed = current; };
     }
 
+
+    
 
     void SetCollidersTrigger(bool isTrigger)
     {
@@ -152,4 +157,6 @@ public class ToggleOrientation : NetworkBehaviour
         bool curIsClosed = IsServer ? isClosed.Value : localPredictionIsClosed;
         return curIsClosed;
     }
+
+    
 }

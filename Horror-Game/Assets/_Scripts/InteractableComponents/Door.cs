@@ -29,6 +29,10 @@ public class Door : NetworkBehaviour, IManagedInteractable
     Lockable lockable;
     ToggleRotations toggleRotations;
 
+    public AudioSource audioSource; // AudioSource for playing sounds
+    public AudioClip openSound;     // Sound for opening the drawer
+    public AudioClip closeSound;
+
     void Awake()
     {
         interactable = gameObject.GetComponent<Interactable>();
@@ -42,6 +46,9 @@ public class Door : NetworkBehaviour, IManagedInteractable
 
         interactable.onInteraction.AddListener(lockable.HandleInteraction);
         lockable.onNotLockedInteraction.AddListener(toggleRotations.Toggle);
+
+        //for doors open and close sound
+        lockable.onNotLockedInteraction.AddListener(OnDoorStateChanged);
 
         if (isLocked)
         {
@@ -59,6 +66,22 @@ public class Door : NetworkBehaviour, IManagedInteractable
         {
             SetOpenCloseMessage(null);
             interactable.onInteraction.AddListener(SetOpenCloseMessage);
+        }
+    }
+
+    private void OnDoorStateChanged(Clicker clicker)
+    {
+
+
+        // Play the corresponding sound when the drawer's state changes
+        if (toggleRotations.GetIsClosed())
+        {
+            PlayOpenSound();
+        }
+        else
+        {
+
+            PlayCloseSound();
         }
     }
 
@@ -141,5 +164,24 @@ public class Door : NetworkBehaviour, IManagedInteractable
             interactable.SetHoverMessage("Open");
         else
             interactable.SetHoverMessage("Close");
+    }
+    private void PlayOpenSound()
+    {
+        if (openSound != null && audioSource != null)
+        {
+            audioSource.clip = openSound;
+            audioSource.Play();
+        }
+    }
+
+    private void PlayCloseSound()
+    {
+        if (closeSound != null && audioSource != null)
+        {
+            audioSource.clip = closeSound;
+            audioSource.Play();
+        }
+
+
     }
 }
