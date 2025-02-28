@@ -17,6 +17,7 @@ public class NetworkGameManager : MonoBehaviour
 {
     public static NetworkGameManager instance;
 
+
     public event Action<ulong> OnClientConnectedCallback;
     public event Action<ulong> OnClientDisconnectCallback;
 
@@ -99,7 +100,7 @@ public class NetworkGameManager : MonoBehaviour
 
     PlayerRole GetNewPlayerRole(ulong clientId)
     {
-        return clientId == 0 ? PlayerRole.survivor : PlayerRole.monster;
+        return clientId != 0 ? PlayerRole.survivor : PlayerRole.monster;
         // if (!playersRoles.ContainsValue(PlayerRole.monster))
         // {
         //     return PlayerRole.monster;

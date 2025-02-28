@@ -18,6 +18,8 @@ public class Hitter : NetworkBehaviour
     [SerializeField] GameObject localVisual;
     Animator localAnimator;
 
+    [SerializeField] private AudioSource swingAudio;
+
     public override void OnNetworkSpawn()
     {
         base.OnNetworkSpawn();
@@ -52,6 +54,8 @@ public class Hitter : NetworkBehaviour
 
         animator.SetTrigger("AxeAttack");
         localAnimator.SetTrigger("AxeAttack");
+
+        PlaySwingSound(); 
     }
 
     IEnumerator RechargeHit()
@@ -89,5 +93,12 @@ public class Hitter : NetworkBehaviour
     {
         hitting = false;
         StartCoroutine(RechargeHit());
+    }
+    void PlaySwingSound() 
+    {
+        if (swingAudio != null) 
+        {
+            swingAudio.Play();
+        }
     }
 }
