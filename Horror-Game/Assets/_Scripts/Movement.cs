@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Netcode;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -60,6 +59,8 @@ public class Movement : NetworkBehaviour
     float orientationOriginalY;
 
     [SerializeField] bool isStunned;
+
+    bool pressedCrouched = false;
 
     void Awake()
     {
@@ -138,7 +139,10 @@ public class Movement : NetworkBehaviour
 
         bool isMoving = Input.GetAxis("Vertical") != 0 || Input.GetAxis("Horizontal") != 0;
         bool isRunning = allowSprint && Input.GetKey(KeyCode.LeftShift) && currentStamina.Value > 0;
-        bool isCrouching = allowSprint && Input.GetKey(KeyCode.C);
+        if(Input.GetKeyDown(KeyCode.LeftControl)) {
+            pressedCrouched = !pressedCrouched;
+        }
+        bool isCrouching = pressedCrouched; //allowSprint && Input.GetKey(KeyCode.LeftControl);
 
         // determining cur state
         MovementState prevState = movementState.Value;
