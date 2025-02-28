@@ -17,6 +17,7 @@ public class NetworkGameManager : MonoBehaviour
 {
     public static NetworkGameManager instance;
 
+
     public event Action<ulong> OnClientConnectedCallback;
     public event Action<ulong> OnClientDisconnectCallback;
 
