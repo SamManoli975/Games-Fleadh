@@ -29,7 +29,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1272283320532061204}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -308.6531, y: -845.09894, z: -953.67554}
   m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
   m_ConstrainProportionsScale: 0
@@ -112,8 +112,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 1297266974
-  InScenePlacedSourceGlobalObjectIdHash: 0
+  GlobalObjectIdHash: 3830387517
+  InScenePlacedSourceGlobalObjectIdHash: 1297266974
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
   ActiveSceneSynchronization: 0
@@ -142,6 +142,7 @@ MonoBehaviour:
   initialHoverMessage: Click on me :)
   outlineOnHover: 1
   outline: {fileID: 1272283320532061205}
+  interactableMaster: {fileID: 0}
 --- !u!114 &1272283320532061205
 MonoBehaviour:
   m_ObjectHideFlags: 0
