@@ -1513,6 +1513,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6685421896897102064}
+  - component: {fileID: 1606276328276239828}
   m_Layer: 7
   m_Name: OrientationTransform
   m_TagString: Untagged
@@ -1537,6 +1538,37 @@ Transform:
   m_Father: {fileID: 4620257674927304017}
   m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1606276328276239828
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2597794241968781854}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04f2766eaa45e1c4a9e9dc321ba4ab5d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  UseUnreliableDeltas: 0
+  SyncPositionX: 0
+  SyncPositionY: 0
+  SyncPositionZ: 0
+  SyncRotAngleX: 1
+  SyncRotAngleY: 0
+  SyncRotAngleZ: 0
+  SyncScaleX: 0
+  SyncScaleY: 0
+  SyncScaleZ: 0
+  PositionThreshold: 0.001
+  RotAngleThreshold: 0.01
+  ScaleThreshold: 0.01
+  UseQuaternionSynchronization: 0
+  UseQuaternionCompression: 0
+  UseHalfFloatPrecision: 0
+  InLocalSpace: 1
+  Interpolate: 1
+  SlerpPosition: 0
 --- !u!1 &2724679947698093923
 GameObject:
   m_ObjectHideFlags: 0
@@ -3834,7 +3866,7 @@ CharacterController:
   m_Height: 1.8
   m_Radius: 0.3
   m_SlopeLimit: 45
-  m_StepOffset: 0.3
+  m_StepOffset: 0.9
   m_SkinWidth: 0.0001
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0.9, z: 0}
@@ -3850,7 +3882,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 362563344
+  GlobalObjectIdHash: 1810388293
   InScenePlacedSourceGlobalObjectIdHash: 362563344
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
@@ -3888,11 +3920,11 @@ MonoBehaviour:
   runSpeed: 12
   crouchSpeed: 3
   allowSprint: 1
-  jumpPower: 10
+  jumpPower: 8
   gravity: 30
   lookSpeed: 2
   lookXLimit: 80
-  defaultHeight: 2
+  defaultHeight: 1.8
   crouchHeight: 1.3
   maxStamina: 3
   staminaRegenRate: 1
@@ -3901,7 +3933,6 @@ MonoBehaviour:
   exhaustionSound: {fileID: 5157970250599511388}
   animator: {fileID: 1656866393245464363}
   footstepPlayer: {fileID: 9128153538631564597}
-  isStunned: 0
 --- !u!114 &9128153538631564597
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4127,9 +4158,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a73176baf694fe4a9944d9f1419c9b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rechargeTime: 5
+  rechargeTime: 30
   activateKey: 114
-  shrinkTime: 5
+  shrinkTime: 7
 --- !u!1 &5633089631221480723
 GameObject:
   m_ObjectHideFlags: 0
@@ -5915,15 +5946,15 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: acb802ad0d9d65c479fe9b322bfb7eb2, type: 3}
-  m_PlayOnAwake: 1
+  m_audioClip: {fileID: 8300000, guid: 1cf33c5c4dde9a544ab9365168358ab0, type: 3}
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 128
+  Priority: 12
   DopplerLevel: 1
   MinDistance: 1
   MaxDistance: 500

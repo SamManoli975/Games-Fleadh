@@ -28,6 +28,8 @@ public class AnimationMiddleware : MonoBehaviour
     public void OnEndTaunt() {
         if(movement != null)
             movement.OnEndTaunt();
+        if(hitter != null)
+            hitter.OnEndTaunt();
     }
 
     public void OnStartTaunt() {

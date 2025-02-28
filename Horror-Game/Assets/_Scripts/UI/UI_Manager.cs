@@ -14,6 +14,9 @@ public class UI_Manager : MonoBehaviour
     [SerializeField] UI_Ability highlightSurvivorAbility;
     [SerializeField] UI_Ability shrinkAbility;
 
+    [SerializeField] GameObject survivorHelpMesage;
+    [SerializeField] GameObject monsterHelpMesage;
+
 
     void Awake()
     {
@@ -28,6 +31,11 @@ public class UI_Manager : MonoBehaviour
             highlightSurvivorAbility.gameObject.SetActive(false);
         if(shrinkAbility != null)
             shrinkAbility.gameObject.SetActive(false);
+
+        if(survivorHelpMesage != null)
+            survivorHelpMesage.SetActive(false);
+        if(monsterHelpMesage != null)
+            monsterHelpMesage.SetActive(false);
     }
 
     public UI_Inventory GetInventoryUI()
@@ -63,12 +71,22 @@ public class UI_Manager : MonoBehaviour
         return highlightSurvivorAbility;
     }
 
-     public UI_Ability GetShrinkAbilityUI()
+    public UI_Ability GetShrinkAbilityUI()
     {
         if(shrinkAbility == null)
             return null;
 
         shrinkAbility.gameObject.SetActive(true);
         return shrinkAbility;
+    }
+
+    public void ShowSurvivorHelpMessage() {
+        if(survivorHelpMesage != null)
+            survivorHelpMesage.SetActive(true);
+    }
+
+    public void ShowMonsterHelpMessage() {
+        if(monsterHelpMesage != null)
+            monsterHelpMesage.SetActive(true);
     }
 }

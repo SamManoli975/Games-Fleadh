@@ -58,9 +58,7 @@ public class Movement : NetworkBehaviour
     Vector3 originalCcCenter;
     float orientationOriginalY;
 
-    [SerializeField] bool isStunned;
-
-    bool pressedCrouched = false;
+    private NetworkVariable<bool> isStunned = new NetworkVariable<bool>(false);
 
     void Awake()
     {
@@ -134,47 +132,44 @@ public class Movement : NetworkBehaviour
         orientationTransform.transform.localRotation = Quaternion.Euler(rotationX, 0, 0);
         transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Mouse X") * lookSpeed, 0);
 
-        if(isStunned)
+        if(isStunned.Value)
                 return;
 
         bool isMoving = Input.GetAxis("Vertical") != 0 || Input.GetAxis("Horizontal") != 0;
         bool isRunning = allowSprint && Input.GetKey(KeyCode.LeftShift) && currentStamina.Value > 0;
-        if(Input.GetKeyDown(KeyCode.LeftControl)) {
-            pressedCrouched = !pressedCrouched;
-        }
-        bool isCrouching = pressedCrouched; //allowSprint && Input.GetKey(KeyCode.LeftControl);
+        bool isCrouching = allowSprint && Input.GetKey(KeyCode.LeftControl);
 
-        
-        MovementState prevState = movementState.Value;
+
+        animator.SetBool("isRunning", false);
+        animator.SetBool("isCrouchingMoving", false);
+        animator.SetBool("isWalking", false);
+        animator.SetBool("isCrouching", false);
+        animator.SetBool("isIdle", false);
+
         if (isMoving && isRunning)
         {
             movementState.Value = MovementState.running;
-            if (prevState != movementState.Value)
-                animator.SetTrigger("goRunning");
+            animator.SetBool("isRunning", true);
         }
         else if (isMoving && isCrouching)
         {
             movementState.Value = MovementState.crouchingMoving;
-            if (prevState != movementState.Value)
-                animator.SetTrigger("goCrouchingMoving");
+            animator.SetBool("isCrouchingMoving", true);
         }
         else if (isMoving)
         {
             movementState.Value = MovementState.walking;
-            if (prevState != movementState.Value)
-                animator.SetTrigger("goWalking");
+            animator.SetBool("isWalking", true);
         }
         else if (isCrouching)
         {
             movementState.Value = MovementState.crouching;
-            if (prevState != movementState.Value)
-                animator.SetTrigger("goCrouching");
+            animator.SetBool("isCrouching", true);
         }
         else
         {
             movementState.Value = MovementState.idle;
-            if (prevState != movementState.Value)
-                animator.SetTrigger("goIdle");
+            animator.SetBool("isIdle", true);
         }
 
         float curSpeed = movementSpeed;
@@ -327,15 +322,14 @@ public class Movement : NetworkBehaviour
         }
     }
 
-    public void SetIsStunned(bool value) {
-        isStunned = value;
-    }
-
     public void OnEndTaunt() {
-        SetIsStunned(false);
+        Debug.Log("Taunt end");
+
+        isStunned.Value = false;
     }
 
     public void OnStartTaunt() {
-        SetIsStunned(true);
+        Debug.Log("Taunt start");
+        isStunned.Value = true;
     }
 }

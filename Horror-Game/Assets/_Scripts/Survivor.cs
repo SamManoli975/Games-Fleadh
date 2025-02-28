@@ -45,6 +45,7 @@ public class Survivor : NetworkBehaviour
                 uI_HoveredMessage = UI_Manager.instance.GetHoveredMessageUI();
                 uI_Hearts = UI_Manager.instance.GetHeartsUI();
                 uI_StaminaBar = UI_Manager.instance.GetStaminaBarUI();
+                UI_Manager.instance.ShowSurvivorHelpMessage();
 
                 movement.staminaBar = uI_StaminaBar.GetStaminaBarFillImage();
                 uI_Inventory.inventory = inventory;

@@ -19,6 +19,7 @@ public class Hitter : NetworkBehaviour
     Animator localAnimator;
 
     [SerializeField] private AudioSource swingAudio;
+    [SerializeField] private AudioSource laughAudio;
 
     public override void OnNetworkSpawn()
     {
@@ -64,9 +65,28 @@ public class Hitter : NetworkBehaviour
         readyToHit = true;
     }
 
+    void PlayLaughSoundBase() {
+        if (laughAudio != null) 
+        {
+            laughAudio.Play();
+        }
+    }
+
+    [ClientRpc]
+    void PlayLaughSoundClientRpc() {
+        PlayLaughSoundBase();
+    }
+
     void AfterSuccessfulHit() {
-        animator.SetTrigger("HitTaunt");
-        localAnimator.SetTrigger("HitTaunt");
+        animator.SetBool("HitTaunt", true);
+        localAnimator.SetBool("HitTaunt", true);
+
+        PlayLaughSoundClientRpc();
+    }
+
+    public void OnEndTaunt() {
+        animator.SetBool("HitTaunt", false);
+        localAnimator.SetBool("HitTaunt", false);
     }
 
     [ServerRpc]
@@ -94,11 +114,27 @@ public class Hitter : NetworkBehaviour
         hitting = false;
         StartCoroutine(RechargeHit());
     }
-    void PlaySwingSound() 
-    {
+
+
+    void PlaySwingSoundBase() {
         if (swingAudio != null) 
         {
             swingAudio.Play();
         }
+    }
+
+    [ServerRpc]
+    void PlaySwingSoundServerRpc() {
+        PlaySwingSoundClientRpc();
+    }
+    [ClientRpc]
+    void PlaySwingSoundClientRpc() {
+        if(!IsOwner)
+            PlaySwingSoundBase();
+    }
+    void PlaySwingSound() 
+    {
+        PlaySwingSoundBase();
+        PlaySwingSoundServerRpc();
     }
 }
