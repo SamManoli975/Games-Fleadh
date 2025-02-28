@@ -78865,41 +78865,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 418962, guid: 210d38b43ba064d418e74fe6c3791d87, type: 3}
   m_PrefabInstance: {fileID: 499235237}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &499656482 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3448908861077823944, guid: 7338001ecc64ca147b2677e2a37434ea, type: 3}
-  m_PrefabInstance: {fileID: 479908018}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &499656483
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 499656482}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ac184be38d00f549b03802555d1f452, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <IsLocalPlayer>k__BackingField: 0
-  <IsOwner>k__BackingField: 0
-  <IsServer>k__BackingField: 0
-  <ServerIsHost>k__BackingField: 0
-  <IsClient>k__BackingField: 0
-  <IsHost>k__BackingField: 0
-  <IsOwnedByServer>k__BackingField: 0
-  <IsSpawned>k__BackingField: 0
-  m_NetworkObject: {fileID: 0}
-  <NetworkObjectId>k__BackingField: 0
-  <NetworkBehaviourId>k__BackingField: 0
-  NetworkBehaviourIdCache: 0
-  <OwnerClientId>k__BackingField: 0
-  m_VarInit: 0
-  <m_TargetIdBeingSynchronized>k__BackingField: 0
-  audioSource: {fileID: 0}
-  openSound: {fileID: 0}
-  closeSound: {fileID: 0}
 --- !u!1001 &499956402
 PrefabInstance:
   m_ObjectHideFlags: 0
