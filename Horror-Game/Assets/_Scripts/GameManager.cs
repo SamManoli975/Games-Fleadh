@@ -36,10 +36,16 @@ public class GameManager : NetworkBehaviour
             if (current == GameState.running)
             {
                 onGameStarted?.Invoke();
+                if(MenuMusic.instance != null) {
+                    MenuMusic.instance.StopMusic();
+                }  
             }
             else if (current == GameState.ended)
             {
                 onGameEnded?.Invoke();
+                if(MenuMusic.instance != null) {
+                    MenuMusic.instance.StartMusic();
+                }   
             }
         };
 
@@ -83,6 +89,10 @@ public class GameManager : NetworkBehaviour
             endScreenType = EndScreenType.win;
 
         UI_EndScreen.instance.ShowEndScreen(endScreenType);
+
+        if(MenuMusic.instance != null) {
+            MenuMusic.instance.StartMusic();
+        }
     }
 
     public void EndGame(PlayerRole winnersRole)
@@ -128,6 +138,9 @@ public class GameManager : NetworkBehaviour
 
     public void QuitGame()
     {
+        if(MenuMusic.instance != null) {
+            MenuMusic.instance.StartMusic();
+        }
         NetworkManager.Singleton.Shutdown();
     }
 

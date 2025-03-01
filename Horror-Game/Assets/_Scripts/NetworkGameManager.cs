@@ -91,6 +91,10 @@ public class NetworkGameManager : MonoBehaviour
             NetworkManager.Singleton.Shutdown();
         }
 
+        if(MenuMusic.instance != null) {
+            MenuMusic.instance.StartMusic();
+        }
+
         // Unlock cursor just in case
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;

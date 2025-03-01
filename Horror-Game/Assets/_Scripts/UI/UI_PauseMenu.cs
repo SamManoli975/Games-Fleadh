@@ -51,14 +51,6 @@ public class UI_PauseMenu : MonoBehaviour
 
         Debug.Log("Quit button clicked!");
 
-        // If the player is in a multiplayer game, disconnect first
-        if (NetworkManager.Singleton != null && NetworkManager.Singleton.IsConnectedClient)
-        {
-            Debug.Log("Disconnecting from Multiplayer...");
-            NetworkManager.Singleton.Shutdown();
-        }
-
-        // Load the Main Menu scene (Make sure it's in Build Settings)
-        SceneManager.LoadScene("MainMenu");
+        GameManager.instance.QuitGame();
     }
 }
