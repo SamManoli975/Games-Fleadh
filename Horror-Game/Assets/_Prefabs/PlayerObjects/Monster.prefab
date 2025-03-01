@@ -4268,7 +4268,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e2da015441534e49a602d1cdaaf568f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rechargeTime: 30
+  rechargeTime: 50
   activateKey: 114
   hightlightTime: 5
 --- !u!1 &4716785024068236245

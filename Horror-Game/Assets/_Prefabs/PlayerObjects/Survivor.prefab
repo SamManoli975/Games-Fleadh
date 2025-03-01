@@ -4159,7 +4159,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a73176baf694fe4a9944d9f1419c9b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rechargeTime: 30
+  rechargeTime: 25
   activateKey: 114
   shrinkTime: 7
 --- !u!114 &2327364804652232988
@@ -4174,9 +4174,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a980fc33a06a014d9a0e6ae76e735cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fromDistace: 3
-  maxDistance: 15
-  minSaturation: -20
+  fromDistace: 5
+  maxDistance: 20
+  minSaturation: -40
   maxSaturation: 0
   minChromaticAberration: 1
   maxChromaticAberration: 0
