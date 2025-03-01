@@ -9,7 +9,9 @@ public enum SurfaceType
     grass,
     wood,
     stone,
-    puddle
+    puddle,
+    water,
+    bush
 }
 
 public class FootstepSurface : MonoBehaviour

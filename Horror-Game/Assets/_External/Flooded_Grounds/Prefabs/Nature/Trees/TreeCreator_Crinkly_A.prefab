@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 19310186}
   - component: {fileID: 3380234}
   - component: {fileID: 2393040}
+  - component: {fileID: 8623868248620392151}
   m_Layer: 0
   m_Name: TreeCreator_Crinkly_A
   m_TagString: Untagged
@@ -95,6 +96,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!136 &8623868248620392151
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 196434}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.8
+  m_Height: 20.5
+  m_Direction: 1
+  m_Center: {x: -0.3, y: 10.1, z: 0.13}
 --- !u!1 &1239650650526732466
 GameObject:
   m_ObjectHideFlags: 0
