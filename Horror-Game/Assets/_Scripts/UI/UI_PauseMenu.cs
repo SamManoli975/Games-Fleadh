@@ -1,27 +1,29 @@
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
-using Unity.Netcode;
 
 public class UI_PauseMenu : MonoBehaviour
 {
-    [SerializeField] private GameObject pauseMenuUI; // Assign the UI Panel in Inspector
-    [SerializeField] private Button quitButton; // Assign the Quit Button in Inspector
+    [SerializeField] private GameObject pauseMenuUI;
+    [SerializeField] private Button quitButton;
+    [SerializeField] private Button resumeButton;
     private bool isPaused = false;
 
     void Start()
     {
-        // Ensure menu starts hidden
         if (pauseMenuUI != null)
             pauseMenuUI.SetActive(false);
         else
             Debug.LogError("PauseMenuUI not assigned in Inspector!");
 
-        // Assign the Quit function to the button
         if (quitButton != null)
             quitButton.onClick.AddListener(QuitGame);
         else
             Debug.LogError("Quit Button not assigned in Inspector!");
+
+        if (resumeButton != null)
+            resumeButton.onClick.AddListener(ResumeGame);
+        else
+            Debug.LogError("Resume Button not assigned in Inspector!");
     }
 
     void Update()
@@ -30,27 +32,60 @@ public class UI_PauseMenu : MonoBehaviour
         {
             TogglePauseMenu();
         }
-
-        // Check for L key press only if the pause menu is active
-        if (isPaused && Input.GetKeyDown(KeyCode.L))
-        {
-            QuitGame();
-        }
     }
 
     void TogglePauseMenu()
     {
-        pauseMenuUI.SetActive(!pauseMenuUI.activeSelf); // Toggle the UI immediately
-        isPaused = pauseMenuUI.activeSelf; // Set isPaused based on the UI's new state
+        isPaused = !isPaused;
+        pauseMenuUI.SetActive(isPaused);
+
+        if (isPaused)
+        {
+            UnlockCursor();
+            
+        }
+        else
+        {
+            LockCursor();
+            
+        }
+
         Debug.Log("Pause Menu Toggled: " + isPaused);
+    }
+
+    void ResumeGame()
+    {
+        isPaused = false;
+        pauseMenuUI.SetActive(false);
+        LockCursor();
+        Debug.Log("Game Resumed");
     }
 
     void QuitGame()
     {
-        if (!isPaused) return; // Ensure QuitGame is only called when paused
+        if (!isPaused) return;
 
         Debug.Log("Quit button clicked!");
 
-        GameManager.instance.QuitGame();
+        if (GameManager.instance != null)
+        {
+            GameManager.instance.QuitGame();
+        }
+        else
+        {
+            Debug.LogError("GameManager instance is null! Ensure GameManager is in the scene.");
+        }
+    }
+
+    void LockCursor()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+    }
+
+    void UnlockCursor()
+    {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
     }
 }
