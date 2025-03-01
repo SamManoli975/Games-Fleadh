@@ -21,6 +21,8 @@ public class Hitter : NetworkBehaviour
     [SerializeField] private AudioSource swingAudio;
     [SerializeField] private AudioSource laughAudio;
 
+    bool taunting = false;
+
     public override void OnNetworkSpawn()
     {
         base.OnNetworkSpawn();
@@ -38,6 +40,12 @@ public class Hitter : NetworkBehaviour
     void Update()
     {
         if (!IsOwner)
+            return;
+
+        if (GameManager.instance != null && !GameManager.instance.IsGameRunning())
+            return;
+
+        if(taunting)
             return;
 
         if (Input.GetMouseButtonDown(0))
@@ -86,6 +94,8 @@ public class Hitter : NetworkBehaviour
         animator.SetBool("HitTaunt", true);
         localAnimator.SetBool("HitTaunt", true);
 
+        taunting = true;
+
         PlayLaughSoundBase();
         PlayLaughSoundServerRpc();
     }
@@ -95,6 +105,8 @@ public class Hitter : NetworkBehaviour
             return;
         animator.SetBool("HitTaunt", false);
         localAnimator.SetBool("HitTaunt", false);
+
+        taunting = false;
     }
 
     void DoHit()

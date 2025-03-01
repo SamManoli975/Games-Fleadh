@@ -116,7 +116,7 @@ MonoBehaviour:
     value: 0
   postExposure:
     overrideState: 1
-    value: -0.5
+    value: -1
   contrast:
     overrideState: 1
     value: 0
@@ -1380,7 +1380,7 @@ MonoBehaviour:
     value: 0
   size:
     overrideState: 1
-    value: 2
+    value: 1.6
   lumContrib:
     overrideState: 0
     value: 0.8
