@@ -24,11 +24,12 @@ public class KillerSense : NetworkBehaviour
 
     void Start()
     {
-        // Find the global post-processing volume in the scene
-        PostProcessVolume postProcessVolume = MainPostProcessing.instance.GetComponent<PostProcessVolume>();
-        postProcessVolume.profile.TryGetSettings(out colorGrading);
-        postProcessVolume.profile.TryGetSettings(out chromaticAberration);
-        postProcessVolume.profile.TryGetSettings(out grain);
+        if(MainPostProcessing.instance != null) {
+            PostProcessVolume postProcessVolume = MainPostProcessing.instance.GetComponent<PostProcessVolume>();
+            postProcessVolume.profile.TryGetSettings(out colorGrading);
+            postProcessVolume.profile.TryGetSettings(out chromaticAberration);
+            postProcessVolume.profile.TryGetSettings(out grain);
+        }
     }
 
     void Update()

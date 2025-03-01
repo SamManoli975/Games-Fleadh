@@ -14,6 +14,6 @@ public class UI_Ability : MonoBehaviour
     }
 
     public void SetFilledPortion(float portion) {
-        filledImage.fillAmount = portion;
+        filledImage.fillAmount = portion * 0.95f; // * 0.95f so that when there is a little left on UI it can already be used
     }
 }

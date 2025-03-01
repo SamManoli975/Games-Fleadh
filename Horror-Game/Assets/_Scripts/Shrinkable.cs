@@ -11,9 +11,17 @@ public class Shrinkable : NetworkBehaviour
 
     Vector3 originalScale;
 
+    CharacterController characterController;
+    float originalSteOffset;
+
     void Awake()
     {
         originalScale = transform.localScale;
+
+        characterController = GetComponent<CharacterController>();
+        if(characterController != null) {
+            originalSteOffset = characterController.stepOffset;
+        }
     }
 
     public override void OnNetworkSpawn()
@@ -25,6 +33,10 @@ public class Shrinkable : NetworkBehaviour
 
     void HandleIsShrinkedChanged(bool previous, bool current) {
         transform.localScale = current ? originalScale * scaleFactor : originalScale;
+        
+        if(characterController != null) {
+            characterController.stepOffset = current ? originalSteOffset * scaleFactor : originalSteOffset;
+        }
     }
 
     public void SetIsShrinked(bool value) {
