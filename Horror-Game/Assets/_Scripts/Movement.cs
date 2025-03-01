@@ -322,14 +322,24 @@ public class Movement : NetworkBehaviour
         }
     }
 
-    public void OnEndTaunt() {
+    [ServerRpc]
+    public void OnEndTauntServerRpc() {
         Debug.Log("Taunt end");
 
         isStunned.Value = false;
     }
+    public void OnEndTaunt() {
+        if(IsOwner)
+            OnEndTauntServerRpc();
+    }
 
-    public void OnStartTaunt() {
+    [ServerRpc]
+    public void OnStartTauntServerRpc() {
         Debug.Log("Taunt start");
         isStunned.Value = true;
+    }
+    public void OnStartTaunt() {
+        if(IsOwner)
+            OnStartTauntServerRpc();
     }
 }

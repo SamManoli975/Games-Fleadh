@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
-using System;
 using UnityEngine.SceneManagement;
 
 public enum PlayerRole
@@ -18,8 +17,8 @@ public class NetworkGameManager : MonoBehaviour
     public static NetworkGameManager instance;
 
 
-    public event Action<ulong> OnClientConnectedCallback;
-    public event Action<ulong> OnClientDisconnectCallback;
+    public event System.Action<ulong> OnClientConnectedCallback;
+    public event System.Action<ulong> OnClientDisconnectCallback;
 
     [SerializeField] string mainMenu;
 
@@ -104,13 +103,16 @@ public class NetworkGameManager : MonoBehaviour
 
     PlayerRole GetNewPlayerRole(ulong clientId)
     {
-        return clientId == 0 ? PlayerRole.survivor : PlayerRole.monster;
-        // if (!playersRoles.ContainsValue(PlayerRole.monster))
-        // {
-        //     return PlayerRole.monster;
-        // }
+        if(playersRoles.ContainsValue(PlayerRole.monster)) {
+            return PlayerRole.survivor;
+        }
 
-        // return PlayerRole.survivor;
+        if(playersRoles.ContainsValue(PlayerRole.survivor)) {
+            return PlayerRole.monster;
+        }
+
+        return Random.Range(0f, 1f) < 0.5f ? PlayerRole.survivor : PlayerRole.monster;
+        //return clientId == 0 ? PlayerRole.survivor : PlayerRole.monster;
     }
 
     // only can start if there is 1 monster and there are 2 players
