@@ -43,15 +43,18 @@ public class Health : NetworkBehaviour, IHitable
         hitSource.Play();
     }
 
-    public void GetHit()
+    [ServerRpc (RequireOwnership = false)]
+    public void GetHitServerRpc()
     {
-        if (!IsServer)
-            return;
-
         SetCurHealth(curHealth.Value - 1);
         hitSource.Play();
         PlayHitSoundClientRpc();
         if (curHealth.Value <= 0)
             Die();
+    }
+
+    public void GetHit()
+    {
+        GetHitServerRpc();
     }
 }

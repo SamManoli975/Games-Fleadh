@@ -72,25 +72,32 @@ public class Hitter : NetworkBehaviour
         }
     }
 
+    [ServerRpc]
+    void PlayLaughSoundServerRpc() {
+        PlayLaughSoundClientRpc();
+    }
     [ClientRpc]
     void PlayLaughSoundClientRpc() {
-        PlayLaughSoundBase();
+        if(!IsOwner)
+            PlayLaughSoundBase();
     }
 
     void AfterSuccessfulHit() {
         animator.SetBool("HitTaunt", true);
         localAnimator.SetBool("HitTaunt", true);
 
-        PlayLaughSoundClientRpc();
+        PlayLaughSoundBase();
+        PlayLaughSoundServerRpc();
     }
 
     public void OnEndTaunt() {
+        if(!IsOwner)
+            return;
         animator.SetBool("HitTaunt", false);
         localAnimator.SetBool("HitTaunt", false);
     }
 
-    [ServerRpc]
-    void DoHitServerRpc()
+    void DoHit()
     {
         if (Physics.SphereCast(hitRayOrigin.position, sphereCastRadius, hitRayOrigin.forward, out RaycastHit hit, hitRange, hitLayer))
         {
@@ -106,11 +113,13 @@ public class Hitter : NetworkBehaviour
     public void OnHitAttackPoint()
     {
         if (IsOwner)
-            DoHitServerRpc();
+            DoHit();
     }
 
     public void OnHitEnd()
     {
+        if(!IsOwner)
+            return;
         hitting = false;
         StartCoroutine(RechargeHit());
     }
