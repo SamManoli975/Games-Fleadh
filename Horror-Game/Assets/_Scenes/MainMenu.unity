@@ -1340,7 +1340,7 @@ MonoBehaviour:
   m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 9181588818245977120, guid: 9fb4ef85d31b4f24c93c0e17d12e133d, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1714,7 +1714,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0.0028076, y: 38.181885}
+  m_AnchoredPosition: {x: 0.0028076172, y: 38.181885}
   m_SizeDelta: {x: 600.8405, y: -391.10828}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &865880278
@@ -4046,7 +4046,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fb731477e40d3d4b96695fe6df09bf4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameScene: KonstantinScene
+  gameScene: MainScene
   hostBtn: {fileID: 1557308825}
   clientBtn: {fileID: 1946872069}
   joinCodeInput: {fileID: 92354921}
@@ -5077,7 +5077,7 @@ MonoBehaviour:
   m_text: "\u200B"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 9181588818245977120, guid: 9fb4ef85d31b4f24c93c0e17d12e133d, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -5188,7 +5188,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 240, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2145558920
 MonoBehaviour:
@@ -5203,7 +5203,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_AspectMode: 4
-  m_AspectRatio: 1.7845433
+  m_AspectRatio: 2
 --- !u!114 &2145558921
 MonoBehaviour:
   m_ObjectHideFlags: 0

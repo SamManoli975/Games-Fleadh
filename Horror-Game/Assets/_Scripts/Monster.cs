@@ -6,9 +6,16 @@ using UnityEngine;
 [RequireComponent(typeof(Clicker))]
 public class Monster : NetworkBehaviour
 {
+    public static Monster instance;
+
     [SerializeField] UI_HoveredMessage uI_HoveredMessage;
 
     Clicker clicker;
+
+    void Awake()
+    {
+        instance = this;   
+    }
 
     public override void OnNetworkSpawn()
     {
