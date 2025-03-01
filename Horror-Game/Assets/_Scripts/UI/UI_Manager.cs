@@ -16,7 +16,7 @@ public class UI_Manager : MonoBehaviour
 
     [SerializeField] GameObject survivorHelpMesage;
     [SerializeField] GameObject monsterHelpMesage;
-
+   
 
     void Awake()
     {
