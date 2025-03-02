@@ -83,8 +83,8 @@ public class CollectableItem : NetworkBehaviour, IManagedInteractable
                 PlaySoundFromObjectClientRpc(networkObject);
             }
 
-            //wait
-            StartCoroutine(DelayedDespawn());
+            //despawn
+            NetworkObject.Despawn(true); ;
 
 
         }
@@ -121,11 +121,7 @@ public class CollectableItem : NetworkBehaviour, IManagedInteractable
         }
     }
 
-    IEnumerator DelayedDespawn()
-    {
-        Debug.Log("despawning..");
-        NetworkObject.Despawn(true);
-    }
+    
 
 
     public SetupInteractableMasterRes SetupInteractableMaster(InteractableMaster interactableMaster)
