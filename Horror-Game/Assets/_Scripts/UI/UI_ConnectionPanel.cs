@@ -70,10 +70,10 @@ public class UI_ConnectionPanel : MonoBehaviour
                 throw new Exception("Could not start host");
             }
         }
-        catch (Exception e)
-        {
+        catch(Exception e) {
             connectingPanel.SetActive(false);
             Debug.LogError("Error while creating relay:\n" + e);
+            NetworkGameManager.instance.CauseFailedToJoin("Error while connecting");
         }
     }
 
@@ -100,6 +100,7 @@ public class UI_ConnectionPanel : MonoBehaviour
         {
             connectingPanel.SetActive(false);
             Debug.LogError("Error while joining relay:\n" + e);
+            NetworkGameManager.instance.CauseFailedToJoin("Error while connecting");
         }
     }
 }

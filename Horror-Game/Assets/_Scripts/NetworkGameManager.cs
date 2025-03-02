@@ -19,6 +19,7 @@ public class NetworkGameManager : MonoBehaviour
 
     public event System.Action<ulong> OnClientConnectedCallback;
     public event System.Action<ulong> OnClientDisconnectCallback;
+    public event System.Action<string> OnFailedToJoinGame;
 
     [SerializeField] string mainMenu;
 
@@ -71,6 +72,9 @@ public class NetworkGameManager : MonoBehaviour
     {
         if (clientId == NetworkManager.Singleton.LocalClientId)
         {
+            if(NetworkManager.Singleton.DisconnectReason.Length > 0) {
+                OnFailedToJoinGame?.Invoke(NetworkManager.Singleton.DisconnectReason);
+            }
             Debug.Log("Disconnect reason: " + NetworkManager.Singleton.DisconnectReason);
             Debug.Log("Local client disconnected, returning to main menu...");
             ReturnToMainMenu();
@@ -80,6 +84,11 @@ public class NetworkGameManager : MonoBehaviour
             return;
 
         OnClientDisconnectCallback?.Invoke(clientId);
+    }
+
+
+    public void CauseFailedToJoin(string reason) {
+        OnFailedToJoinGame?.Invoke(reason);
     }
 
     private void ReturnToMainMenu()
