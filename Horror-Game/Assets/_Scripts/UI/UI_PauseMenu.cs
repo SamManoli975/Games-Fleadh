@@ -28,7 +28,7 @@ public class UI_PauseMenu : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.P))
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
             TogglePauseMenu();
         }
@@ -41,13 +41,11 @@ public class UI_PauseMenu : MonoBehaviour
 
         if (isPaused)
         {
-            UnlockCursor();
-            
+            UnlockCursor();     
         }
         else
         {
             LockCursor();
-            
         }
 
         Debug.Log("Pause Menu Toggled: " + isPaused);

@@ -4014,7 +4014,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 1810388293
+  GlobalObjectIdHash: 362563344
   InScenePlacedSourceGlobalObjectIdHash: 362563344
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
@@ -4144,6 +4144,7 @@ MonoBehaviour:
   minScrollAmount: 0.2
   maxStoredScroll: 3
   itemsDropPoint: {fileID: 997439457955120394}
+  soundName: KeySound
 --- !u!114 &1686901419
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4290,7 +4291,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a73176baf694fe4a9944d9f1419c9b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rechargeTime: 25
+  rechargeTime: 30
   activateKey: 114
   shrinkTime: 7
 --- !u!114 &2327364804652232988
