@@ -149,6 +149,7 @@ public class Door : NetworkBehaviour, IManagedInteractable
 
     void HandleUnclocked()
     {
+        PlayUnlockSoundClientRpc();
         lockable.onUnlocked.RemoveListener(HandleUnclocked);
 
         SetOpenCloseMessage(null);
@@ -184,4 +185,25 @@ public class Door : NetworkBehaviour, IManagedInteractable
 
 
     }
+
+    [ClientRpc]
+    void PlayUnlockSoundClientRpc()
+    {
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        if (player != null)
+        {
+            // Dynamically find the sound under 'Sounds/'
+            AudioSource audioSource = player.transform.Find("Sounds/Unlock")?.GetComponent<AudioSource>();
+            if (audioSource != null)
+            {
+                Debug.Log("audio playing..");
+                audioSource.Play();
+            }
+            else
+            {
+                Debug.LogWarning("AudioSource not found at Sounds for playe}");
+            }
+        }
+    }
+
 }

@@ -12,7 +12,7 @@ public class CollectableItem : NetworkBehaviour, IManagedInteractable
     [SerializeField] Outline outline;
     [SerializeField] InteractableMaster interactableMaster;
 
-    private string soundName = "PickupSound";
+    private string soundName = "KeySound";
 
 
     Interactable interactable;
