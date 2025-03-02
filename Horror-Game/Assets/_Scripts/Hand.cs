@@ -98,6 +98,12 @@ public class Hand : NetworkBehaviour
 
     void DropCurItem()
     {
+        if (curHandItemType.Value == ItemType.keyCommon ||
+        curHandItemType.Value == ItemType.keyRare ||
+        curHandItemType.Value == ItemType.gateKey)
+        {
+            PlayUnlockSoundClientRpc();  // Play sound when dropping a key
+        }
         DropCurItemServerRpc();
     }
 
@@ -234,4 +240,25 @@ public class Hand : NetworkBehaviour
     {
         return selectedSlot.Value;
     }
+
+    [ClientRpc]
+    void PlayUnlockSoundClientRpc()
+    {
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        if (player != null)
+        {
+            // Dynamically find the sound under 'Sounds/'
+            AudioSource audioSource = player.transform.Find("Sounds/KeySound")?.GetComponent<AudioSource>();
+            if (audioSource != null)
+            {
+                Debug.Log("audio playing..");
+                audioSource.Play();
+            }
+            else
+            {
+                Debug.LogWarning("AudioSource not found at Sounds for playe}");
+            }
+        }
+    }
+
 }
