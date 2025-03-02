@@ -120,7 +120,9 @@ public class NetworkGameManager : MonoBehaviour
             return PlayerRole.monster;
         }
 
-        return Random.Range(0f, 1f) < 0.5f ? PlayerRole.survivor : PlayerRole.monster;
+        float rand = Random.Range(0f, 1f);
+        Debug.Log("Rolled " + rand + " for random role");
+        return rand < 0.5f ? PlayerRole.survivor : PlayerRole.monster;
         //return clientId == 0 ? PlayerRole.survivor : PlayerRole.monster;
     }
 
