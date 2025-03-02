@@ -243,8 +243,9 @@ MonoBehaviour:
   doDisableCollidersOnMovement: 0
   disableColliderFromProgress: 0
   audioSource: {fileID: 1626071307265785986}
-  openSound: {fileID: 8300000, guid: 9be85a44d28b372488554a2438493c11, type: 3}
+  openSound: {fileID: 8300000, guid: f75bfc60d048d2a4a8f5280c564ac184, type: 3}
   closeSound: {fileID: 8300000, guid: f0c1479604bad3c489830d36d2f4c8dd, type: 3}
+  soundName: Unlock
 --- !u!1 &5614709687715973855
 GameObject:
   m_ObjectHideFlags: 0
