@@ -10,6 +10,7 @@ public class Hitter : NetworkBehaviour
     [SerializeField] private float sphereCastRadius = 0.2f;
     [SerializeField] private LayerMask hitLayer;
     [SerializeField] Transform hitRayOrigin;
+    [SerializeField] float tauntTime = 2f;
 
     bool readyToHit = true;
     bool hitting = false;
@@ -95,18 +96,28 @@ public class Hitter : NetworkBehaviour
         localAnimator.SetBool("HitTaunt", true);
 
         taunting = true;
+        Movement movement = GetComponent<Movement>();
+        if(movement != null) {
+            movement.OnStartTaunt();
+        }
 
         PlayLaughSoundBase();
         PlayLaughSoundServerRpc();
+
+        StartCoroutine(EndTaunt());
     }
 
-    public void OnEndTaunt() {
-        if(!IsOwner)
-            return;
+    IEnumerator EndTaunt()
+    {
+        yield return new WaitForSeconds(tauntTime);
+        taunting = false;
         animator.SetBool("HitTaunt", false);
         localAnimator.SetBool("HitTaunt", false);
 
-        taunting = false;
+        Movement movement = GetComponent<Movement>();
+        if(movement != null) {
+            movement.OnEndTaunt();
+        }
     }
 
     void DoHit()

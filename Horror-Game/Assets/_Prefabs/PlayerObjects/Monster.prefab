@@ -4116,7 +4116,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   orientationTransform: {fileID: 5580652356509563859}
-  movementSpeed: 9.5
+  movementSpeed: 10
   runSpeed: 6
   crouchSpeed: 3
   allowSprint: 0
@@ -4195,6 +4195,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 243
   hitRayOrigin: {fileID: 5580652356509563859}
+  tauntTime: 2
   animator: {fileID: 5626912958572799039}
   localVisual: {fileID: 354048149909042485}
   swingAudio: {fileID: 8971009297549447499}
@@ -4268,7 +4269,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e2da015441534e49a602d1cdaaf568f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rechargeTime: 50
+  rechargeTime: 45
   activateKey: 114
   hightlightTime: 5
 --- !u!1 &4716785024068236245

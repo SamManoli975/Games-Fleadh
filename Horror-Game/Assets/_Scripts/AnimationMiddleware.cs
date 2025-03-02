@@ -24,16 +24,4 @@ public class AnimationMiddleware : MonoBehaviour
         if(movement != null)
             movement.OnFootstep();
     }
-
-    public void OnEndTaunt() {
-        if(movement != null)
-            movement.OnEndTaunt();
-        if(hitter != null)
-            hitter.OnEndTaunt();
-    }
-
-    public void OnStartTaunt() {
-        if(movement != null)
-            movement.OnStartTaunt();
-    }
 }
