@@ -18,6 +18,9 @@ public class KillerSense : NetworkBehaviour
     public float minGrain = 0f;
     public float maxGrain = 1f;
 
+    public AudioSource heartbeatAudio;
+    public float maxHeartbeatDist = 10f;
+
     ColorGrading colorGrading;
     ChromaticAberration chromaticAberration;
     Grain grain;
@@ -36,7 +39,7 @@ public class KillerSense : NetworkBehaviour
     {
         if(!IsOwner)
             return;
-            
+
         if (colorGrading == null || chromaticAberration == null || grain == null 
             || Monster.instance == null) return;
 
@@ -48,5 +51,18 @@ public class KillerSense : NetworkBehaviour
         colorGrading.saturation.value = Mathf.Lerp(minSaturation, maxSaturation, t);
         chromaticAberration.intensity.value = Mathf.Lerp(minChromaticAberration, maxChromaticAberration, t);
         grain.intensity.value = Mathf.Lerp(minGrain, maxGrain, t);
+
+        if(heartbeatAudio != null) {
+            if(distance <= maxHeartbeatDist) {
+                if(!heartbeatAudio.isPlaying) {
+                    heartbeatAudio.Play();
+                }
+            }
+            else {
+                if(heartbeatAudio.isPlaying) {
+                    heartbeatAudio.Stop();
+                }
+            }
+        }   
     }
 }

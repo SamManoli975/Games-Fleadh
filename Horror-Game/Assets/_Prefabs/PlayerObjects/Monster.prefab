@@ -4116,7 +4116,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   orientationTransform: {fileID: 5580652356509563859}
-  movementSpeed: 10
+  movementSpeed: 9.5
   runSpeed: 6
   crouchSpeed: 3
   allowSprint: 0
