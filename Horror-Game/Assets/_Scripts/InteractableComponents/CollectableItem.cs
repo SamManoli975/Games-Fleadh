@@ -59,9 +59,10 @@ public class CollectableItem : NetworkBehaviour, IManagedInteractable
 
     void Collect(Clicker clicker)
     {
-        if (!IsServer)
+        if (!IsServer) {
             Debug.Log("collect called on a client and not a server");
             return;
+        }
 
         Inventory inventory = clicker.GetComponent<Inventory>();
         if (inventory == null)
@@ -84,9 +85,7 @@ public class CollectableItem : NetworkBehaviour, IManagedInteractable
             }
 
             //despawn
-            NetworkObject.Despawn(true); ;
-
-
+            NetworkObject.Despawn(true);
         }
     }
 
