@@ -86,6 +86,14 @@ public class Hand : NetworkBehaviour
             return;
         }
 
+        if (curHandItemType.Value == ItemType.keyCommon ||
+        curHandItemType.Value == ItemType.keyRare ||
+        curHandItemType.Value == ItemType.gateKey)
+        {
+            NetworkObject networkObject = gameObject.GetComponent<NetworkObject>();
+            PlaySoundFromObjectClientRpc(networkObject);
+        }
+
         ItemData itemData = ItemsDataManager.instance.GetItemData(curHandItemType.Value);
         if (itemData.collectableItemPrefab != null)
         {
@@ -100,13 +108,6 @@ public class Hand : NetworkBehaviour
 
     void DropCurItem()
     {
-        if (curHandItemType.Value == ItemType.keyCommon ||
-        curHandItemType.Value == ItemType.keyRare ||
-        curHandItemType.Value == ItemType.gateKey)
-        {
-            NetworkObject networkObject = gameObject.GetComponent<NetworkObject>();
-            PlaySoundFromObjectClientRpc(networkObject);
-        }
         DropCurItemServerRpc();
     }
 

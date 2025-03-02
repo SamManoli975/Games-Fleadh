@@ -158,7 +158,7 @@ public class Door : NetworkBehaviour, IManagedInteractable
             return;
         }
 
-        NetworkObject networkObject = gameObject.GetComponent<NetworkObject>();
+        NetworkObject networkObject = clicker.gameObject.GetComponent<NetworkObject>();
 
         if (networkObject == null)
         {

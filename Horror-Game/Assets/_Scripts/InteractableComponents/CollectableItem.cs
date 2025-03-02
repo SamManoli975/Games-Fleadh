@@ -80,7 +80,7 @@ public class CollectableItem : NetworkBehaviour, IManagedInteractable
             if (itemType == ItemType.keyCommon || itemType == ItemType.gateKey || itemType == ItemType.keyRare)
             {
                 Debug.Log("item type key, going into function");
-                NetworkObject networkObject = gameObject.GetComponent<NetworkObject>();
+                NetworkObject networkObject = clicker.gameObject.GetComponent<NetworkObject>();
                 PlaySoundFromObjectClientRpc(networkObject);
             }
 
