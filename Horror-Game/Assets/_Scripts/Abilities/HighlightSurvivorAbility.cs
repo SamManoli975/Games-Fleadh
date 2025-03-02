@@ -30,6 +30,9 @@ public class HighlightSurvivorAbility : Ability
             Highlightable highlightable = Survivor.instance.GetComponent<Highlightable>();
             if(highlightable != null) {
                 highlightable.SetIsHighlighted(true);
+                NetworkObject networkObject = gameObject.GetComponent<NetworkObject>();
+                playAbilitySoundClientRpc(new NetworkObjectReference(networkObject));
+
                 StartCoroutine(Unhighlight(highlightable));
             }
         }
@@ -47,4 +50,34 @@ public class HighlightSurvivorAbility : Ability
     protected override void Activate() {
         ActivateServerRpc();
     }
+    
+    [ClientRpc]
+    void playAbilitySoundClientRpc(NetworkObjectReference networkObjectReference)
+    {
+        
+        Debug.Log("PlaySoundFromObjectClientRpc called on client");
+
+        if (!networkObjectReference.TryGet(out NetworkObject networkObject))
+        {
+            Debug.LogError("Failed to retrieve NetworkObject from reference");
+            return;
+        }
+
+        GameObject player = networkObject.gameObject;
+        Debug.Log($"NetworkObject found: {player.name}");
+
+        // Find the AudioSource
+        AudioSource audioSource = player.transform.Find("Sounds/ability")?.GetComponent<AudioSource>();
+
+        if (audioSource != null)
+        {
+            Debug.Log("Playing unlock sound...");
+            audioSource.Play();
+        }
+        else
+        {
+            Debug.LogWarning("AudioSource not found at Sounds/Unlock for player");
+        }
+    }
+    
 }
