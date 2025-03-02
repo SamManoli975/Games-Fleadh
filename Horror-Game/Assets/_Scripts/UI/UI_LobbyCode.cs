@@ -7,15 +7,20 @@ using UnityEngine;
 public class UI_LobbyCode : MonoBehaviour
 {
     [SerializeField] TMP_InputField codeTextField;
+    [SerializeField] TextMeshProUGUI joinCodeHeading;
 
     void Start()
     {
-        if(!NetworkManager.Singleton.IsServer)
+        string code = NetworkGameManager.instance.GetLobbyCode();
+        if(code.Length == 0)
         {
-            gameObject.SetActive(false);
-            return;
+            codeTextField.gameObject.SetActive(false);
+            joinCodeHeading.gameObject.SetActive(false);
         }
-        
-        codeTextField.text = NetworkGameManager.instance.GetLobbyCode();
+        else {
+            codeTextField.gameObject.SetActive(true);
+            joinCodeHeading.gameObject.SetActive(true);
+            codeTextField.text = code;
+        }
     }
 }
