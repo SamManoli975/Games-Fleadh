@@ -12,11 +12,17 @@ public class CollectableItem : NetworkBehaviour, IManagedInteractable
     [SerializeField] Outline outline;
     [SerializeField] InteractableMaster interactableMaster;
 
+    private string soundName = "PickupSound";
+
+
     Interactable interactable;
+
+    
 
     void Awake()
     {
         interactable = gameObject.GetComponent<Interactable>();
+      
     }
 
     public override void OnNetworkSpawn()
@@ -68,9 +74,46 @@ public class CollectableItem : NetworkBehaviour, IManagedInteractable
                 prioritySlot = hand.GetSelectedSlot();
 
             inventory.AddItem(itemType, prioritySlot);
-            NetworkObject.Despawn(true);
+
+            if (itemType == ItemType.keyCommon || itemType == ItemType.gateKey || itemType == ItemType.keyRare)
+            {
+                PlayPickupSoundClientRpc(clicker.NetworkObjectId);
+            }
+
+            //wait
+            StartCoroutine(DelayedDespawn());
+
+
         }
     }
+
+    [ClientRpc]
+    void PlayPickupSoundClientRpc(ulong playerId)
+    {
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        if (player != null)
+        {
+            // Dynamically find the sound under 'Sounds/'
+            AudioSource audioSource = player.transform.Find($"Sounds/{soundName}")?.GetComponent<AudioSource>();
+            if (audioSource != null)
+            {
+                Debug.Log("audio playing..");
+                audioSource.Play();
+            }
+            else
+            {
+                Debug.LogWarning($"AudioSource not found at Sounds/{soundName} for player {playerId}");
+            }
+        }
+    }
+
+    IEnumerator DelayedDespawn()
+    {
+        Debug.Log("despawning..");
+        yield return new WaitForSeconds(0.01f); // Small delay to let sound play
+        NetworkObject.Despawn(true);
+    }
+
 
     public SetupInteractableMasterRes SetupInteractableMaster(InteractableMaster interactableMaster)
     {
