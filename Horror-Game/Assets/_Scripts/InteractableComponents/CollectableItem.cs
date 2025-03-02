@@ -12,7 +12,7 @@ public class CollectableItem : NetworkBehaviour, IManagedInteractable
     [SerializeField] Outline outline;
     [SerializeField] InteractableMaster interactableMaster;
 
-    private string soundName = "KeySound";
+    public string soundName = "KeySound";
 
 
     Interactable interactable;
@@ -60,6 +60,7 @@ public class CollectableItem : NetworkBehaviour, IManagedInteractable
     void Collect(Clicker clicker)
     {
         if (!IsServer)
+            Debug.Log("collect called on a client and not a server");
             return;
 
         Inventory inventory = clicker.GetComponent<Inventory>();
@@ -77,7 +78,9 @@ public class CollectableItem : NetworkBehaviour, IManagedInteractable
 
             if (itemType == ItemType.keyCommon || itemType == ItemType.gateKey || itemType == ItemType.keyRare)
             {
-                PlayPickupSoundClientRpc(clicker.NetworkObjectId);
+                Debug.Log("item type key, going into function");
+                NetworkObject networkObject = gameObject.GetComponent<NetworkObject>();
+                PlaySoundFromObjectClientRpc(networkObject);
             }
 
             //wait
@@ -87,12 +90,18 @@ public class CollectableItem : NetworkBehaviour, IManagedInteractable
         }
     }
 
+
+
     [ClientRpc]
-    void PlayPickupSoundClientRpc(ulong playerId)
+    public void PlaySoundFromObjectClientRpc(NetworkObjectReference networkObjectReference)
     {
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
-        if (player != null)
+        Debug.Log("PlaySoundFromObjectClientRpc called on client.");
+
+        if (networkObjectReference.TryGet(out NetworkObject networkObject))
         {
+            GameObject player = networkObject.gameObject;
+            Debug.Log($"NetworkObject found: {player.name}");
+
             // Dynamically find the sound under 'Sounds/'
             AudioSource audioSource = player.transform.Find($"Sounds/{soundName}")?.GetComponent<AudioSource>();
             if (audioSource != null)
@@ -102,15 +111,19 @@ public class CollectableItem : NetworkBehaviour, IManagedInteractable
             }
             else
             {
-                Debug.LogWarning($"AudioSource not found at Sounds/{soundName} for player {playerId}");
+                Debug.LogWarning($"AudioSource not found at Sounds/{soundName} for player");
             }
+
+        }
+        else
+        {
+            Debug.LogError("Failed to retrieve NetworkObject from reference.");
         }
     }
 
     IEnumerator DelayedDespawn()
     {
         Debug.Log("despawning..");
-        yield return new WaitForSeconds(0.01f); // Small delay to let sound play
         NetworkObject.Despawn(true);
     }
 

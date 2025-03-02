@@ -150,7 +150,7 @@ public class Drawer : NetworkBehaviour, IManagedInteractable
         return new SetupInteractableMasterRes(modifiedComponents, new List<Interactable> { interactable });
     }
 
-    void HandleUnclocked()
+    void HandleUnclocked(Clicker clicker)
     {
         lockable.onUnlocked.RemoveListener(HandleUnclocked);
 

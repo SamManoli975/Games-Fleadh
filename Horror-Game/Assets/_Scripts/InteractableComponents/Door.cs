@@ -32,6 +32,7 @@ public class Door : NetworkBehaviour, IManagedInteractable
     public AudioSource audioSource; // AudioSource for playing sounds
     public AudioClip openSound;     // Sound for opening the drawer
     public AudioClip closeSound;
+    public string soundName = "Unlock";
 
     void Awake()
     {
@@ -147,11 +148,29 @@ public class Door : NetworkBehaviour, IManagedInteractable
         return new SetupInteractableMasterRes(modifiedComponents, new List<Interactable> { interactable });
     }
 
-    void HandleUnclocked()
+    void HandleUnclocked(Clicker clicker)
     {
-        PlayUnlockSoundClientRpc();
-        lockable.onUnlocked.RemoveListener(HandleUnclocked);
+        Debug.Log("handle unlocked, going into function");
 
+        if (!IsServer) // Ensure only the server runs this
+        {
+            Debug.LogWarning("HandleUnclocked called on a client, but it should be on the server.");
+            return;
+        }
+
+        NetworkObject networkObject = gameObject.GetComponent<NetworkObject>();
+
+        if (networkObject == null)
+        {
+            Debug.LogError("NetworkObject not found on this object");
+            return;
+        }
+
+        Debug.Log("Calling PlaySoundFromObjectClientRpc...");
+
+        PlaySoundFromObjectClientRpc(networkObject);
+
+        lockable.onUnlocked.RemoveListener(HandleUnclocked);
         SetOpenCloseMessage(null);
         interactable.onInteraction.AddListener(SetOpenCloseMessage);
     }
@@ -187,23 +206,34 @@ public class Door : NetworkBehaviour, IManagedInteractable
     }
 
     [ClientRpc]
-    void PlayUnlockSoundClientRpc()
+    public void PlaySoundFromObjectClientRpc(NetworkObjectReference networkObjectReference)
     {
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
-        if (player != null)
+        Debug.Log("PlaySoundFromObjectClientRpc called on client");
+
+        if (!networkObjectReference.TryGet(out NetworkObject networkObject))
         {
-            // Dynamically find the sound under 'Sounds/'
-            AudioSource audioSource = player.transform.Find("Sounds/Unlock")?.GetComponent<AudioSource>();
-            if (audioSource != null)
-            {
-                Debug.Log("audio playing..");
-                audioSource.Play();
-            }
-            else
-            {
-                Debug.LogWarning("AudioSource not found at Sounds for playe}");
-            }
+            Debug.LogError("Failed to retrieve NetworkObject from reference");
+            return;
+        }
+
+        GameObject player = networkObject.gameObject;
+        Debug.Log($"NetworkObject found: {player.name}");
+
+        // Find the AudioSource
+        AudioSource audioSource = player.transform.Find("Sounds/Unlock")?.GetComponent<AudioSource>();
+
+        if (audioSource != null)
+        {
+            Debug.Log("Playing unlock sound...");
+            audioSource.Play();
+        }
+        else
+        {
+            Debug.LogWarning("AudioSource not found at Sounds/Unlock for player");
         }
     }
+
+
+
 
 }

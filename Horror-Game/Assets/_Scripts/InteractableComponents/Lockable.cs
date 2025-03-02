@@ -7,7 +7,7 @@ using UnityEngine.Events;
 public class Lockable : NetworkBehaviour
 {
     public UnityEvent<Clicker> onNotLockedInteraction = new UnityEvent<Clicker>();
-    public UnityEvent onUnlocked = new UnityEvent();
+    public UnityEvent<Clicker> onUnlocked = new UnityEvent<Clicker>();
 
     public ItemType requiredKey = ItemType.none;
     public bool initialIsLocked = true;
@@ -29,7 +29,7 @@ public class Lockable : NetworkBehaviour
 
         if (requiredKey == ItemType.none)
         {
-            Unclock();
+            Unclock(clicker);
             return;
         }
 
@@ -43,16 +43,16 @@ public class Lockable : NetworkBehaviour
         if (selectedStack.itemType == requiredKey)
         {
             inventory.RemoveItemFromSlot(requiredKey, selectedSlot);
-            Unclock();
+            Unclock(clicker);
         }
     }
 
-    void Unclock()
+    void Unclock(Clicker clicker)
     {
         if (!IsServer)
             return;
 
         isLocked.Value = false;
-        onUnlocked.Invoke();
+        onUnlocked.Invoke(clicker);
     }
 }

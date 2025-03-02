@@ -38,6 +38,7 @@ public class DoubleDoor : NetworkBehaviour, IManagedInteractable
     public AudioSource audioSource; // AudioSource for playing sounds
     public AudioClip openSound;     // Sound for opening the drawer
     public AudioClip closeSound;
+    public string soundName = "Unlock";
 
     void Awake()
     {
@@ -185,9 +186,10 @@ public class DoubleDoor : NetworkBehaviour, IManagedInteractable
         SetOpenCloseMessage();
     }
 
-    void HandleUnclocked()
+    void HandleUnclocked(Clicker clicker)
     {
-        PlayUnlockSoundClientRpc();
+        NetworkObject networkObject = gameObject.GetComponent<NetworkObject>();
+        PlaySoundFromObjectClientRpc(networkObject);
 
         lockable.onUnlocked.RemoveListener(HandleUnclocked);
         SetOpenCloseMessage();
@@ -239,13 +241,15 @@ public class DoubleDoor : NetworkBehaviour, IManagedInteractable
     }
 
     [ClientRpc]
-    void PlayUnlockSoundClientRpc()
+    public void PlaySoundFromObjectClientRpc(NetworkObjectReference networkObjectReference)
     {
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
-        if (player != null)
+
+        if (networkObjectReference.TryGet(out NetworkObject networkObject))
         {
+            GameObject player = networkObject.gameObject;
+
             // Dynamically find the sound under 'Sounds/'
-            AudioSource audioSource = player.transform.Find("Sounds/Unlock")?.GetComponent<AudioSource>();
+            AudioSource audioSource = player.transform.Find($"Sounds/Unlock")?.GetComponent<AudioSource>();
             if (audioSource != null)
             {
                 Debug.Log("audio playing..");
@@ -253,9 +257,11 @@ public class DoubleDoor : NetworkBehaviour, IManagedInteractable
             }
             else
             {
-                Debug.LogWarning("AudioSource not found at Sounds for playe}");
+                Debug.LogWarning($"AudioSource not found at Sounds/Unlock for player");
             }
         }
     }
+
+
 
 }

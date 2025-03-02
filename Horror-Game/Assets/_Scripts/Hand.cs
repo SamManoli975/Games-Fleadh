@@ -31,6 +31,8 @@ public class Hand : NetworkBehaviour
     float scrollTimer = 0;
     float storedScroll = 0;
 
+    public string soundName = "KeySound";
+
     void Awake()
     {
         inventory = GetComponent<Inventory>();
@@ -102,7 +104,8 @@ public class Hand : NetworkBehaviour
         curHandItemType.Value == ItemType.keyRare ||
         curHandItemType.Value == ItemType.gateKey)
         {
-            PlayUnlockSoundClientRpc();  // Play sound when dropping a key
+            NetworkObject networkObject = gameObject.GetComponent<NetworkObject>();
+            PlaySoundFromObjectClientRpc(networkObject);
         }
         DropCurItemServerRpc();
     }
@@ -242,13 +245,15 @@ public class Hand : NetworkBehaviour
     }
 
     [ClientRpc]
-    void PlayUnlockSoundClientRpc()
+    public void PlaySoundFromObjectClientRpc(NetworkObjectReference objectReference)
     {
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
-        if (player != null)
+        if (objectReference.TryGet(out NetworkObject networkObject))
         {
+            GameObject player = networkObject.gameObject;
+
+           
             // Dynamically find the sound under 'Sounds/'
-            AudioSource audioSource = player.transform.Find("Sounds/KeySound")?.GetComponent<AudioSource>();
+            AudioSource audioSource = player.transform.Find($"Sounds/{soundName}")?.GetComponent<AudioSource>();
             if (audioSource != null)
             {
                 Debug.Log("audio playing..");
@@ -256,9 +261,11 @@ public class Hand : NetworkBehaviour
             }
             else
             {
-                Debug.LogWarning("AudioSource not found at Sounds for playe}");
+                Debug.LogWarning($"AudioSource not found at Sounds/{soundName} for player");
             }
+            
         }
     }
+
 
 }
