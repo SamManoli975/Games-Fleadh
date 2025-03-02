@@ -4208,7 +4208,7 @@ MonoBehaviour:
   onDied:
     m_PersistentCalls:
       m_Calls: []
-  maxHealth: 3
+  maxHealth: 2
   hitSource: {fileID: 3097216141851549948}
 --- !u!114 &3690282729844865212
 MonoBehaviour:
