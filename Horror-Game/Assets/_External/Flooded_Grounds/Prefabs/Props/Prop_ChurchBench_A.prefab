@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3385130}
   - component: {fileID: 2364536}
   - component: {fileID: 6595830}
+  - component: {fileID: 4157963809171421724}
   m_Layer: 8
   m_Name: lo_Prop_ChurchBench_A_LOD1
   m_TagString: Untagged
@@ -95,8 +96,21 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2.8562033, y: 1.3, z: 1.1}
-  m_Center: {x: -1.3281018, y: 0.65, z: -0.35000008}
+  m_Size: {x: 2.8562033, y: 0.44101736, z: 1.1}
+  m_Center: {x: -1.3281018, y: 0.22050868, z: -0.35000008}
+--- !u!65 &4157963809171421724
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 119706}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2.856211, y: 1.3000076, z: 0.26966262}
+  m_Center: {x: -1.3281018, y: 0.65, z: -0.76517266}
 --- !u!1 &132168
 GameObject:
   m_ObjectHideFlags: 0
@@ -109,6 +123,7 @@ GameObject:
   - component: {fileID: 3348206}
   - component: {fileID: 2314332}
   - component: {fileID: 6522516}
+  - component: {fileID: 4885137505572276824}
   m_Layer: 8
   m_Name: lo_Prop_ChurchBench_A_LOD0
   m_TagString: Untagged
@@ -192,8 +207,21 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2.8562033, y: 1.3, z: 1.1}
-  m_Center: {x: -1.3281018, y: 0.65, z: -0.35000008}
+  m_Size: {x: 2.8562033, y: 0.43824026, z: 1.1}
+  m_Center: {x: -1.3281018, y: 0.21912013, z: -0.35000008}
+--- !u!65 &4885137505572276824
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 132168}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2.856211, y: 1.3000076, z: 0.22651076}
+  m_Center: {x: -1.3281018, y: 0.65, z: -0.7867486}
 --- !u!1 &144546
 GameObject:
   m_ObjectHideFlags: 0
