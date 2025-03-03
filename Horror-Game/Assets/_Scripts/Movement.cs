@@ -135,7 +135,7 @@ public class Movement : NetworkBehaviour
         if(isStunned.Value)
                 return;
 
-        bool isMoving = Input.GetAxis("Vertical") != 0 || Input.GetAxis("Horizontal") != 0;
+        bool isMoving = Input.GetAxisRaw("Vertical") != 0 || Input.GetAxisRaw("Horizontal") != 0;
         bool isRunning = allowSprint && Input.GetKey(KeyCode.LeftShift) && currentStamina.Value > 0;
         bool isCrouching = allowSprint && Input.GetKey(KeyCode.LeftControl);
 
@@ -182,7 +182,7 @@ public class Movement : NetworkBehaviour
             curSpeed = crouchSpeed;
         }
 
-        Vector3 input = new Vector3(Input.GetAxis("Vertical"), 0, Input.GetAxis("Horizontal"));
+        Vector3 input = new Vector3(Input.GetAxisRaw("Vertical"), 0, Input.GetAxisRaw("Horizontal"));
         input.Normalize();
         Vector3 velocity = input * curSpeed;
 
