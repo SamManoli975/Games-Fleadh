@@ -67,7 +67,7 @@ public class TriggerSound : MonoBehaviour
 
                 // Play thunder sounds
                 SoundManager.instance.SoundsPlayingAtRandomIntervals(other.gameObject, 30f, 60f, new string[] { "Thunder" }, "Thunder");
-                SoundManager.instance.SoundsPlayingAtRandomIntervals(other.gameObject, 30f, 60f, new string[] { "howl" }, "howl");
+                SoundManager.instance.SoundsPlayingAtRandomIntervals(other.gameObject, 50f, 70f, new string[] { "howl" }, "howl");
                 SoundManager.instance.SoundsPlayingAtRandomIntervals(other.gameObject, 40f, 70f, new string[] { "whispers" }, "whispers");
             }
         }
