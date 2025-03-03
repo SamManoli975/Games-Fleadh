@@ -154,6 +154,7 @@ public class Outline : MonoBehaviour
     }
   }
 
+
   void OnDisable()
   {
     foreach (var renderer in renderers)

@@ -4291,7 +4291,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rechargeTime: 40
   activateKey: 114
-  hightlightTime: 7
+  hightlightTime: 6
 --- !u!114 &-2323681666837941753
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4304,7 +4304,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce80b1d86b867a44ca0072d3b0ae5e28, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fromDistace: 100
+  fromDistace: 130
 --- !u!1 &4716785024068236245
 GameObject:
   m_ObjectHideFlags: 0

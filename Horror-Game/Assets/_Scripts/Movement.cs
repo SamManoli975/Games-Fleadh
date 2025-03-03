@@ -182,18 +182,20 @@ public class Movement : NetworkBehaviour
             curSpeed = crouchSpeed;
         }
 
-        float curSpeedX = curSpeed * Input.GetAxis("Vertical");
-        float curSpeedY = curSpeed * Input.GetAxis("Horizontal");
+        Vector3 input = new Vector3(Input.GetAxis("Vertical"), 0, Input.GetAxis("Horizontal"));
+        input.Normalize();
+        Vector3 velocity = input * curSpeed;
 
         Vector3 forward = transform.TransformDirection(Vector3.forward);
         Vector3 right = transform.TransformDirection(Vector3.right);
         float movementDirectionY = moveDirection.y;
-        moveDirection = (forward * curSpeedX) + (right * curSpeedY);
+        moveDirection = (forward * velocity.x) + (right * velocity.z);
 
         
         if (Input.GetButton("Jump") && characterController.isGrounded)
         {
             moveDirection.y = jumpPower;
+            footstepPlayer.PlayFootstep(false);
         }
         else
         {
