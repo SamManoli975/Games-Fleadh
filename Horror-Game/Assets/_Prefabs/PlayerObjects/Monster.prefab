@@ -4041,6 +4041,7 @@ GameObject:
   - component: {fileID: 5200368895374749906}
   - component: {fileID: 6063824534916933520}
   - component: {fileID: 2200239415864305164}
+  - component: {fileID: -2323681666837941753}
   m_Layer: 9
   m_Name: Monster
   m_TagString: Player
@@ -4082,7 +4083,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 668270750
+  GlobalObjectIdHash: 3986861631
   InScenePlacedSourceGlobalObjectIdHash: 3986861631
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
@@ -4288,9 +4289,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e2da015441534e49a602d1cdaaf568f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rechargeTime: 50
+  rechargeTime: 40
   activateKey: 114
   hightlightTime: 7
+--- !u!114 &-2323681666837941753
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4700655125903280924}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce80b1d86b867a44ca0072d3b0ae5e28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fromDistace: 100
 --- !u!1 &4716785024068236245
 GameObject:
   m_ObjectHideFlags: 0

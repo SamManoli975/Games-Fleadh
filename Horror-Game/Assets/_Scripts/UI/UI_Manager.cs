@@ -16,6 +16,8 @@ public class UI_Manager : MonoBehaviour
 
     [SerializeField] GameObject survivorHelpMesage;
     [SerializeField] GameObject monsterHelpMesage;
+
+    [SerializeField] GameObject survivorFarMessage;
    
 
     void Awake()
@@ -36,6 +38,9 @@ public class UI_Manager : MonoBehaviour
             survivorHelpMesage.SetActive(false);
         if(monsterHelpMesage != null)
             monsterHelpMesage.SetActive(false);
+
+        if(survivorFarMessage != null)
+            survivorFarMessage.SetActive(false);
     }
 
     public UI_Inventory GetInventoryUI()
@@ -88,5 +93,15 @@ public class UI_Manager : MonoBehaviour
     public void ShowMonsterHelpMessage() {
         if(monsterHelpMesage != null)
             monsterHelpMesage.SetActive(true);
+    }
+
+    public void ShowSurvivorFarMessage() {
+        if(survivorFarMessage != null)
+            survivorFarMessage.SetActive(true);
+    }
+
+    public void HideSurvivorFarMessage() {
+        if(survivorFarMessage != null)
+            survivorFarMessage.SetActive(false);
     }
 }
