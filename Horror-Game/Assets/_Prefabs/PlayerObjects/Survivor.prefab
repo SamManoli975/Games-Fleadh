@@ -3320,7 +3320,7 @@ AudioSource:
   Priority: 0
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 100
+  MaxDistance: 140
   Pan2D: 0
   rolloffMode: 2
   BypassEffects: 0
@@ -4023,7 +4023,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 362563344
+  GlobalObjectIdHash: 1810388293
   InScenePlacedSourceGlobalObjectIdHash: 362563344
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
@@ -6090,7 +6090,7 @@ AudioSource:
   Priority: 0
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 100
+  MaxDistance: 140
   Pan2D: 0
   rolloffMode: 2
   BypassEffects: 0
