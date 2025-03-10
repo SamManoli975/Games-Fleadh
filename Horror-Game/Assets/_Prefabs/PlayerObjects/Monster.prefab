@@ -4209,13 +4209,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hitRechargeTime: 0.2
-  hitRange: 3
+  hitRange: 3.5
   sphereCastRadius: 0.5
   hitLayer:
     serializedVersion: 2
     m_Bits: 243
   hitRayOrigin: {fileID: 5580652356509563859}
-  tauntTime: 2
+  tauntTime: 4.5
   animator: {fileID: 5626912958572799039}
   localVisual: {fileID: 354048149909042485}
   swingAudio: {fileID: 8971009297549447499}
@@ -4289,7 +4289,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e2da015441534e49a602d1cdaaf568f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rechargeTime: 35
+  rechargeTime: 40
   activateKey: 114
   hightlightTime: 6
 --- !u!114 &-2323681666837941753
